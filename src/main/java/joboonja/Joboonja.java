@@ -1,5 +1,6 @@
 package joboonja;
 
+import config.JoboonjaConfig;
 import org.json.JSONObject;
 import project.Project;
 import user.User;
@@ -16,5 +17,9 @@ public class Joboonja {
     public static void registerNewUser(JSONObject userInfo)
     {
         users.add(new User(userInfo));
+    }
+    public static void auction(JSONObject projectIdentifier)
+    {
+        String projectTitle = projectIdentifier.getString(JoboonjaConfig.projectTitle);
     }
 }
