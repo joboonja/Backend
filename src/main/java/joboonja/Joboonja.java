@@ -28,12 +28,9 @@ public class Joboonja {
     }
     public static void addNewBid(JSONObject bidInfo) { bids.add(new Bid(bidInfo)); }
         String projectTitle = projectIdentifier.getString(BidConfig.PROJECT_TITLE);
-        String bidingUser = projectIdentifier.getString(BidConfig.BIDDING_USER);
-
         User user = null;
         Project project = null;
         try {
-            user = getUserByUsername(bidingUser);
             project = getProjectByProjectTitle(projectTitle);
 
         }
@@ -48,6 +45,14 @@ public class Joboonja {
 
         for(Bid bid : bids)
         {
+
+            try {
+                user = getUserByUsername(bid.getBiddingUserName());
+            }
+            catch (Exception e) {
+                System.out.println(e.getMessage());
+                return;
+            }
 
             int auctionRate = calcAuctionFormula(user, project, bid);
             if(!firstVisited)
