@@ -1,37 +1,55 @@
 package tools;
 
 
+import com.sun.xml.internal.bind.v2.TODO;
+import config.Commands;
 import javafx.util.Pair;
 import org.json.JSONObject;
 
 import java.util.Scanner;
 
 public class CommandHandler {
-    public static Pair<String, JSONObject> getCommand() {
+    public static Pair<String, JSONObject> getCommand() throws Exception{
         String command ;
         Scanner scanner = new Scanner(System.in);
         command = scanner.nextLine();
+        Pair<String, JSONObject> pairedCommand;
         String parts[] = command.split(" ", 2);
 
-        Pair<String, JSONObject> pairedCommand;
-        try
-        {
-            if(parts.length != 2)
-                throw new Exception();
-            String userCommand = parts[0];
-            String jsonString = parts[1];
+        if(parts.length != 2)
+            throw new Exception(Commands.INPUT_ERROR);
 
-            JSONObject userInputJson = new JSONObject(jsonString);
+        String userCommand = parts[0];
+        String jsonString = parts[1];
 
-            pairedCommand = new Pair<String, JSONObject>(userCommand, userInputJson);
-        }
-        catch (Exception e)
-        {
-            System.out.println("Bad Input!");
-
-            pairedCommand = new Pair<String, JSONObject>("", new JSONObject(""));
-        }
-
+        JSONObject userInputJson = new JSONObject(jsonString);
+        pairedCommand = new Pair<String, JSONObject>(userCommand, userInputJson);
         return pairedCommand;
+    }
+    public static void handleInputCommands()
+    {
+        do {
+            try
+            {
+                Pair<String, JSONObject> pairedCommand = CommandHandler.getCommand();
+                if(pairedCommand.getKey().equals(Commands.REGISTER))
+                {
+                    //TODO:Call needed function
+                } else if(pairedCommand.getKey().equals(Commands.ADD_PROJECT))
+                {
+                    //TODO:Call needed function
+                } else if(pairedCommand.getKey().equals(Commands.BID))
+                {
+                    //TODO:Call needed function
+                } else if(pairedCommand.getKey().equals(Commands.AUCTION)) {
+                    //TODO:Call needed function
+                } else
+                    throw new Exception(Commands.COMMAND_NOT_FOUND_ERROR);
+            }
+            catch (Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
     }
 }
