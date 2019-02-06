@@ -1,6 +1,5 @@
 package user;
 
-import config.Commands;
 import config.UserConfig;
 import org.json.JSONArray;
 import org.json.JSONObject;
