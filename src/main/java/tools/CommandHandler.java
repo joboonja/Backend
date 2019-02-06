@@ -1,6 +1,7 @@
 package tools;
 
 
+import com.sun.xml.internal.bind.v2.TODO;
 import config.Commands;
 import javafx.util.Pair;
 import org.json.JSONObject;
@@ -31,8 +32,19 @@ public class CommandHandler {
             try
             {
                 Pair<String, JSONObject> pairedCommand = CommandHandler.getCommand();
-                System.out.println(pairedCommand.getKey());
-                System.out.println(pairedCommand.getValue().toString());
+                if(pairedCommand.getKey().equals(Commands.REGISTER))
+                {
+                    //TODO:Call needed function
+                } else if(pairedCommand.getKey().equals(Commands.ADD_PROJECT))
+                {
+                    //TODO:Call needed function
+                } else if(pairedCommand.getKey().equals(Commands.BID))
+                {
+                    //TODO:Call needed function
+                } else if(pairedCommand.getKey().equals(Commands.AUCTION)) {
+                    //TODO:Call needed function
+                } else
+                    throw new Exception(Commands.COMMAND_NOT_FOUND_ERROR);
             }
             catch (Exception e)
             {

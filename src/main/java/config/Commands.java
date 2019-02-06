@@ -6,4 +6,5 @@ public class Commands {
     public static final String BID = "bid";
     public static final String AUCTION = "auction";
     public static final String INPUT_ERROR = "Bad Input!";
+    public static final String COMMAND_NOT_FOUND_ERROR = "Commmand not found!";
 }
