@@ -13,11 +13,20 @@ import java.util.ArrayList;
 public class Bid {
     private String biddingUserName;
     private String projectTitle;
-    private int bidAmount;
+    private int offer;
 
     public Bid(JSONObject bidInfo){
         biddingUserName = bidInfo.getString(BidConfig.BIDDING_USER);
         projectTitle = bidInfo.getString(BidConfig.PROJECT_TITLE);
-        bidAmount = bidInfo.getInt(BidConfig.BID_AMOUNT);
+        offer = bidInfo.getInt(BidConfig.BID_AMOUNT);
     }
+    public int getOffer()
+    {
+        return offer;
+    }
+    public String getBiddingUserName()
+    {
+        return biddingUserName;
+    }
+
 }

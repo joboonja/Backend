@@ -6,10 +6,11 @@ import org.json.JSONObject;
 import skill.Skill;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User {
     private String username;
-    private ArrayList <Skill> skills = new ArrayList<Skill>();
+    private HashMap<String, Skill> skills = new HashMap<String, Skill>();
 
     public User(JSONObject userInfo){
         JSONArray skillsInfo;
@@ -17,7 +18,15 @@ public class User {
         skillsInfo = (JSONArray) userInfo.get(UserConfig.SKILLS);
         for(int i = 0; i < skillsInfo.length(); i++){
             Skill skill = new Skill((JSONObject) skillsInfo.get(i));
-            skills.add(skill);
+            skills.put(skill.getName(), skill);
         }
+    }
+    public String getUsername()
+    {
+        return username;
+    }
+    public HashMap<String, Skill> getSkills()
+    {
+        return skills;
     }
 }
