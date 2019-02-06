@@ -42,6 +42,7 @@ public class CommandHandler {
                 } else if(pairedCommand.getKey().equals(Commands.BID))
                 {
 
+                    Joboonja.addNewBid(pairedCommand.getValue());
                 } else if(pairedCommand.getKey().equals(Commands.AUCTION)) {
                     //TODO:Call needed function
                 } else
