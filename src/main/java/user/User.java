@@ -1,26 +1,23 @@
 package user;
 
 import config.Commands;
+import config.UserConfig;
 import org.json.JSONObject;
 import skill.Skill;
 
+import java.util.ArrayList;
+
 public class User {
-    private String name;
-    private Skill[] skills;
+    private String username;
+    private ArrayList <Skill> skills;
 
-    User(JSONObject userInfo){
-
+    public User(JSONObject userInfo){
+        JSONObject skillsInfo[];
+        username = userInfo.getString(UserConfig.USERNAME);
+        skillsInfo = (JSONObject[])userInfo.get(UserConfig.SKILLS);
+        for(int i = 0; i < skillsInfo.length; i++){
+            Skill skill = new Skill(skillsInfo[i]);
+            skills.add(skill);
+        }
     }
-
-    public static void main(String[] args) {
-//        JSONObject obj = new JSONObject();
-//
-//        obj.put("name", "foo");
-//        obj.put("num", new Integer(100));
-//        obj.put("balance", new Double(1000.21));
-//        obj.put("is_vip", new Boolean(true));
-//
-//        System.out.print(Commands.AUCTION);
-    }
-
 }
