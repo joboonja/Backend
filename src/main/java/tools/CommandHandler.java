@@ -4,6 +4,7 @@ package tools;
 import com.sun.xml.internal.bind.v2.TODO;
 import config.Commands;
 import javafx.util.Pair;
+import joboonja.Joboonja;
 import org.json.JSONObject;
 
 import java.util.Scanner;
@@ -34,10 +35,10 @@ public class CommandHandler {
                 Pair<String, JSONObject> pairedCommand = CommandHandler.getCommand();
                 if(pairedCommand.getKey().equals(Commands.REGISTER))
                 {
-                    //TODO:Call needed function
+                    Joboonja.registerNewUser(pairedCommand.getValue());
                 } else if(pairedCommand.getKey().equals(Commands.ADD_PROJECT))
                 {
-                    //TODO:Call needed function
+                    Joboonja.addNewProject(pairedCommand.getValue());
                 } else if(pairedCommand.getKey().equals(Commands.BID))
                 {
                     //TODO:Call needed function

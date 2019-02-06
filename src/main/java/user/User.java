@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class User {
     private String username;
-    private ArrayList <Skill> skills;
+    private ArrayList <Skill> skills = new ArrayList<Skill>();
 
     public User(JSONObject userInfo){
         JSONObject skillsInfo[];
