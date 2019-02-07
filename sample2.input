@@ -1,0 +1,8 @@
+register {"username":"user1","skills":[{"name":"backend","points":12},{"name":"database","points":15}]}
+register {"username":"user2","skills":[{"name":"backend","points":10},{"name":"frontend","points":15},{"name":"database","points":15}]}
+register {"username":"user3","skills":[{"name":"backend","points":5},{"name":"database","points":15}]}
+addProject {"title":"project1","skills":[{"name":"backend","points":10},{"name":"database","points":10}],"budget":1000000}
+bid {"biddingUser":"user1","projectTitle":"project1","bidAmount":900000}
+bid {"biddingUser":"user2","projectTitle":"project1","bidAmount":900000}
+bid {"biddingUser":"user3","projectTitle":"project1","bidAmount":100000}
+auction {"projectTitle":"project1"}

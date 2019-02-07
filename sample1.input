@@ -4,3 +4,4 @@ addProject {"title":"project1","skills":[{"name":"backend","points":10},{"name":
 bid {"biddingUser":"user1","projectTitle":"project1","bidAmount":900000}
 bid {"biddingUser":"user2","projectTitle":"project1","bidAmount":800000}
 auction {"projectTitle":"project1"}
+
