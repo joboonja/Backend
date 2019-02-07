@@ -21,10 +21,12 @@ public class User {
             skills.put(skill.getName(), skill);
         }
     }
+
     public String getUsername()
     {
         return username;
     }
+
     public HashMap<String, Skill> getSkills()
     {
         return skills;

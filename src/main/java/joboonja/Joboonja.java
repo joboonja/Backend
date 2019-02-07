@@ -14,14 +14,30 @@ public class Joboonja {
     private static ArrayList<Project> projects = new ArrayList<Project>();
     private static ArrayList<User> users = new ArrayList<User>();
     private static ArrayList<Bid> bids = new ArrayList<Bid>();
+
     public static void addNewProject(JSONObject projectInfo)
     {
         projects.add(new Project(projectInfo));
     }
+
     public static void registerNewUser(JSONObject userInfo)
     {
         users.add(new User(userInfo));
     }
+
+    public static void addNewBid(JSONObject bidInfo) {
+        try{
+            User user = getUserByUsername(bidInfo.getString(BidConfig.BIDDING_USER));
+            Project project = getProjectByProjectTitle(bidInfo.getString(BidConfig.PROJECT_TITLE));
+            if(project.checkSatisfaction(user.getSkills(), bidInfo.getLong(BidConfig.BID_AMOUNT)))
+                bids.add(new Bid(bidInfo));
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+    }
+
     public static void auction(JSONObject projectIdentifier)
     {
         String projectTitle = projectIdentifier.getString(JoboonjaConfig.projectTitle);
@@ -71,6 +87,7 @@ public class Joboonja {
 
         System.out.println(JoboonjaConfig.WINNER_MSG(winner));
     }
+
     private static User getUserByUsername(String name) throws Exception
     {
         for (User user : users) {
@@ -80,6 +97,7 @@ public class Joboonja {
 
         throw new Exception(JoboonjaConfig.USER_NOT_FOUND_ERROR);
     }
+
     private static Project getProjectByProjectTitle(String projectTitle) throws Exception
     {
         for (Project project : projects)
@@ -89,6 +107,7 @@ public class Joboonja {
         }
         throw new Exception(JoboonjaConfig.PROJECT_NOT_FOUND_ERROR);
     }
+
     private static int calcAuctionFormula(User user, Project project, Bid bid)
     {
         HashMap<String, Skill> userSkills = user.getSkills();

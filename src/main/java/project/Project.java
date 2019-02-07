@@ -10,8 +10,9 @@ import java.util.HashMap;
 
 public class Project {
     private String title;
-    private int budget;
+    private long budget;
     private HashMap<String, Skill> skills = new HashMap<String, Skill>();
+
     public Project(JSONObject projectInfo)
     {
         title = projectInfo.getString(ProjectConfig.TITLE);
@@ -24,11 +25,13 @@ public class Project {
             skills.put(skill.getName(), skill);
         }
     }
+
     public String getTitle()
     {
         return title;
     }
-    public boolean satisfy(HashMap<String, Skill> userSkills)
+
+    public boolean checkSatisfaction(HashMap<String, Skill> userSkills, long bidAmount)
     {
         if(userSkills.size() != skills.size())
             return false;
@@ -41,13 +44,15 @@ public class Project {
                 return false;
         }
 
+        if(budget < bidAmount)
+            return false;
+
         return true;
     }
-    public HashMap<String, Skill> getSkills()
-    {
-        return skills;
-    }
-    public int getBudget()
+
+    public HashMap<String, Skill> getSkills() { return skills; }
+
+    public long getBudget()
     {
         return budget;
     }
