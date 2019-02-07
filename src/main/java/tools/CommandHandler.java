@@ -10,10 +10,7 @@ import org.json.JSONObject;
 import java.util.Scanner;
 
 public class CommandHandler {
-    public static Pair<String, JSONObject> getCommand() throws Exception{
-        String command ;
-        Scanner scanner = new Scanner(System.in);
-        command = scanner.nextLine();
+    public static Pair<String, JSONObject> getCommandParts(String command) throws Exception{
         Pair<String, JSONObject> pairedCommand;
         String parts[] = command.split(" ", 2);
 
@@ -47,6 +44,23 @@ public class CommandHandler {
                     Joboonja.auction(pairedCommand.getValue());
                 } else
                     throw new Exception(Commands.COMMAND_NOT_FOUND_ERROR);
+            try {
+                String command;
+                Scanner scanner = new Scanner(System.in);
+                while (scanner.hasNextLine()) {
+                    command = scanner.nextLine();
+                    Pair<String, JSONObject> pairedCommand = CommandHandler.getCommandParts(command);
+                    if (pairedCommand.getKey().equals(Commands.REGISTER)) {
+                        Joboonja.registerNewUser(pairedCommand.getValue());
+                    } else if (pairedCommand.getKey().equals(Commands.ADD_PROJECT)) {
+                        Joboonja.addNewProject(pairedCommand.getValue());
+                    } else if (pairedCommand.getKey().equals(Commands.BID)) {
+                        Joboonja.addNewBid(pairedCommand.getValue());
+                    } else if (pairedCommand.getKey().equals(Commands.AUCTION)) {
+                        Joboonja.auction(pairedCommand.getValue());
+                    } else
+                        throw new Exception(Commands.COMMAND_NOT_FOUND_ERROR);
+                }
             }
             catch (Exception e)
             {
