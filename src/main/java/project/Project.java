@@ -31,9 +31,16 @@ public class Project {
         return title;
     }
 
+    public HashMap<String, Skill> getSkills() { return skills; }
+
+    public long getBudget()
+    {
+        return budget;
+    }
+
     public boolean checkSatisfaction(HashMap<String, Skill> userSkills, long bidAmount)
     {
-        if(userSkills.size() != skills.size())
+        if(userSkills.size() < skills.size())
             return false;
 
         for (Skill skill : skills.values()) {
@@ -43,18 +50,8 @@ public class Project {
             if(userSkills.get(skillName).getPoints() < skill.getPoints())
                 return false;
         }
-
         if(budget < bidAmount)
             return false;
-
         return true;
     }
-
-    public HashMap<String, Skill> getSkills() { return skills; }
-
-    public long getBudget()
-    {
-        return budget;
-    }
-
 }

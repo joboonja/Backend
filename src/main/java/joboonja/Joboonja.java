@@ -56,35 +56,30 @@ public class Joboonja {
         }
 
         int maxAuctionRate = 0;
-        long minOffer = 0;
         boolean firstVisited = false;
         User winner = null;
 
         for(Bid bid : bids)
         {
-
             try {
                 user = getUserByUsername(bid.getBiddingUserName());
+                int auctionRate = calcAuctionFormula(user, project, bid);
+                if(!firstVisited)
+                {
+                    maxAuctionRate = auctionRate;
+                    firstVisited = true;
+                    winner = user;
+                }
+                else if(auctionRate > maxAuctionRate)
+                {
+                    maxAuctionRate = auctionRate;
+                    winner = user;
+                }
             }
             catch (Exception e) {
                 System.out.println(e.getMessage());
                 return;
             }
-
-            int auctionRate = calcAuctionFormula(user, project, bid);
-            if(!firstVisited)
-            {
-                maxAuctionRate = auctionRate;
-                minOffer = bid.getOffer();
-                firstVisited = true;
-                winner = user;
-            }
-            else if(auctionRate > maxAuctionRate)
-            {
-                maxAuctionRate = auctionRate;
-                winner = user;
-            }
-
         }
 
         System.out.println(JoboonjaConfig.WINNER_MSG(winner));
@@ -117,9 +112,9 @@ public class Joboonja {
 
         int auctionRate = 0;
 
-        for(Skill userSkill : userSkills.values())
+        for(Skill projectSkill : projectSkills.values())
         {
-            Skill projectSkill = projectSkills.get(userSkill.getName());
+            Skill userSkill = userSkills.get(projectSkill.getName());
             auctionRate += 10000 *  Math.pow(userSkill.getPoints() - projectSkill.getPoints(), 2);
         }
         auctionRate += (project.getBudget() - bid.getOffer());
