@@ -46,44 +46,31 @@ public class Joboonja {
         String projectTitle = projectIdentifier.getString(BidConfig.PROJECT_TITLE);
         User user = null;
         Project project = null;
-        try {
-            project = getProjectByProjectTitle(projectTitle);
-
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-            return;
-        }
-
         int maxAuctionRate = 0;
         boolean firstVisited = false;
         User winner = null;
 
-        for(Bid bid : bids)
-        {
-            if(!bid.getProjectTitle().equals(projectTitle))
-                continue;
-            try {
+        try {
+            project = getProjectByProjectTitle(projectTitle);
+
+            for(Bid bid : bids) {
+                if (!bid.getProjectTitle().equals(projectTitle))
+                    continue;
                 user = getUserByUsername(bid.getBiddingUserName());
                 int auctionRate = calcAuctionFormula(user, project, bid);
-                if(!firstVisited)
-                {
+                if (!firstVisited) {
                     maxAuctionRate = auctionRate;
                     firstVisited = true;
                     winner = user;
-                }
-                else if(auctionRate > maxAuctionRate)
-                {
+                } else if (auctionRate > maxAuctionRate) {
                     maxAuctionRate = auctionRate;
                     winner = user;
                 }
             }
-            catch (Exception e) {
-                System.out.println(e.getMessage());
-                return;
-            }
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
         }
-
         System.out.println(JoboonjaConfig.WINNER_MSG(winner));
     }
 
