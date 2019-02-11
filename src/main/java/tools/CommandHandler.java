@@ -58,6 +58,7 @@ public class CommandHandler {
                         Joboonja.addNewBid(pairedCommand.getValue());
                     } else if (pairedCommand.getKey().equals(Commands.AUCTION)) {
                         Joboonja.auction(pairedCommand.getValue());
+                        return;
                     } else
                         throw new Exception(Commands.COMMAND_NOT_FOUND_ERROR);
                 }
