@@ -47,7 +47,6 @@ public class Joboonja {
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
-            return;
         }
     }
 
@@ -57,14 +56,17 @@ public class Joboonja {
     }
     public static void addNewBid(JSONObject bidInfo) { bids.add(new Bid(bidInfo)); }
         String projectTitle = projectIdentifier.getString(BidConfig.PROJECT_TITLE);
-        User user = null;
-        Project project = null;
+        User user;
+        Project project;
         int maxAuctionRate = 0;
         boolean firstVisited = false;
         User winner = null;
 
         try {
             project = getProjectByProjectTitle(projectTitle);
+
+            if(bids.size() == 0)
+                throw new Exception(JoboonjaConfig.NO_BID_TO_AUCTION_ERROR);
 
             for(Bid bid : bids) {
                 if (!bid.getProjectTitle().equals(projectTitle))
@@ -80,6 +82,7 @@ public class Joboonja {
                     winner = user;
                 }
             }
+
         }catch (Exception e) {
             System.out.println(e.getMessage());
             return;
