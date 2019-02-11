@@ -2,6 +2,8 @@ package joboonja;
 
 import config.JoboonjaConfig;
 import bid.Bid;
+import config.ProjectConfig;
+import config.UserConfig;
 import org.json.JSONObject;
 import project.Project;
 import skill.Skill;
@@ -17,11 +19,22 @@ public class Joboonja {
 
     public static void addNewProject(JSONObject projectInfo)
     {
+        for (Project project : projects)
+            if (project.getTitle().equals(projectInfo.getString(ProjectConfig.TITLE))){
+                System.out.println(JoboonjaConfig.PROJECT_TITLE_ALREADY_EXISTS_ERROR);
+                return;
+            }
         projects.add(new Project(projectInfo));
     }
 
     public static void registerNewUser(JSONObject userInfo)
     {
+        for (User user : users) {
+            if (user.getUsername().equals(userInfo.getString(UserConfig.USERNAME))) {
+                System.out.println(JoboonjaConfig.USERNAME_ALREADY_EXISTS_ERROR);
+                return;
+            }
+        }
         users.add(new User(userInfo));
     }
 

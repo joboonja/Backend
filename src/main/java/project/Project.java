@@ -20,8 +20,8 @@ public class Project {
         JSONArray skillsInfo;
         skillsInfo = (JSONArray) projectInfo.get(ProjectConfig.SKILLS);
 
-        for(int i = 0; i < skillsInfo.length(); i++){
-            Skill skill = new Skill((JSONObject) skillsInfo.get(i));
+        for(Object skillInfo : skillsInfo){
+            Skill skill = new Skill((JSONObject) skillInfo);
             skills.put(skill.getName(), skill);
         }
     }
