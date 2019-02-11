@@ -1,0 +1,10 @@
+register {"username":"Farzad","skills":[{"name":"backend","points":12},{"name":"frontend","points":25},{"name":"c++","points":20},{"name":"python", "points":2}]}
+register {"username":"Yasaman","skills":[{"name":"backend","points":4},{"name":"frontend","points":25},{"name":"c++","points":21},{"name":"python", "points":25}, {"name":"LaTex", "points":12}]}
+register {"username":"Jhon","skills":[{"name":"backend","points":40}, {"name":"LaTex", "points":10}]}
+register {"username":"Sarah","skills":[{"name":"backend","points":23},{"name":"c++","points":21}, {"name":"LaTex", "points":12}]}
+addProject {"title":"AP-Course-TA","skills":[{"name":"backend","points":10}, {"name":"LaTex", "points":10}, {"name":"c++","points":20}],"budget":1000000}
+bid {"biddingUser":"Farzad","projectTitle":"AP-Course-TA","bidAmount":700000}
+bid {"biddingUser":"Yasaman","projectTitle":"AP-Course-TA","bidAmount":800000}
+bid {"biddingUser":"Jhon","projectTitle":"AP-Course-TA","bidAmount":900000}
+bid {"biddingUser":"Sarah","projectTitle":"AP-Course-TA","bidAmount":990000}
+auction {"projectTitle":"AP-Course-TA"}
