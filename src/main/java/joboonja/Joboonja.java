@@ -61,6 +61,8 @@ public class Joboonja {
 
         for(Bid bid : bids)
         {
+            if(!bid.getProjectTitle().equals(projectTitle))
+                continue;
             try {
                 user = getUserByUsername(bid.getBiddingUserName());
                 int auctionRate = calcAuctionFormula(user, project, bid);

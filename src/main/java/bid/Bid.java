@@ -26,6 +26,8 @@ public class Bid {
         return offer;
     }
 
+    public String getProjectTitle() { return projectTitle; }
+
     public String getBiddingUserName()
     {
         return biddingUserName;
