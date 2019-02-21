@@ -1,8 +1,5 @@
 package skill;
 
-import config.SkillsConfig;
-import org.json.JSONObject;
-
 public class Skill {
 
     private String name;

@@ -1,11 +1,6 @@
 package user;
 
-import config.UserConfig;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import skill.Skill;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {

@@ -1,7 +1,6 @@
 package bid;
 
 import config.BidConfig;
-import org.json.JSONObject;
 import project.Project;
 import project.ProjectRepo;
 import user.User;
