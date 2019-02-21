@@ -26,7 +26,7 @@ public class BidRepo {
         ProjectRepo projectRepo = ProjectRepo.getInstance();
 
         User user = userRepo.getUserByUsername(newBid.getBiddingUserName());
-        Project project = projectRepo.getProjectByProjectTitle(newBid.getProjectTitle());
+        Project project = projectRepo.getProjectByProjectID(newBid.getProjectID());
 
         return project.checkSatisfaction(user.getSkills(), newBid.getOffer());
     }
@@ -41,12 +41,12 @@ public class BidRepo {
             System.out.println(e.getMessage());
         }
     }
-    public ArrayList<Bid> getBidsOfProject(String projectTitle)
+    public ArrayList<Bid> getBidsOfProject(String projectID)
     {
         ArrayList<Bid> bidsOfProject = new ArrayList<Bid>();
         for(Bid bid : bids)
         {
-            if(bid.getProjectTitle().equals(projectTitle))
+            if(bid.getProjectID().equals(projectID))
                 bidsOfProject.add(bid);
         }
         return bidsOfProject;

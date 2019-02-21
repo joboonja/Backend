@@ -1,22 +1,24 @@
 package bid;
 
 
+import project.Project;
+
 public class Bid {
     private String biddingUserName;
-    private String projectTitle;
+    private Project project;
     private long offer;
 
-    public Bid(String _biddingUserName, String _projectTitle, long _offer){
-        biddingUserName = _biddingUserName;
-        projectTitle = _projectTitle;
-        offer = _offer;
+    public Bid(String _biddingUserName, Project project, long offer){
+        this.biddingUserName = _biddingUserName;
+        this.project = project;
+        this.offer = offer;
     }
     public long getOffer()
     {
         return offer;
     }
 
-    public String getProjectTitle() { return projectTitle; }
+    public String getProjectID() { return project.getID(); }
 
     public String getBiddingUserName()
     {

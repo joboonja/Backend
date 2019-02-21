@@ -16,11 +16,11 @@ public class ProjectRepo {
         projects = new ArrayList<Project>();
     }
 
-    public Project getProjectByProjectTitle(String projectTitle) throws Exception
+    public Project getProjectByProjectID(String projectID) throws Exception
     {
         for (Project project : projects)
         {
-            if (project.getTitle().equals(projectTitle))
+            if (project.getID().equals(projectID))
                 return project;
         }
         throw new Exception(ProjectConfig.PROJECT_NOT_FOUND_ERROR);
