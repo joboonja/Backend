@@ -56,8 +56,4 @@ public class BidRepo {
         return bids.size() == 0;
     }
 
-
-
-
-
 }

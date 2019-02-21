@@ -5,7 +5,7 @@ import bid.BidRepo;
 import config.AuctionConfig;
 import project.Project;
 import project.ProjectRepo;
-import skill.Skill;
+import skill.UserSkill;
 import user.User;
 import user.UserRepo;
 
@@ -35,7 +35,7 @@ public class Auction {
 
             for(Bid bid : bidRepo.getBidsOfProject(projectTitle)) {
 
-                user = userRepo.getUserByUsername(bid.getBiddingUserName());
+                user = userRepo.getUserById(bid.getBiddingUserName());
                 int auctionRate = calcAuctionFormula(user, project, bid);
                 if (!firstVisited) {
                     maxAuctionRate = auctionRate;
@@ -55,14 +55,14 @@ public class Auction {
 
     private int calcAuctionFormula(User user, Project project, Bid bid)
     {
-        HashMap<String, Skill> userSkills = user.getSkills();
-        HashMap<String, Skill> projectSkills = project.getSkills();
+        HashMap<String, UserSkill> userSkills = user.getSkills();
+        HashMap<String, UserSkill> projectSkills = project.getSkills();
 
         int auctionRate = 0;
 
-        for(Skill projectSkill : projectSkills.values())
+        for(UserSkill projectSkill : projectSkills.values())
         {
-            Skill userSkill = userSkills.get(projectSkill.getName());
+            UserSkill userSkill = userSkills.get(projectSkill.getName());
             auctionRate += 10000 *  Math.pow(userSkill.getPoints() - projectSkill.getPoints(), 2);
         }
         auctionRate += (project.getBudget() - bid.getOffer());

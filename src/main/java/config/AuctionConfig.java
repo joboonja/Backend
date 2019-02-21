@@ -7,6 +7,6 @@ public class AuctionConfig {
     {
         if(user == null)
             return "-> There is no Winner!";
-        return "-> winner:" + user.getUsername();
+        return "-> winner:" + user.getId();
     }
 }

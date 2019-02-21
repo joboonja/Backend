@@ -11,6 +11,7 @@ import project.Project;
 import project.ProjectRepo;
 import services.auction.Auction;
 import skill.Skill;
+import skill.UserSkill;
 import user.User;
 
 import java.util.HashMap;
@@ -19,15 +20,22 @@ public class JSONDecoder {
 
     public static User decodeJSONtoUser(JSONObject userInfo){
         JSONArray skillsInfo;
-        String username = userInfo.getString(UserConfig.USERNAME);
-        HashMap<String, Skill> skills = new HashMap<String, Skill>();
+        String id = userInfo.getString(UserConfig.ID);
+        HashMap<String, UserSkill> skills = new HashMap<String, UserSkill>();
         skillsInfo = (JSONArray) userInfo.get(UserConfig.SKILLS);
         for(Object skillInfo : skillsInfo){
-            Skill skill = decodeJSONtoSkill((JSONObject)skillInfo);
+            UserSkill skill = decodeJSONtoUserSkill((JSONObject)skillInfo);
             skills.put(skill.getName(), skill);
         }
+        String firstName = userInfo.getString(UserConfig.FIRST_NAME);
+        String lastName = userInfo.getString(UserConfig.LAST_NAME);
+        String jobTitle = userInfo.getString(UserConfig.JOB_TITLE);
+        String bio = userInfo.getString(UserConfig.BIO);
+        User user = new User(id, skills, firstName, lastName, jobTitle, bio);
+        if(userInfo.getString(UserConfig.PROFILE_URL) != null)
+            user.setProfilePictureURL(userInfo.getString(UserConfig.PROFILE_URL));
 
-        return new User(username, skills);
+        return user;
     }
 
     public static Project decodeJSONtoProject(JSONObject projectInfo){
@@ -57,11 +65,11 @@ public class JSONDecoder {
         return new Bid(biddingUserName, ProjectRepo.getInstance().getProjectByProjectID(projectID), offer);
     }
 
-    public static Skill decodeJSONtoSkill(JSONObject skillInfo){
+    public static UserSkill decodeJSONtoUserSkill(JSONObject skillInfo){
         String name = skillInfo.getString(SkillsConfig.NAME);
         int points = skillInfo.getInt(SkillsConfig.POINTS);
 
-        return new Skill(name, points);
+        return new UserSkill(name, points);
     }
 
     public static Auction decodeJSONToAuction(JSONObject auctionInfo){
