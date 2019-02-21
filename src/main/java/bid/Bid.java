@@ -15,10 +15,10 @@ public class Bid {
     private String projectTitle;
     private long offer;
 
-    public Bid(JSONObject bidInfo){
-        biddingUserName = bidInfo.getString(BidConfig.BIDDING_USER);
-        projectTitle = bidInfo.getString(BidConfig.PROJECT_TITLE);
-        offer = bidInfo.getInt(BidConfig.BID_AMOUNT);
+    public Bid(String _biddingUserName, String _projectTitle, long _offer){
+        biddingUserName = _biddingUserName;
+        projectTitle = _projectTitle;
+        offer = _offer;
     }
 
     public long getOffer()

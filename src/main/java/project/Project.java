@@ -11,19 +11,13 @@ import java.util.HashMap;
 public class Project {
     private String title;
     private long budget;
-    private HashMap<String, Skill> skills = new HashMap<String, Skill>();
+    private HashMap<String, Skill> skills;
 
-    public Project(JSONObject projectInfo)
+    public Project(String _title, long _budget, HashMap <String, Skill> _skills)
     {
-        title = projectInfo.getString(ProjectConfig.TITLE);
-        budget = projectInfo.getInt(ProjectConfig.BUDGET);
-        JSONArray skillsInfo;
-        skillsInfo = (JSONArray) projectInfo.get(ProjectConfig.SKILLS);
-
-        for(Object skillInfo : skillsInfo){
-            Skill skill = new Skill((JSONObject) skillInfo);
-            skills.put(skill.getName(), skill);
-        }
+        title = _title;
+        budget = _budget;
+        skills = _skills;
     }
 
     public String getTitle()

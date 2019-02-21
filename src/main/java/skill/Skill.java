@@ -9,9 +9,9 @@ public class Skill {
     private int points;
 
 
-    public Skill(JSONObject skillInfo){
-        name = skillInfo.getString(SkillsConfig.NAME);
-        points = skillInfo.getInt(SkillsConfig.POINTS);
+    public Skill(String _name, int _points){
+        name = _name;
+        points = _points;
     }
     public String getName()
     {
