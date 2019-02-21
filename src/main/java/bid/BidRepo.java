@@ -35,7 +35,7 @@ public class BidRepo {
             if(isValidToAdd(newBid))
                 bids.add(newBid);
             else
-                throw new Exception(BidConfig.BID_CREATE_ERROR);
+                throw new Exception(BidConfig.BID_ADD_ERROR);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
