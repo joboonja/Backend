@@ -9,8 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import project.Project;
 import project.ProjectRepo;
-import services.auction.Auction;
-import skill.Skill;
+import auction.Auction;
 import skill.UserSkill;
 import user.User;
 
@@ -45,12 +44,12 @@ public class JSONDecoder {
         String imageURL = projectInfo.getString(ProjectConfig.IMAGE_URL);
         long budget = projectInfo.getLong(ProjectConfig.BUDGET);
         long deadline = projectInfo.getLong(ProjectConfig.DEADLINE);
-        HashMap<String, Skill> skills = new HashMap<String, Skill>();
+        HashMap<String, UserSkill> skills = new HashMap<String, UserSkill>();
         JSONArray skillsInfo;
         skillsInfo = (JSONArray) projectInfo.get(ProjectConfig.SKILLS);
 
         for(Object skillInfo : skillsInfo){
-            Skill skill = decodeJSONtoSkill((JSONObject)skillInfo);
+            UserSkill skill = decodeJSONtoUserSkill((JSONObject)skillInfo);
             skills.put(skill.getName(), skill);
         }
 

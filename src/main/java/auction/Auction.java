@@ -1,4 +1,4 @@
-package services.auction;
+package auction;
 
 import bid.Bid;
 import bid.BidRepo;
@@ -31,7 +31,7 @@ public class Auction {
         ProjectRepo projectRepo = ProjectRepo.getInstance();
 
         try {
-            project = projectRepo.getProjectByProjectTitle(projectTitle);
+            project = projectRepo.getProjectByProjectID(projectTitle);
 
             for(Bid bid : bidRepo.getBidsOfProject(projectTitle)) {
 

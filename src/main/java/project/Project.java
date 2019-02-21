@@ -1,9 +1,6 @@
 package project;
 
 import skill.Skill;
-import user.User;
-
-import java.util.ArrayList;
 import skill.UserSkill;
 
 import java.util.HashMap;
@@ -19,7 +16,8 @@ public class Project {
 //    private List <Bid> bids;
 //    private User winner;
 
-    public Project(String id, String title, String description, String imageURL, long budget, HashMap <String, Skill> skills, long deadline)
+
+    public Project(String id, String title, String description, String imageURL, long budget, HashMap<String, UserSkill> skills, long deadline)
     {
         this.id = id;
         this.title = title;
