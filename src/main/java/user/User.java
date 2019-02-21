@@ -5,10 +5,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import skill.Skill;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String jobTitle;
+    private String profilePictureURL;
+    private String bio;
     private String username;
     private HashMap<String, Skill> skills;
 

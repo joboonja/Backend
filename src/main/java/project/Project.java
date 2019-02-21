@@ -4,14 +4,21 @@ import config.ProjectConfig;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import skill.Skill;
+import user.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Project {
+    private String id;
     private String title;
+    private String description;
+    private String imageURL;
     private long budget;
     private HashMap<String, Skill> skills;
+    private long deadline;
+//    private List <Bid> bids;
+//    private User winner;
 
     public Project(String _title, long _budget, HashMap <String, Skill> _skills)
     {
