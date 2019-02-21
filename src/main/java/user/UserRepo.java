@@ -1,8 +1,6 @@
 package user;
 
-import config.JoboonjaConfig;
 import config.UserConfig;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -23,13 +21,13 @@ public class UserRepo {
             if (user.getUsername().equals(name))
                 return user;
         }
-        throw new Exception(JoboonjaConfig.USER_NOT_FOUND_ERROR);
+        throw new Exception(UserConfig.USER_NOT_FOUND_ERROR);
     }
     public void registerNewUser(User newUser)
     {
         for (User user : users) {
             if (user.getUsername().equals(newUser.getUsername())) {
-                System.out.println(JoboonjaConfig.USERNAME_ALREADY_EXISTS_ERROR);
+                System.out.println(UserConfig.USERNAME_ALREADY_EXISTS_ERROR);
                 return;
             }
         }

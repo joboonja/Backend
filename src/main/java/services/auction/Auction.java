@@ -2,9 +2,7 @@ package services.auction;
 
 import bid.Bid;
 import bid.BidRepo;
-import config.BidConfig;
-import config.JoboonjaConfig;
-import org.json.JSONObject;
+import config.AuctionConfig;
 import project.Project;
 import project.ProjectRepo;
 import skill.Skill;
@@ -21,7 +19,7 @@ public class Auction {
         this.projectTitle = projectTitle;
     }
 
-    public void auction()
+    public void start()
     {
         User user;
         Project project;
@@ -52,7 +50,7 @@ public class Auction {
             System.out.println(e.getMessage());
             return;
         }
-        System.out.println(JoboonjaConfig.WINNER_MSG(winner));
+        System.out.println(AuctionConfig.WINNER_MSG(winner));
     }
 
     private int calcAuctionFormula(User user, Project project, Bid bid)
