@@ -1,8 +1,5 @@
 package project;
 
-import config.ProjectConfig;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import skill.Skill;
 import user.User;
 

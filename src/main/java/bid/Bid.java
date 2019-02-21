@@ -1,14 +1,5 @@
 package bid;
 
-import config.BidConfig;
-import config.UserConfig;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import project.Project;
-import skill.Skill;
-import user.User;
-
-import java.util.ArrayList;
 
 public class Bid {
     private String biddingUserName;
