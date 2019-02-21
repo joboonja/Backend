@@ -20,7 +20,6 @@ public class Bid {
         projectTitle = bidInfo.getString(BidConfig.PROJECT_TITLE);
         offer = bidInfo.getInt(BidConfig.BID_AMOUNT);
     }
-
     public long getOffer()
     {
         return offer;
@@ -32,5 +31,6 @@ public class Bid {
     {
         return biddingUserName;
     }
+
 
 }

@@ -55,6 +55,7 @@ public class CommandHandler {
                     } else if (pairedCommand.getKey().equals(Commands.ADD_PROJECT)) {
                         Joboonja.addNewProject(pairedCommand.getValue());
                     } else if (pairedCommand.getKey().equals(Commands.BID)) {
+
                         Joboonja.addNewBid(pairedCommand.getValue());
                     } else if (pairedCommand.getKey().equals(Commands.AUCTION)) {
                         Joboonja.auction(pairedCommand.getValue());
