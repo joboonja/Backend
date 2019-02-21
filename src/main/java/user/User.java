@@ -1,5 +1,6 @@
 package user;
 
+import config.UserConfig;
 import skill.Skill;
 import java.util.HashMap;
 
@@ -10,17 +11,30 @@ public class User {
     private String jobTitle;
     private String profilePictureURL;
     private String bio;
-    private String username;
     private HashMap<String, Skill> skills;
 
-    public User(String _username, HashMap <String, Skill> _skills){
-        username = _username;
-        skills = _skills;
+    public User(String id,
+                HashMap <String, Skill> skills,
+                String firstName,
+                String lastName,
+                String jobTitle,
+                String bio){
+        this.id = id;
+        this.skills = skills;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.jobTitle = jobTitle;
+        this.bio = bio;
+        this.profilePictureURL = UserConfig.DEFAULT_PROFILE_PIC_URL;
     }
 
-    public String getUsername()
+    public String getId()
     {
-        return username;
+        return id;
+    }
+
+    public void setProfilePictureURL(String profilePictureURL) {
+        this.profilePictureURL = profilePictureURL;
     }
 
     public HashMap<String, Skill> getSkills()

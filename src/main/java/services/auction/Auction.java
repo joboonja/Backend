@@ -35,7 +35,7 @@ public class Auction {
 
             for(Bid bid : bidRepo.getBidsOfProject(projectTitle)) {
 
-                user = userRepo.getUserByUsername(bid.getBiddingUserName());
+                user = userRepo.getUserById(bid.getBiddingUserName());
                 int auctionRate = calcAuctionFormula(user, project, bid);
                 if (!firstVisited) {
                     maxAuctionRate = auctionRate;

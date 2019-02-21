@@ -25,7 +25,7 @@ public class BidRepo {
         UserRepo userRepo = UserRepo.getInstance();
         ProjectRepo projectRepo = ProjectRepo.getInstance();
 
-        User user = userRepo.getUserByUsername(newBid.getBiddingUserName());
+        User user = userRepo.getUserById(newBid.getBiddingUserName());
         Project project = projectRepo.getProjectByProjectTitle(newBid.getProjectTitle());
 
         return project.checkSatisfaction(user.getSkills(), newBid.getOffer());
@@ -55,9 +55,5 @@ public class BidRepo {
     {
         return bids.size() == 0;
     }
-
-
-
-
 
 }

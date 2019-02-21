@@ -15,10 +15,10 @@ public class UserRepo {
     private UserRepo() {
         users = new ArrayList<User>();
     }
-    public User getUserByUsername(String name) throws Exception
+    public User getUserById(String name) throws Exception
     {
         for (User user : users) {
-            if (user.getUsername().equals(name))
+            if (user.getId().equals(name))
                 return user;
         }
         throw new Exception(UserConfig.USER_NOT_FOUND_ERROR);
@@ -26,7 +26,7 @@ public class UserRepo {
     public void registerNewUser(User newUser)
     {
         for (User user : users) {
-            if (user.getUsername().equals(newUser.getUsername())) {
+            if (user.getId().equals(newUser.getId())) {
                 System.out.println(UserConfig.USERNAME_ALREADY_EXISTS_ERROR);
                 return;
             }
