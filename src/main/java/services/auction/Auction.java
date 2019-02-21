@@ -55,7 +55,7 @@ public class Auction {
         System.out.println(JoboonjaConfig.WINNER_MSG(winner));
     }
 
-    private static int calcAuctionFormula(User user, Project project, Bid bid)
+    private int calcAuctionFormula(User user, Project project, Bid bid)
     {
         HashMap<String, Skill> userSkills = user.getSkills();
         HashMap<String, Skill> projectSkills = project.getSkills();

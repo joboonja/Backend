@@ -8,9 +8,9 @@ import config.UserConfig;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import project.Project;
+import services.auction.Auction;
 import skill.Skill;
 import user.User;
-import Auction.Auction;
 
 import java.util.HashMap;
 

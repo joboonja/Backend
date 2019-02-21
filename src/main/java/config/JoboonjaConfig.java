@@ -8,7 +8,6 @@ public class JoboonjaConfig {
     public static final String PROJECT_NOT_FOUND_ERROR = "Project not found.";
     public static final String USERNAME_ALREADY_EXISTS_ERROR = "This username already exists.";
     public static final String PROJECT_TITLE_ALREADY_EXISTS_ERROR = "This project title already exists.";
-    public static final String NO_BID_TO_AUCTION_ERROR = "There is no bid to calculate auction rate.";
     public static String WINNER_MSG(User user)
     {
         if(user == null)
