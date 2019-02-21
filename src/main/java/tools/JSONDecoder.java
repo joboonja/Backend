@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import project.Project;
 import skill.Skill;
 import user.User;
+import Auction.Auction;
 
 import java.util.HashMap;
 
@@ -56,5 +57,11 @@ public class JSONDecoder {
         int points = skillInfo.getInt(SkillsConfig.POINTS);
 
         return new Skill(name, points);
+    }
+
+    public Auction decodeJSONToAuction(JSONObject auctionInfo){
+        String projectTitle = auctionInfo.getString(BidConfig.PROJECT_TITLE);
+
+        return new Auction(projectTitle);
     }
 }
