@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class HttpRequest {
-    public static ArrayList<JSONObject> getRemoteData(String requestedData) throws Exception {
+    public static JSONArray getRemoteData(String requestedData) throws Exception {
         String baseRemotURL = RemoteURLs.BASE + requestedData;
 
         HttpURLConnection connection = (HttpURLConnection) new URL(baseRemotURL).openConnection();
@@ -29,10 +29,6 @@ public class HttpRequest {
         }
         dataReader.close();
 
-        JSONArray responseList = new JSONArray(response);
-
-        ArrayList <JSONObject> finalResponse = new ArrayList();
-        for (int i = 0; i < responseList.length(); finalResponse.add(responseList.getJSONObject(i++)));
-        return finalResponse;
+        return new JSONArray(response.toString());
     }
 }

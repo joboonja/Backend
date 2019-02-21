@@ -2,6 +2,7 @@ package remoteServices;
 
 
 import config.ProjectConfig;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import project.Project;
 import project.ProjectRepo;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public class ProjectInitializer {
     private static ArrayList<Project> getProjects()
     {
-        ArrayList<JSONObject> projectsInfo = null;
+        JSONArray projectsInfo = null;
         try {
             projectsInfo = HttpRequest.getRemoteData(ProjectConfig.PROJECT_INIT_URL);
         } catch (Exception e) {

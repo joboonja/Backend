@@ -78,25 +78,29 @@ public class JSONDecoder {
 
         return new Auction(projectTitle);
     }
-    public static ArrayList<Project> decodeJSONListToProjectList(ArrayList<JSONObject> projectsInfo)
+
+    public static ArrayList<Project> decodeJSONListToProjectList(JSONArray projectsInfo)
     {
         ArrayList<Project> projects = new ArrayList<Project>();
-        for(JSONObject json : projectsInfo)
+
+        for(int i = 0; i < projectsInfo.length(); i++)
         {
-            projects.add(decodeJSONtoProject(json));
+            projects.add(decodeJSONtoProject(projectsInfo.getJSONObject(i)));
         }
         return projects;
     }
+
     public static Skill decodeJSONtoSkill(JSONObject json)
     {
         return new Skill(json.getString(SkillsConfig.NAME));
     }
-    public static ArrayList<Skill> decodeJSONListToSkillList(ArrayList<JSONObject> skillsInfo)
+
+    public static ArrayList<Skill> decodeJSONListToSkillList(JSONArray skillsInfo)
     {
         ArrayList<Skill> skills = new ArrayList<Skill>();
-        for(JSONObject json : skillsInfo)
+        for(int i = 0; i < skillsInfo.length(); i++)
         {
-            skills.add(decodeJSONtoSkill(json));
+            skills.add(decodeJSONtoSkill(skillsInfo.getJSONObject(i)));
         }
         return skills;
     }
