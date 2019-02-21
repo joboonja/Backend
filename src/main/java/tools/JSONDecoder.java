@@ -8,6 +8,7 @@ import config.UserConfig;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import project.Project;
+import project.ProjectRepo;
 import services.auction.Auction;
 import skill.Skill;
 import skill.UserSkill;
@@ -38,8 +39,12 @@ public class JSONDecoder {
     }
 
     public static Project decodeJSONtoProject(JSONObject projectInfo){
+        String id = projectInfo.getString(ProjectConfig.ID);
         String title = projectInfo.getString(ProjectConfig.TITLE);
-        long budget = projectInfo.getInt(ProjectConfig.BUDGET);
+        String description = projectInfo.getString(ProjectConfig.DESCRIPTION);
+        String imageURL = projectInfo.getString(ProjectConfig.IMAGE_URL);
+        long budget = projectInfo.getLong(ProjectConfig.BUDGET);
+        long deadline = projectInfo.getLong(ProjectConfig.DEADLINE);
         HashMap<String, Skill> skills = new HashMap<String, Skill>();
         JSONArray skillsInfo;
         skillsInfo = (JSONArray) projectInfo.get(ProjectConfig.SKILLS);
@@ -49,15 +54,15 @@ public class JSONDecoder {
             skills.put(skill.getName(), skill);
         }
 
-        return new Project(title, budget, skills);
+        return new Project(id, title, description, imageURL, budget, skills, deadline);
     }
 
-    public static  Bid decodeJSONtoBid(JSONObject bidInfo){
+    public static Bid decodeJSONtoBid(JSONObject bidInfo) throws Exception{
         String biddingUserName = bidInfo.getString(BidConfig.BIDDING_USER);
-        String projectTitle = bidInfo.getString(BidConfig.PROJECT_TITLE);
+        String projectID = bidInfo.getString(BidConfig.PROJECT_ID);
         long offer = bidInfo.getInt(BidConfig.BID_AMOUNT);
 
-        return new Bid(biddingUserName, projectTitle, offer);
+        return new Bid(biddingUserName, ProjectRepo.getInstance().getProjectByProjectID(projectID), offer);
     }
 
     public static UserSkill decodeJSONtoUserSkill(JSONObject skillInfo){
@@ -68,7 +73,7 @@ public class JSONDecoder {
     }
 
     public static Auction decodeJSONToAuction(JSONObject auctionInfo){
-        String projectTitle = auctionInfo.getString(BidConfig.PROJECT_TITLE);
+        String projectTitle = auctionInfo.getString(BidConfig.PROJECT_ID);
 
         return new Auction(projectTitle);
     }

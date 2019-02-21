@@ -1,7 +1,11 @@
 package config;
 
 public class ProjectConfig {
+    public static final String ID = "id";
     public static final String TITLE = "title";
+    public static final String DESCRIPTION = "description";
+    public static final String IMAGE_URL = "imageUrl";
+    public static final String DEADLINE = "deadline";
     public static final String SKILLS = "skills";
     public static final String BUDGET = "budget";
     public static final String PROJECT_NOT_FOUND_ERROR = "Project not found.";
