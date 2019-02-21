@@ -2,6 +2,8 @@ package user;
 
 import config.UserConfig;
 import skill.Skill;
+import skill.UserSkill;
+
 import java.util.HashMap;
 
 public class User {
@@ -11,10 +13,10 @@ public class User {
     private String jobTitle;
     private String profilePictureURL;
     private String bio;
-    private HashMap<String, Skill> skills;
+    private HashMap<String, UserSkill> skills;
 
     public User(String id,
-                HashMap <String, Skill> skills,
+                HashMap <String, UserSkill> skills,
                 String firstName,
                 String lastName,
                 String jobTitle,
@@ -37,7 +39,7 @@ public class User {
         this.profilePictureURL = profilePictureURL;
     }
 
-    public HashMap<String, Skill> getSkills()
+    public HashMap<String, UserSkill> getSkills()
     {
         return skills;
     }

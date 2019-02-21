@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import project.Project;
 import services.auction.Auction;
 import skill.Skill;
+import skill.UserSkill;
 import user.User;
 
 import java.util.HashMap;
@@ -19,10 +20,10 @@ public class JSONDecoder {
     public static User decodeJSONtoUser(JSONObject userInfo){
         JSONArray skillsInfo;
         String id = userInfo.getString(UserConfig.ID);
-        HashMap<String, Skill> skills = new HashMap<String, Skill>();
+        HashMap<String, UserSkill> skills = new HashMap<String, UserSkill>();
         skillsInfo = (JSONArray) userInfo.get(UserConfig.SKILLS);
         for(Object skillInfo : skillsInfo){
-            Skill skill = decodeJSONtoSkill((JSONObject)skillInfo);
+            UserSkill skill = decodeJSONtoUserSkill((JSONObject)skillInfo);
             skills.put(skill.getName(), skill);
         }
         String firstName = userInfo.getString(UserConfig.FIRST_NAME);
@@ -59,11 +60,11 @@ public class JSONDecoder {
         return new Bid(biddingUserName, projectTitle, offer);
     }
 
-    public static Skill decodeJSONtoSkill(JSONObject skillInfo){
+    public static UserSkill decodeJSONtoUserSkill(JSONObject skillInfo){
         String name = skillInfo.getString(SkillsConfig.NAME);
         int points = skillInfo.getInt(SkillsConfig.POINTS);
 
-        return new Skill(name, points);
+        return new UserSkill(name, points);
     }
 
     public static Auction decodeJSONToAuction(JSONObject auctionInfo){
