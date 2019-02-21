@@ -110,19 +110,19 @@ public class Joboonja {
         throw new Exception(JoboonjaConfig.PROJECT_NOT_FOUND_ERROR);
     }
 
-    private static int calcAuctionFormula(User user, Project project, Bid bid)
-    {
-        HashMap<String, Skill> userSkills = user.getSkills();
-        HashMap<String, Skill> projectSkills = project.getSkills();
-
-        int auctionRate = 0;
-
-        for(Skill projectSkill : projectSkills.values())
-        {
-            Skill userSkill = userSkills.get(projectSkill.getName());
-            auctionRate += 10000 *  Math.pow(userSkill.getPoints() - projectSkill.getPoints(), 2);
-        }
-        auctionRate += (project.getBudget() - bid.getOffer());
-        return auctionRate;
-    }
+//    private static int calcAuctionFormula(User user, Project project, Bid bid)
+//    {
+//        HashMap<String, Skill> userSkills = user.getSkills();
+//        HashMap<String, Skill> projectSkills = project.getSkills();
+//
+//        int auctionRate = 0;
+//
+//        for(Skill projectSkill : projectSkills.values())
+//        {
+//            Skill userSkill = userSkills.get(projectSkill.getName());
+//            auctionRate += 10000 *  Math.pow(userSkill.getPoints() - projectSkill.getPoints(), 2);
+//        }
+//        auctionRate += (project.getBudget() - bid.getOffer());
+//        return auctionRate;
+//    }
 }

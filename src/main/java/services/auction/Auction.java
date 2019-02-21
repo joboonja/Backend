@@ -1,35 +1,43 @@
 package services.auction;
 
 import bid.Bid;
+import bid.BidRepo;
 import config.BidConfig;
 import config.JoboonjaConfig;
 import org.json.JSONObject;
 import project.Project;
+import project.ProjectRepo;
 import skill.Skill;
 import user.User;
+import user.UserRepo;
 
 import java.util.HashMap;
 
 public class Auction {
-    public static void auction(JSONObject projectIdentifier)
+
+    private String projectTitle;
+    public Auction(String projectTitle)
     {
-        String projectTitle = projectIdentifier.getString(BidConfig.PROJECT_TITLE);
+        this.projectTitle = projectTitle;
+    }
+
+    public void auction()
+    {
         User user;
         Project project;
         int maxAuctionRate = 0;
         boolean firstVisited = false;
         User winner = null;
+        BidRepo bidRepo = BidRepo.getInstance();
+        UserRepo userRepo = UserRepo.getInstance();
+        ProjectRepo projectRepo = ProjectRepo.getInstance();
 
         try {
-            project = getProjectByProjectTitle(projectTitle);
+            project = projectRepo.getProjectByProjectTitle(projectTitle);
 
-            if(bids.size() == 0)
-                throw new Exception(JoboonjaConfig.NO_BID_TO_AUCTION_ERROR);
+            for(Bid bid : bidRepo.getBidsOfProject(projectTitle)) {
 
-            for(Bid bid : bids) {
-                if (!bid.getProjectTitle().equals(projectTitle))
-                    continue;
-                user = getUserByUsername(bid.getBiddingUserName());
+                user = userRepo.getUserByUsername(bid.getBiddingUserName());
                 int auctionRate = calcAuctionFormula(user, project, bid);
                 if (!firstVisited) {
                     maxAuctionRate = auctionRate;
@@ -40,13 +48,13 @@ public class Auction {
                     winner = user;
                 }
             }
-
         }catch (Exception e) {
             System.out.println(e.getMessage());
             return;
         }
         System.out.println(JoboonjaConfig.WINNER_MSG(winner));
     }
+
     private static int calcAuctionFormula(User user, Project project, Bid bid)
     {
         HashMap<String, Skill> userSkills = user.getSkills();

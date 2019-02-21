@@ -42,6 +42,20 @@ public class BidRepo {
             System.out.println(e.getMessage());
         }
     }
+    public ArrayList<Bid> getBidsOfProject(String projectTitle)
+    {
+        ArrayList<Bid> bidsOfProject = new ArrayList<Bid>();
+        for(Bid bid : bids)
+        {
+            if(bid.getProjectTitle().equals(projectTitle))
+                bidsOfProject.add(bid);
+        }
+        return bidsOfProject;
+    }
+    public boolean isEmpty()
+    {
+        return bids.size() == 0;
+    }
 
 
 
