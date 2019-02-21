@@ -35,5 +35,9 @@ public class ProjectRepo {
             }
         projects.add(newProject);
     }
+    public void addNewProjects(ArrayList<Project> projects)
+    {
+        projects.addAll(projects);
+    }
 
 }

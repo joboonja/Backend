@@ -10,9 +10,11 @@ import org.json.JSONObject;
 import project.Project;
 import project.ProjectRepo;
 import auction.Auction;
+import skill.Skill;
 import skill.UserSkill;
 import user.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class JSONDecoder {
@@ -75,5 +77,27 @@ public class JSONDecoder {
         String projectTitle = auctionInfo.getString(BidConfig.PROJECT_ID);
 
         return new Auction(projectTitle);
+    }
+    public static ArrayList<Project> decodeJSONListToProjectList(ArrayList<JSONObject> projectsInfo)
+    {
+        ArrayList<Project> projects = new ArrayList<Project>();
+        for(JSONObject json : projectsInfo)
+        {
+            projects.add(decodeJSONtoProject(json));
+        }
+        return projects;
+    }
+    public static Skill decodeJSONtoSkill(JSONObject json)
+    {
+        return new Skill(json.getString(SkillsConfig.NAME));
+    }
+    public static ArrayList<Skill> decodeJSONListToSkillList(ArrayList<JSONObject> skillsInfo)
+    {
+        ArrayList<Skill> skills = new ArrayList<Skill>();
+        for(JSONObject json : skillsInfo)
+        {
+            skills.add(decodeJSONtoSkill(json));
+        }
+        return skills;
     }
 }
