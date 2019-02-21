@@ -1,16 +1,18 @@
 package tools;
 
 import config.RemoteURLs;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class HttpRequest {
-    private JSONObject getRemoteData() throws Exception {
-        String baseRemotURL = RemoteURLs.BASE;
+    public static ArrayList<JSONObject> getRemoteData(String requestedData) throws Exception {
+        String baseRemotURL = RemoteURLs.BASE + requestedData;
 
         HttpURLConnection connection = (HttpURLConnection) new URL(baseRemotURL).openConnection();
 
@@ -26,6 +28,11 @@ public class HttpRequest {
             response.append(line);
         }
         dataReader.close();
-        return new JSONObject(response);
+
+        JSONArray responseList = new JSONArray(response);
+
+        ArrayList <JSONObject> finalResponse = new ArrayList();
+        for (int i = 0; i < responseList.length(); finalResponse.add(responseList.getJSONObject(i++)));
+        return finalResponse;
     }
 }

@@ -13,7 +13,12 @@ import java.util.ArrayList;
 public class SkillInitializer {
     private static ArrayList<Skill> getSkills()
     {
-        ArrayList<JSONObject> skillsInfo =  HttpRequest.getRemoteData(SkillsConfig.SKILL_INIT_URL);
+        ArrayList<JSONObject> skillsInfo = null;
+        try {
+            skillsInfo = HttpRequest.getRemoteData(SkillsConfig.SKILL_INIT_URL);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return JSONDecoder.decodeJSONListToSkillList(skillsInfo);
     }
     public static void initSkills()
