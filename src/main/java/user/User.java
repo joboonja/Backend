@@ -10,16 +10,11 @@ import java.util.HashMap;
 
 public class User {
     private String username;
-    private HashMap<String, Skill> skills = new HashMap<String, Skill>();
+    private HashMap<String, Skill> skills;
 
-    public User(JSONObject userInfo){
-        JSONArray skillsInfo;
-        username = userInfo.getString(UserConfig.USERNAME);
-        skillsInfo = (JSONArray) userInfo.get(UserConfig.SKILLS);
-        for(int i = 0; i < skillsInfo.length(); i++){
-            Skill skill = new Skill((JSONObject) skillsInfo.get(i));
-            skills.put(skill.getName(), skill);
-        }
+    public User(String _username, HashMap <String, Skill> _skills){
+        username = _username;
+        skills = _skills;
     }
 
     public String getUsername()
