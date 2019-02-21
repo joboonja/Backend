@@ -1,11 +1,15 @@
 package tools;
 
 
+import bid.BidRepo;
 import com.sun.xml.internal.bind.v2.TODO;
 import config.Commands;
 import javafx.util.Pair;
-import joboonja.Joboonja;
+import jdk.nashorn.internal.parser.JSONParser;
 import org.json.JSONObject;
+import project.ProjectRepo;
+import services.auction.Auction;
+import user.UserRepo;
 
 import java.util.Scanner;
 
@@ -51,14 +55,13 @@ public class CommandHandler {
                     command = scanner.nextLine();
                     Pair<String, JSONObject> pairedCommand = CommandHandler.getCommandParts(command);
                     if (pairedCommand.getKey().equals(Commands.REGISTER)) {
-                        Joboonja.registerNewUser(pairedCommand.getValue());
+                        UserRepo.getInstance().registerNewUser(JSONDecoder.decodeJSONtoUser(pairedCommand.getValue()));
                     } else if (pairedCommand.getKey().equals(Commands.ADD_PROJECT)) {
-                        Joboonja.addNewProject(pairedCommand.getValue());
+                        ProjectRepo.getInstance().addNewProject(JSONDecoder.decodeJSONtoProject(pairedCommand.getValue()));
                     } else if (pairedCommand.getKey().equals(Commands.BID)) {
-
-                        Joboonja.addNewBid(pairedCommand.getValue());
+                        BidRepo.getInstance().addNewBid(JSONDecoder.decodeJSONtoBid(pairedCommand.getValue()));
                     } else if (pairedCommand.getKey().equals(Commands.AUCTION)) {
-                        Joboonja.auction(pairedCommand.getValue());
+                        JSONDecoder.decodeJSONToAuction(pairedCommand.getValue()).start();
                         return;
                     } else
                         throw new Exception(Commands.COMMAND_NOT_FOUND_ERROR);

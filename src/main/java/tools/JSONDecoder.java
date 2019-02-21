@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class JSONDecoder {
 
-    public User decodeJSONtoUser(JSONObject userInfo){
+    public static User decodeJSONtoUser(JSONObject userInfo){
         JSONArray skillsInfo;
         String username = userInfo.getString(UserConfig.USERNAME);
         HashMap<String, Skill> skills = new HashMap<String, Skill>();
@@ -29,7 +29,7 @@ public class JSONDecoder {
         return new User(username, skills);
     }
 
-    public Project decodeJSONtoProject(JSONObject projectInfo){
+    public static Project decodeJSONtoProject(JSONObject projectInfo){
         String title = projectInfo.getString(ProjectConfig.TITLE);
         long budget = projectInfo.getInt(ProjectConfig.BUDGET);
         HashMap<String, Skill> skills = new HashMap<String, Skill>();
@@ -44,7 +44,7 @@ public class JSONDecoder {
         return new Project(title, budget, skills);
     }
 
-    public Bid decodeJSONtoBid(JSONObject bidInfo){
+    public static  Bid decodeJSONtoBid(JSONObject bidInfo){
         String biddingUserName = bidInfo.getString(BidConfig.BIDDING_USER);
         String projectTitle = bidInfo.getString(BidConfig.PROJECT_TITLE);
         long offer = bidInfo.getInt(BidConfig.BID_AMOUNT);
@@ -52,14 +52,14 @@ public class JSONDecoder {
         return new Bid(biddingUserName, projectTitle, offer);
     }
 
-    public Skill decodeJSONtoSkill(JSONObject skillInfo){
+    public static Skill decodeJSONtoSkill(JSONObject skillInfo){
         String name = skillInfo.getString(SkillsConfig.NAME);
         int points = skillInfo.getInt(SkillsConfig.POINTS);
 
         return new Skill(name, points);
     }
 
-    public Auction decodeJSONToAuction(JSONObject auctionInfo){
+    public static Auction decodeJSONToAuction(JSONObject auctionInfo){
         String projectTitle = auctionInfo.getString(BidConfig.PROJECT_TITLE);
 
         return new Auction(projectTitle);
