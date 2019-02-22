@@ -42,7 +42,11 @@ public class Project {
         return budget;
     }
 
-    public boolean checkSatisfaction(HashMap<String, UserSkill> userSkills, long bidAmount)
+    public boolean checkBudgetSatisfaction(long bidAmount)
+    {
+        return budget >= bidAmount;
+    }
+    public boolean checkSkillSatisfaction(HashMap<String, UserSkill> userSkills)
     {
         if(userSkills.size() < skills.size())
             return false;
@@ -54,8 +58,6 @@ public class Project {
             if(userSkills.get(skillName).getPoints() < skill.getPoints())
                 return false;
         }
-        if(budget < bidAmount)
-            return false;
         return true;
     }
 }

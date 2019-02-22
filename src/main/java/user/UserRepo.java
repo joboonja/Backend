@@ -17,10 +17,10 @@ public class UserRepo {
     private UserRepo() {
         users = new ArrayList<User>();
     }
-    public User getUserById(String name) throws Exception
+    public User getUserById(String id) throws Exception
     {
         for (User user : users) {
-            if (user.getId().equals(name))
+            if (user.getId().equals(id))
                 return user;
         }
         throw new Exception(UserConfig.USER_NOT_FOUND_ERROR);

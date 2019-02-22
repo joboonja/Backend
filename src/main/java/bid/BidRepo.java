@@ -28,7 +28,7 @@ public class BidRepo {
         User user = userRepo.getUserByUsername(newBid.getBiddingUserName());
         Project project = projectRepo.getProjectByProjectID(newBid.getProjectID());
 
-        return project.checkSatisfaction(user.getSkills(), newBid.getOffer());
+        return project.checkSkillSatisfaction(user.getSkills()) && project.checkBudgetSatisfaction(newBid.getOffer());
     }
     public void addNewBid(Bid newBid) {
         try{
