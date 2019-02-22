@@ -3,11 +3,9 @@ package services.user;
 import user.User;
 import user.UserRepo;
 
-public class UserHTMLService {
-    public static String getUserByIdHtml(String userID) {
-        User user = null;
-        try {
-            user = UserRepo.getInstance().getUserById(userID);
+public class UserService {
+    public static String getUserByIDHtml(String userID) throws Exception {
+            User user = UserRepo.getInstance().getUserById(userID);
             String page = "<!DOCTYPE html>\n" +
                     "<html lang=\"en\">\n" +
                     "<head>\n" +
@@ -33,8 +31,6 @@ public class UserHTMLService {
                     + "</ul>\n"
                     + "</body>\n"
                     + "</html>";
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            return page;
     }
 }

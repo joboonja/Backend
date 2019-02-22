@@ -1,9 +1,7 @@
 package remoteServices;
 
-import config.ProjectConfig;
 import config.SkillsConfig;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import skill.Skill;
 import skill.SkillRepo;
 import tools.HttpRequest;

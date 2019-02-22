@@ -4,9 +4,6 @@ import config.ProjectServiceConfig;
 import project.Project;
 import project.ProjectRepo;
 
-
-import javax.xml.ws.spi.http.HttpExchange;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ProjectService {
@@ -47,7 +44,7 @@ public class ProjectService {
         return html;
 
     }
-    public static String getProjectByIdHtml(String projectID) throws Exception
+    public static String getProjectByIDHtml(String projectID) throws Exception
     {
         ProjectRepo projectRepo = ProjectRepo.getInstance();
         Project project = projectRepo.getProjectByIDForUser(projectID, ProjectServiceConfig.USER_ID);
