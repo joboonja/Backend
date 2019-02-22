@@ -10,19 +10,52 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
+import javax.xml.ws.http.HTTPException;
+
 public class Server {
-    public void startServer() throws Exception {
+    private void startServer() throws Exception {
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-        server.createContext("/", new MyHandler());
+        server.createContext("/project", new ProjectListHandler());
+        server.createContext("/project/", new SpecificProjectHandler());
+        server.createContext("/user/", new SpecificUserHandler());
         server.setExecutor(null);
         server.start();
     }
 
-    class MyHandler implements HttpHandler {
+    private String getID(HttpExchange httpExchange) {
+        StringTokenizer tokenizer = new StringTokenizer(httpExchange.getRequestURI().getPath(), "/");
+        tokenizer.nextToken();
+        return tokenizer.nextToken();
+    }
+
+    private void writeSuccessResponse(HttpExchange httpExchange, String response) throws IOException{
+        httpExchange.sendResponseHeaders(200, response.length());
+        OutputStream responseStream = httpExchange.getResponseBody();
+        responseStream.write(response.getBytes());
+        responseStream.close();
+    }
+
+    class ProjectListHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange httpExchange) throws IOException {
-            StringTokenizer tokenizer = new StringTokenizer(httpExchange.getRequestURI().getPath(), "/");
-            String context = tokenizer.nextToken();
+            String response = ProjectService.getAllProjectsHtml();
+            writeSuccessResponse(httpExchange, response);
+        }
+    }
+
+    class SpecificProjectHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange httpExchange) throws IOException {
+            String response = ProjectService.getProjectByIdHtml(getID(httpExchange));
+            writeSuccessResponse(httpExchange, response);
+        }
+    }
+
+    class SpecificUserHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange httpExchange) throws IOException {
+            String response = UserService.getUserByIdHtml(getID(httpExchange));
+            writeSuccessResponse(httpExchange, response);
         }
     }
 }
