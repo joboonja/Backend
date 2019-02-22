@@ -3,6 +3,8 @@ package project;
 import config.ProjectConfig;
 
 import java.util.ArrayList;
+import user.User;
+import user.UserRepo;
 
 public class ProjectRepo {
     private static ProjectRepo ourInstance = new ProjectRepo();
@@ -38,6 +40,18 @@ public class ProjectRepo {
     public void addNewProjects(ArrayList<Project> projects)
     {
         projects.addAll(projects);
+    }
+    public ArrayList<Project> getProjectsForUser(String userId) throws Exception {
+        ArrayList<Project> projectsForUser = new ArrayList<Project>();
+        User user = UserRepo.getInstance().getUserById(userId);
+        for(Project project : projects)
+        {
+            if(project.checkSkillSatisfaction(user.getSkills()))
+            {
+                projectsForUser.add(project);
+            }
+        }
+        return projectsForUser;
     }
 
 }
