@@ -36,9 +36,9 @@ public class ProjectService {
         for(Project project : projects)
         {
             html += "        <tr>\n" +
-                    "            <th>id</th>\n" +
-                    "            <th>title</th>\n" +
-                    "            <th>budget</th>\n" +
+                    "            <th>"+project.getID()+"</th>\n" +
+                    "            <th>"+project.getTitle()+"</th>\n" +
+                    "            <th>"+Long.toString(project.getBudget())+"</th>\n" +
                     "        </tr>\n";
         }
         html +=  "    </table>\n" +
@@ -47,8 +47,26 @@ public class ProjectService {
         return html;
 
     }
-    public static String getProjectByIdHtml(String projectId)
+    public static String getProjectByIdHtml(String projectID) throws Exception
     {
-        return "";
+        ProjectRepo projectRepo = ProjectRepo.getInstance();
+        Project project = projectRepo.getProjectByIDForUser(projectID, ProjectServiceConfig.USER_ID);
+        return  "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <title>Project</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <ul>\n" +
+                "        <li>id: "+project.getID()+"</li>\n" +
+                "        <li>title: "+project.getTitle()+"</li>\n" +
+                "        <li>description: "+project.getDescription()+"</li>\n" +
+                "        <li>imageUrl: <img src=\""+project.getImageURL()+"\" style=\"width: 50px; height: 50px;\"></li>\n" +
+                "        <li>budget: "+Long.toString(project.getBudget())+"</li>\n" +
+                "    </ul>\n" +
+                "</body>\n" +
+                "</html>";
+
     }
 }

@@ -60,4 +60,12 @@ public class Project {
         }
         return true;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
 }
