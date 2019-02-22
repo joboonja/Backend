@@ -30,9 +30,24 @@ public class User {
         this.profilePictureURL = UserConfig.DEFAULT_PROFILE_PIC_URL;
     }
 
-    public String getId()
-    {
+    public String getId() {
         return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return  lastName;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public String getBio() {
+        return bio;
     }
 
     public void setProfilePictureURL(String profilePictureURL) {
