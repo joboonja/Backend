@@ -3,6 +3,7 @@ package server;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
 import java.util.StringTokenizer;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -29,7 +30,8 @@ public class Server {
     }
 
     private void writeSuccessResponse(HttpExchange httpExchange, String response) throws IOException{
-        httpExchange.sendResponseHeaders(200, response.length());
+        byte[] responseBytes = response.getBytes(StandardCharsets.UTF_8);
+        httpExchange.sendResponseHeaders(200, responseBytes.length);
         OutputStream responseStream = httpExchange.getResponseBody();
         responseStream.write(response.getBytes());
         responseStream.close();
