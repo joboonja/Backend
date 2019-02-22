@@ -27,6 +27,14 @@ public class ProjectRepo {
         }
         throw new Exception(ProjectConfig.PROJECT_NOT_FOUND_ERROR);
     }
+    public Project getProjectByIDForUser(String projectID, String userID) throws Exception
+    {
+        Project project = getProjectByProjectID(projectID);
+        User user = UserRepo.getInstance().getUserById(userID);
+        if(!project.checkSkillSatisfaction(user.getSkills()))
+            throw new Exception(ProjectConfig.USER_CANNOT_SATISFY_PROJECT);
+        return project;
+    }
 
     public void addNewProject(Project newProject)
     {
