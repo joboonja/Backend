@@ -45,9 +45,9 @@ public class ProjectRepo {
             }
         projects.add(newProject);
     }
-    public void addNewProjects(ArrayList<Project> projects)
+    public void addNewProjects(ArrayList<Project> newProjects)
     {
-        projects.addAll(projects);
+        projects.addAll(newProjects);
     }
     public ArrayList<Project> getProjectsForUser(String userId) throws Exception {
         ArrayList<Project> projectsForUser = new ArrayList<Project>();

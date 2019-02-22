@@ -14,7 +14,7 @@ public class Main {
         Server server = new Server();
         server.startServer();
 
-        CommandHandler.handleInputCommands();
+
     }
 }
 
