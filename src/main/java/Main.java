@@ -1,7 +1,6 @@
 import remoteServices.ProjectInitializer;
 import remoteServices.SkillInitializer;
 import server.Server;
-import tools.CommandHandler;
 import user.UserRepo;
 
 public class Main {

@@ -11,28 +11,28 @@ public class UserService {
                     "<head>\n" +
                     "    <meta charset=\"UTF-8\">\n" +
                     "    <title>User</title>\n" +
-                    "</head>";
-            page += "<body>\n" +
+                    "</head>" +
+                    "<body>\n" +
                     "<div style = \"direction : rtl;\">"+
                     "    <ul>\n" +
                     "        <li>id: " +
-                    user.getId()
-                    + "</li>\n <li>firstname: "
-                    + user.getFirstName()
-                    + "</li>\n "
-                    + "<li>lastname: "
-                    + user.getLastName()
-                    + "</li>\n"
-                    + " <li>jobTitle: "
-                    + user.getJobTitle()
-                    + "</li>\n"
-                    + " <li>bio: "
-                    + user.getBio()
-                    + "</li>\n    "
-                    + "</ul>\n"
-                    +"</div>"
-                    + "</body>\n"
-                    + "</html>";
+                    user.getId() +
+                    "</li>\n <li>firstname: " +
+                    user.getFirstName() +
+                    "</li>\n " +
+                    "<li>lastname: " +
+                    user.getLastName() +
+                    "</li>\n" +
+                    " <li>jobTitle: " +
+                    user.getJobTitle() +
+                    "</li>\n" +
+                    " <li>bio: " +
+                    user.getBio() +
+                    "</li>\n    " +
+                    "</ul>\n" +
+                    "</div>" +
+                    "</body>\n" +
+                    "</html>";
             return page;
     }
 }

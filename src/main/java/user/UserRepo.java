@@ -46,7 +46,7 @@ public class UserRepo {
         skills.put("C++", new UserSkill("C++", 2));
         skills.put("Java", new UserSkill("Java", 3));
         String jobTitle = "برنامه‌نویس وب";
-        String bio = "روی سنگ قبرم بنویسید: خدا بیامرز میخواست خیلیکارا بکنه ولی پول نداشت";
+        String bio = "روی سنگ قبرم بنویسید: خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت";
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
     }
 }

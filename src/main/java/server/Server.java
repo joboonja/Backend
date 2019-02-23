@@ -15,7 +15,7 @@ import services.user.UserService;
 
 public class Server {
     public void startServer() throws Exception {
-        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(8088), 0);
         server.createContext("/project", new ProjectListHandler());
         server.createContext("/project/", new SpecificProjectHandler());
         server.createContext("/user/", new SpecificUserHandler());

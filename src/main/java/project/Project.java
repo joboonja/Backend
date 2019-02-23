@@ -1,6 +1,5 @@
 package project;
 
-import skill.Skill;
 import skill.UserSkill;
 
 import java.util.HashMap;
