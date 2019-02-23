@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class CommandHandler {
     public static Pair<String, JSONObject> getCommandParts(String command) throws Exception{
         Pair<String, JSONObject> pairedCommand;
+
         String parts[] = command.split(" ", 2);
 
         if(parts.length != 2)

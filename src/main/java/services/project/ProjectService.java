@@ -26,6 +26,9 @@ public class ProjectService {
                 "            margin: 5px 5px 5px 5px;\n" +
                 "            text-align: center;\n" +
                 "        }\n" +
+                "        tr {\n" +
+                "            direction: rtl;\n" +
+                "        }"+
                 "    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
@@ -55,6 +58,7 @@ public class ProjectService {
                 "    <title>Project</title>\n" +
                 "</head>\n" +
                 "<body>\n" +
+                "<div style = \"direction : rtl;\">"+
                 "    <ul>\n" +
                 "        <li>id: "+project.getID()+"</li>\n" +
                 "        <li>title: "+project.getTitle()+"</li>\n" +
@@ -62,6 +66,7 @@ public class ProjectService {
                 "        <li>imageUrl: <img src=\""+project.getImageURL()+"\" style=\"width: 50px; height: 50px;\"></li>\n" +
                 "        <li>budget: "+Long.toString(project.getBudget())+"</li>\n" +
                 "    </ul>\n" +
+                "</div>"+
                 "</body>\n" +
                 "</html>";
 
