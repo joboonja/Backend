@@ -1,8 +1,7 @@
-package user;
+package models.data.user;
 
 import config.UserConfig;
-import skill.Skill;
-import skill.UserSkill;
+import models.data.skill.UserSkill;
 
 import java.util.HashMap;
 

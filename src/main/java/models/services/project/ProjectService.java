@@ -1,8 +1,8 @@
-package services.project;
+package models.services.project;
 
 import config.ProjectServiceConfig;
-import project.Project;
-import project.ProjectRepo;
+import models.data.project.Project;
+import models.data.project.ProjectRepo;
 
 import java.util.ArrayList;
 

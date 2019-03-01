@@ -1,4 +1,4 @@
-package skill;
+package models.data.skill;
 
 import java.util.ArrayList;
 

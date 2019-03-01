@@ -1,4 +1,4 @@
-package skill;
+package models.data.skill;
 
 public class UserSkill extends Skill {
     private int points;

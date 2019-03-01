@@ -1,7 +1,7 @@
-package bid;
+package models.data.bid;
 
 
-import project.Project;
+import models.data.project.Project;
 
 public class Bid {
     private String biddingUserName;

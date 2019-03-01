@@ -1,10 +1,9 @@
-package remoteServices;
+package models.remoteServices;
 
 
 import config.ProjectConfig;
-import org.json.JSONArray;
-import project.Project;
-import project.ProjectRepo;
+import models.data.project.Project;
+import models.data.project.ProjectRepo;
 import tools.HttpRequest;
 import tools.JSONDecoder;
 

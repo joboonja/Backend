@@ -1,10 +1,10 @@
-package bid;
+package models.data.bid;
 
 import config.BidConfig;
-import project.Project;
-import project.ProjectRepo;
-import user.User;
-import user.UserRepo;
+import models.data.project.Project;
+import models.data.project.ProjectRepo;
+import models.data.user.User;
+import models.data.user.UserRepo;
 
 import java.util.ArrayList;
 

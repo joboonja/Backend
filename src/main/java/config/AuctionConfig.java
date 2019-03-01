@@ -1,6 +1,6 @@
 package config;
 
-import user.User;
+import models.data.user.User;
 
 public class AuctionConfig {
     public static String WINNER_MSG(User user)

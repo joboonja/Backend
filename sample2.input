@@ -2,7 +2,7 @@ register {"username":"user4","skills":[{"name":"backend","points":12},{"name":"d
 register {"username":"user5","skills":[{"name":"backend","points":10},{"name":"frontend","points":15},{"name":"database","points":15}]}
 register {"username":"user6","skills":[{"name":"backend","points":5},{"name":"database","points":15}]}
 addProject {"title":"project2","skills":[{"name":"backend","points":10},{"name":"database","points":10}],"budget":1000000}
-bid {"biddingUser":"user4","projectTitle":"project2","bidAmount":900000}
-bid {"biddingUser":"user5","projectTitle":"project2","bidAmount":900000}
-bid {"biddingUser":"user6","projectTitle":"project2","bidAmount":100000}
-auction {"projectTitle":"project2"}
+models.data.bid {"biddingUser":"user4","projectTitle":"project2","bidAmount":900000}
+models.data.bid {"biddingUser":"user5","projectTitle":"project2","bidAmount":900000}
+models.data.bid {"biddingUser":"user6","projectTitle":"project2","bidAmount":100000}
+models.data.auction {"projectTitle":"project2"}

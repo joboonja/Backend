@@ -1,9 +1,8 @@
-package remoteServices;
+package models.remoteServices;
 
 import config.SkillsConfig;
-import org.json.JSONArray;
-import skill.Skill;
-import skill.SkillRepo;
+import models.data.skill.Skill;
+import models.data.skill.SkillRepo;
 import tools.HttpRequest;
 import tools.JSONDecoder;
 

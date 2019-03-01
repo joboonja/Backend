@@ -1,10 +1,10 @@
-package project;
+package models.data.project;
 
 import config.ProjectConfig;
 
 import java.util.ArrayList;
-import user.User;
-import user.UserRepo;
+import models.data.user.User;
+import models.data.user.UserRepo;
 
 public class ProjectRepo {
     private static ProjectRepo ourInstance = new ProjectRepo();

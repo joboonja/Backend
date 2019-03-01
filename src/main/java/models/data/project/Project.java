@@ -1,6 +1,6 @@
-package project;
+package models.data.project;
 
-import skill.UserSkill;
+import models.data.skill.UserSkill;
 
 import java.util.HashMap;
 

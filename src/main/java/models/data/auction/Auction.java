@@ -1,13 +1,13 @@
-package auction;
+package models.data.auction;
 
-import bid.Bid;
-import bid.BidRepo;
+import models.data.bid.Bid;
+import models.data.bid.BidRepo;
 import config.AuctionConfig;
-import project.Project;
-import project.ProjectRepo;
-import skill.UserSkill;
-import user.User;
-import user.UserRepo;
+import models.data.project.Project;
+import models.data.project.ProjectRepo;
+import models.data.skill.UserSkill;
+import models.data.user.User;
+import models.data.user.UserRepo;
 
 import java.util.HashMap;
 

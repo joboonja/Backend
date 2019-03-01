@@ -1,18 +1,18 @@
 package tools;
 
-import bid.Bid;
+import models.data.bid.Bid;
 import config.BidConfig;
 import config.ProjectConfig;
 import config.SkillsConfig;
 import config.UserConfig;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import project.Project;
-import project.ProjectRepo;
-import auction.Auction;
-import skill.Skill;
-import skill.UserSkill;
-import user.User;
+import models.data.project.Project;
+import models.data.project.ProjectRepo;
+import models.data.auction.Auction;
+import models.data.skill.Skill;
+import models.data.skill.UserSkill;
+import models.data.user.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;

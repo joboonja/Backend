@@ -1,7 +1,7 @@
-import remoteServices.ProjectInitializer;
-import remoteServices.SkillInitializer;
+import models.remoteServices.ProjectInitializer;
+import models.remoteServices.SkillInitializer;
 import server.Server;
-import user.UserRepo;
+import models.data.user.UserRepo;
 
 public class Main {
     public static void main(String args[]) throws Exception

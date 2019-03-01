@@ -9,16 +9,16 @@ import java.util.StringTokenizer;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import services.project.ProjectService;
-import services.user.UserService;
+import models.services.project.ProjectService;
+import models.services.user.UserService;
 
 
 public class Server {
     public void startServer() throws Exception {
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-        server.createContext("/project", new ProjectListHandler());
-        server.createContext("/project/", new SpecificProjectHandler());
-        server.createContext("/user/", new SpecificUserHandler());
+        server.createContext("/models/data/project", new ProjectListHandler());
+        server.createContext("/models/data/project/", new SpecificProjectHandler());
+        server.createContext("/models/data/user/", new SpecificUserHandler());
         server.setExecutor(null);
         server.start();
     }

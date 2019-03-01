@@ -1,7 +1,7 @@
-package services.user;
+package models.services.user;
 
-import user.User;
-import user.UserRepo;
+import models.data.user.User;
+import models.data.user.UserRepo;
 
 public class UserService {
     public static String getUserByIDHtml(String userID) throws Exception {
