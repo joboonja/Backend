@@ -79,10 +79,10 @@ public class JSONDecoder {
         return new Auction(projectTitle);
     }
 
-    public static ArrayList<Project> decodeJSONListToProjectList(JSONArray projectsInfo)
+    public static ArrayList<Project> decodeJSONListToProjectList(String info)
     {
         ArrayList<Project> projects = new ArrayList<Project>();
-
+        JSONArray projectsInfo = new JSONArray(info);
         for(int i = 0; i < projectsInfo.length(); i++)
         {
             projects.add(decodeJSONtoProject(projectsInfo.getJSONObject(i)));
@@ -95,8 +95,9 @@ public class JSONDecoder {
         return new Skill(json.getString(SkillsConfig.NAME));
     }
 
-    public static ArrayList<Skill> decodeJSONListToSkillList(JSONArray skillsInfo)
+    public static ArrayList<Skill> decodeJSONListToSkillList(String info)
     {
+        JSONArray skillsInfo = new JSONArray(info);
         ArrayList<Skill> skills = new ArrayList<Skill>();
         for(int i = 0; i < skillsInfo.length(); i++)
         {

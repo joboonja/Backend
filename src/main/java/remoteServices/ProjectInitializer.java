@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ProjectInitializer {
     private static ArrayList<Project> getProjects()
     {
-        JSONArray projectsInfo = null;
+        String projectsInfo = null;
         try {
             projectsInfo = HttpRequest.getRemoteData(ProjectConfig.PROJECT_INIT_URL);
         } catch (Exception e) {

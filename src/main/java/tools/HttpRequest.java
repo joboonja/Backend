@@ -9,7 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class HttpRequest {
-    public static JSONArray getRemoteData(String requestedData) throws Exception {
+    public static String getRemoteData(String requestedData) throws Exception {
         String baseRemotURL = RemoteURLs.BASE + requestedData;
 
         HttpURLConnection connection = (HttpURLConnection) new URL(baseRemotURL).openConnection();
@@ -27,6 +27,6 @@ public class HttpRequest {
         }
         dataReader.close();
 
-        return new JSONArray(response.toString());
+        return response.toString();
     }
 }

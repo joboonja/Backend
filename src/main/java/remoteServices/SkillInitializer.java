@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class SkillInitializer {
     private static ArrayList<Skill> getSkills()
     {
-        JSONArray skillsInfo = null;
+        String skillsInfo = null;
         try {
             skillsInfo = HttpRequest.getRemoteData(SkillsConfig.SKILL_INIT_URL);
         } catch (Exception e) {
