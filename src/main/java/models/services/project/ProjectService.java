@@ -47,28 +47,4 @@ public class ProjectService {
         return html;
 
     }
-    public static String getProjectByIDHtml(String projectID) throws Exception
-    {
-        ProjectRepo projectRepo = ProjectRepo.getInstance();
-        Project project = projectRepo.getProjectByIDForUser(projectID, ProjectServiceConfig.USER_ID);
-        return  "<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <title>Project</title>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "<div style = \"direction : rtl;\">"+
-                "    <ul>\n" +
-                "        <li>id: "+project.getID()+"</li>\n" +
-                "        <li>title: "+project.getTitle()+"</li>\n" +
-                "        <li>description: "+project.getDescription()+"</li>\n" +
-                "        <li>imageUrl: <img src=\""+project.getImageURL()+"\" style=\"width: 50px; height: 50px;\"></li>\n" +
-                "        <li>budget: "+Long.toString(project.getBudget())+"</li>\n" +
-                "    </ul>\n" +
-                "</div>"+
-                "</body>\n" +
-                "</html>";
-
-    }
 }
