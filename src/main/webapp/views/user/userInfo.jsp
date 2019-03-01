@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,11 +6,11 @@
 </head>
 <body>
 <ul>
-    <li> </li>
-    <li>first name: ...</li>
-    <li>last name: ...</li>
-    <li>jobTitle: ...</li>
-    <li>bio: ...</li>
+    <li><c:out value="${user.id}"/> </li>
+    <li><c:out value="${user.firstName}"/></li>
+    <li><c:out value="${user.lastName}"/></li>
+    <li><c:out value="${user.jobTitle}"/></li>
+    <li><c:out value="${user.bio}"/></li>
     <li>
         skills:
         <ul>

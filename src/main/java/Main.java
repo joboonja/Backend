@@ -5,9 +5,7 @@ import models.data.user.UserRepo;
 public class Main {
     public static void main(String args[]) throws Exception
     {
-        SkillInitializer.initSkills();
-        ProjectInitializer.initProjects();
-        UserRepo.getInstance().addDefaultUser();
+
     }
 }
 
