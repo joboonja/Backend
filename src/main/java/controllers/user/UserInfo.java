@@ -16,7 +16,7 @@ import java.io.IOException;
 
 
 
-@WebServlet(value="/user/*")
+@WebServlet(value = "/user/*")
 public class UserInfo extends HttpServlet {
 
 
