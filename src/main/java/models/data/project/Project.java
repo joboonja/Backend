@@ -13,7 +13,7 @@ public class Project {
     private HashMap<String, UserSkill> skills;
     private long deadline;
 //    private List <Bid> bids;
-//    private User winner;
+//    private UserInfo winner;
 
 
     public Project(String id, String title, String description, String imageURL, long budget, HashMap<String, UserSkill> skills, long deadline)

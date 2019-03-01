@@ -1,6 +1,5 @@
 import models.remoteServices.ProjectInitializer;
 import models.remoteServices.SkillInitializer;
-import server.Server;
 import models.data.user.UserRepo;
 
 public class Main {
@@ -9,11 +8,6 @@ public class Main {
         SkillInitializer.initSkills();
         ProjectInitializer.initProjects();
         UserRepo.getInstance().addDefaultUser();
-
-        Server server = new Server();
-        server.startServer();
-
-
     }
 }
 
