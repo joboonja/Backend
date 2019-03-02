@@ -7,7 +7,7 @@
 <body>
 <div style="text-align: center; align-items: center; height: 100%;">
     <h1>
-        <c:out value="You have add ${skill} to your skills."/>
+        <c:out value="You have added ${skill} to your skills."/>
     </h1>
     <form action="${userPath}" method="get">
         <input type="submit" value="Go to your profile.">
