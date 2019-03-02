@@ -29,7 +29,7 @@ public class UserInfo extends HttpServlet {
             request.setAttribute("user", user);
             request.setAttribute("skills", user.getSkills().values());
 
-            String jsp = user.getId().equals(ProjectServiceConfig.USER_ID) ? JspConfig.SINGLE_LOGEDIN_USER_VIEW_PATH : JspConfig.SINGLE_GUEST_USER_VIEW_PATH;
+            String jsp = user.getId().equals(ProjectServiceConfig.USER_ID) ? JspConfig.SINGLE_LOGGED_IN_USER_VIEW_PATH : JspConfig.SINGLE_GUEST_USER_VIEW_PATH;
             RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(jsp);
             requestDispatcher.forward(request, response);
 
