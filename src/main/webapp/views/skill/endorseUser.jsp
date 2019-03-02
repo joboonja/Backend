@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Endorse</title>
 </head>
 <body>
     <div style="text-align: center; align-items: center; height: 100%;">
