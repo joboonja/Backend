@@ -10,26 +10,27 @@
 
 <html>
 <head>
-    <c:choose>
-        <c:when test="${isSuccess}">
-            <title>BID_ADD_SUCCESS</title>
-            <body>
+<body>
+    <div style="text-align: center; align-items: center; height: 100%;">
+        <c:choose>
+            <c:when test="${isSuccess}">
+                <title>BID_ADD_SUCCESS</title>
+                <body>
                 <h1>Your bid is successfully added.</h1>
                 <p>The results will be announced later.</p>
-            </body>
-        </c:when>
-        <c:otherwise>
-            <title>BID_ADD_FAIL</title>
-            <body>
+                </body>
+            </c:when>
+            <c:otherwise>
+                <title>BID_ADD_FAIL</title>
+                <body>
                 <h1>The budget of the project is less than your offer.</h1>
                 <p>Check the budget limit and try again.</p>
-            </body>
-        </c:otherwise>
-    </c:choose>
-<form action="${projectPath}" method="get">
-    <input type="submit" value="Go to user page.">
-</form>
-<body>
-
+                </body>
+            </c:otherwise>
+        </c:choose>
+        <form action="${projectPath}" method="get">
+            <input type="submit" value="Go to project page.">
+        </form>
+    </div>
 </body>
 </html>

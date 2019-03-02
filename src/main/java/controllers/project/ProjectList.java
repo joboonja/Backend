@@ -27,7 +27,6 @@ public class ProjectList extends HttpServlet {
         try {
             ArrayList<Project> projects = ProjectRepo.getInstance().getProjectsForUser(ProjectServiceConfig.USER_ID);
             request.setAttribute("projectList", projects);
-
             RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(JspConfig.PROJECT_LIST_VIEW_PATH);
             requestDispatcher.forward(request, response);
         } catch (Exception e) {

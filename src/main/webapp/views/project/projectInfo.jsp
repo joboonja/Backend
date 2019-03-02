@@ -29,8 +29,7 @@
             <form action = "/bid" method = "">
                 <label> Bid Amount: </label>
                 <input type = "number" name = "bidAmount">
-                <input type = "hidden" name = "projectID" value = "${project.ID}">
-                <input type = "hidden" name = "projectID" value = "${project.ID}">
+                <input type = "hidden" name = "id" value = "${project.ID}">
 
                 <button>Submit</button>
             </form>

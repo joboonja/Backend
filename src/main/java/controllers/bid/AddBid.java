@@ -20,11 +20,13 @@ public class AddBid extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         try {
             long bidAmount = Long.parseLong(request.getParameter("bidAmount"));
-            Project project = ProjectRepo.getInstance().getProjectByProjectID(request.getParameter("projectID"));
+            String id = request.getParameter("id");
+            Project project = ProjectRepo.getInstance().getProjectByProjectID(id);
             boolean isSuccess = project.checkBudgetSatisfaction(bidAmount);
             if(isSuccess)
                 BidRepo.getInstance().addNewBid(new Bid(ProjectServiceConfig.USER_ID, project, bidAmount));
             request.setAttribute("isSuccess", isSuccess);
+            request.setAttribute("projectPath", "/project/" + id);
             RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(JspConfig.ADD_BID_RESULT_VIEW_PATH);
             requestDispatcher.forward(request, response);
         } catch (Exception e) {
