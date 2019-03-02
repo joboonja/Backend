@@ -49,6 +49,7 @@ public class ProjectRepo {
     {
         projects.addAll(newProjects);
     }
+
     public ArrayList<Project> getProjectsForUser(String userId) throws Exception {
         ArrayList<Project> projectsForUser = new ArrayList<Project>();
         User user = UserRepo.getInstance().getUserById(userId);

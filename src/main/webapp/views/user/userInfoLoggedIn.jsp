@@ -17,24 +17,23 @@
                 <c:forEach var="skill" items="${skills}">
                     <li>
                         <c:out value="${skill.name} : ${skill.points}"/>
-                        <form action="/endorse" method="POST">
+                        <form action="/deleteSkill" method="POST">
                             <input type="hidden" name="skill" value="${skill.name}"/>
                             <input type="hidden" name="id" value="${user.id}"/>
+                            <button> Delete </button>
                         </form>
                     </li>
                 </c:forEach>
             </ul>
         </li>
         Add Skill:
-        <form action="/addSkill" method="post">
-            <select name="skill">
-                <c:forEach var="skill" items="${availableSkills}">
-                    <option value="${skill.name}">
-                        <c:out value="${skill.name}"/>
-                    </option>
-                </c:forEach>
+        <form action="" method="">
+            <select name="">
+                <option value="CSS">CSS</option>
+                <option value="C++">C++</option>
+                <!-- ... -->
             </select>
-            <input type="submit" value="Add"/>
+            <button>Add</button>
         </form>
     </div>
 </body>
