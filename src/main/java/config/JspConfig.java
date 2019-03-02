@@ -6,4 +6,5 @@ public class JspConfig {
     public static final String ENDORSE_USER_VIEW_PATH = "/views/skill/endorseUser.jsp";
     public static final String ERROR_VIEW = "/views/error/error.jsp";
     public static final String ADD_BID_RESULT_VIEW_PATH = "/views/bid/addBidResult.jsp";
+    public static final String USER_LIST_VIEW_PATH = "/views/user/userList.jsp";
 }

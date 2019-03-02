@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 public class UserRepo {
     private static UserRepo ourInstance = new UserRepo();
+
     private ArrayList<User> users = new ArrayList<User>();
 
     public static UserRepo getInstance() {
@@ -17,6 +18,7 @@ public class UserRepo {
     private UserRepo() {
         users = new ArrayList<User>();
     }
+
     public User getUserById(String id) throws Exception
     {
         for (User user : users) {
@@ -25,6 +27,7 @@ public class UserRepo {
         }
         throw new Exception(UserConfig.USER_NOT_FOUND_ERROR);
     }
+
     public void registerNewUser(User newUser)
     {
         for (User user : users) {
@@ -35,6 +38,11 @@ public class UserRepo {
         }
         users.add(newUser);
     }
+
+    public ArrayList<User> getAllUsers() {
+        return users;
+    }
+
     public void addDefaultUser()
     {
         String id = "1";

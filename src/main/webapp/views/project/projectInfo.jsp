@@ -15,11 +15,11 @@
 </head>
 <body>
 <ul>
-    <li>id: <c:out value = "${project.ID}"/></li>
-    <li>title: <c:out value = "${project.title}"/></li>
-    <li>description: <c:out value = "${project.description}"/></li>
-    <li>imageUrl: <img src = "${project.imageURL}"  style="width: 50px; height: 50px;"></li>
-    <li>budget: <c:out value ="${project.budget}"/> </li>
+    <li>ID: <c:out value = "${project.ID}"/></li>
+    <li>Title: <c:out value = "${project.title}"/></li>
+    <li>Description: <c:out value = "${project.description}"/></li>
+    <li>ImageUrl: <img src = "${project.imageURL}"  style="width: 50px; height: 50px;"></li>
+    <li>Budget: <c:out value ="${project.budget}"/> </li>
 </ul>
 <!-- display form if user has not bidded before -->
 
