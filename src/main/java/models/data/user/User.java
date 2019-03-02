@@ -57,4 +57,10 @@ public class User {
     {
         return skills;
     }
+
+    public void endorse(String skillName) throws Exception
+    {
+        UserSkill userSkill = skills.get(skillName);
+        userSkill.endorse(id);
+    }
 }

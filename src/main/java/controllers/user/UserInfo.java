@@ -28,10 +28,11 @@ public class UserInfo extends HttpServlet {
             User user = UserService.getUserByID(tools.HttpTokenizer.getID(request));
             request.setAttribute("user", user);
             request.setAttribute("skills", user.getSkills().values());
-            request.setAttribute("canEndorse", !user.getId().equals(ProjectServiceConfig.USER_ID));
 
-            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(JspConfig.SINGLE_USER_VIEW_PATH);
+            String jsp = user.getId().equals(ProjectServiceConfig.USER_ID) ? JspConfig.SINGLE_LOGEDIN_USER_VIEW_PATH : JspConfig.SINGLE_GUEST_USER_VIEW_PATH;
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(jsp);
             requestDispatcher.forward(request, response);
+
         } catch (Exception e) {
             request.setAttribute("message", e.getMessage());
             RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(JspConfig.ERROR_VIEW);
