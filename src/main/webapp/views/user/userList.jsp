@@ -28,11 +28,13 @@
     <div style="direction: rtl">
         <table>
             <c:forEach var="user" items="${userList}">
-                <tr>
-                    <td><c:out value="${user.id}"/></td>
-                    <td><c:out value="${user.firstName} ${user.lastName}"/></td>
-                    <td>${user.jobTitle}</td>
-                </tr>
+                <c:if test = "${!user.id.equals(\"1\")}">
+                    <tr>
+                        <td><c:out value="${user.id}"/></td>
+                        <td><c:out value="${user.firstName} ${user.lastName}"/></td>
+                        <td>${user.jobTitle}</td>
+                    </tr>
+                </c:if>
             </c:forEach>
         </table>
     </div>
