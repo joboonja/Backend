@@ -58,6 +58,10 @@ public class User {
         return skills;
     }
 
+    public void deleteSkill(String name) {
+        skills.remove(name);
+    }
+
     public void endorse(String skillName) throws Exception
     {
         UserSkill userSkill = skills.get(skillName);

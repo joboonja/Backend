@@ -8,4 +8,6 @@ public class JspConfig {
     public static final String ERROR_VIEW = "/views/error/error.jsp";
     public static final String ADD_BID_RESULT_VIEW_PATH = "/views/bid/addBidResult.jsp";
     public static final String USER_LIST_VIEW_PATH = "/views/user/userList.jsp";
+    public static final String PROJECT_LIST_VIEW_PATH = "/views/project/projectList.jsp";
+    public static final String DELETE_SKILL_VIEW_PATH = "/views/skill/deleteSkill.jsp";
 }

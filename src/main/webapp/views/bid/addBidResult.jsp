@@ -26,7 +26,9 @@
             </body>
         </c:otherwise>
     </c:choose>
-</head>
+<form action="${projectPath}" method="get">
+    <input type="submit" value="Go to user page.">
+</form>
 <body>
 
 </body>
