@@ -10,15 +10,16 @@ import java.net.URL;
 
 public class HttpRequest {
     public static String getRemoteData(String requestedData) throws Exception {
-        String baseRemotURL = RemoteURLs.BASE + requestedData;
+        String baseRemoteURL = RemoteURLs.BASE + requestedData;
 
-        HttpURLConnection connection = (HttpURLConnection) new URL(baseRemotURL).openConnection();
+        HttpURLConnection connection = (HttpURLConnection) new URL(baseRemoteURL).openConnection();
 
         connection.setRequestMethod("GET");
 
         int status = connection.getResponseCode();
 
-        BufferedReader dataReader = new BufferedReader(status > 299 ? new InputStreamReader(connection.getErrorStream()) : new InputStreamReader(connection.getInputStream()));
+        BufferedReader dataReader = new BufferedReader(status > 299 ? new InputStreamReader(connection.getErrorStream())
+                : new InputStreamReader(connection.getInputStream()));
         String line;
         StringBuffer response = new StringBuffer();
 

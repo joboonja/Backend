@@ -15,7 +15,7 @@
 </head>
 <body>
 <ul>
-    <li>id: <c:out value="${project.id}"/></li>
+    <li>id: <c:out value="${project.ID}"/></li>
     <li>title: <c:out value="${project.title}"/></li>
     <li>description: <c:out value="${project.description}"/></li>
     <li>imageUrl: <img src= "${project.imageURL}"  style="width: 50px; height: 50px;"></li>

@@ -2,10 +2,8 @@ package controllers.user;
 
 
 import models.data.user.User;
-import models.data.user.UserRepo;
-import models.services.user.UserService;
-import tools.HttpTokenizer;
 
+import models.services.user.UserService;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,19 +20,14 @@ public class UserInfo extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userID = HttpTokenizer.getID(request);
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/views/user/userInfo.jsp");
-
-        requestDispatcher.forward(request, response);
-
-        try
-        {
-            User user = UserService.getUserByID(userID);
+        response.setContentType("text/html; charset=UTF-8");
+        try {
+            User user = UserService.getUserByID(tools.HttpTokenizer.getID(request));
             request.setAttribute("user", user);
-        }
-        catch (Exception e )
-        {
-
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/views/user/userInfo.jsp");
+            requestDispatcher.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

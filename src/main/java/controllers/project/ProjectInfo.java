@@ -17,7 +17,7 @@ public class ProjectInfo extends HttpServlet {
         try {
             Project project = ProjectService.getProjectByID(tools.HttpTokenizer.getID(request));
             request.setAttribute("project", project);
-            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/views/project/projecInfo.jsp");
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/views/project/projectInfo.jsp");
             requestDispatcher.forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
