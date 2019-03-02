@@ -1,4 +1,4 @@
-package controllers.user;
+package controllers.project;
 
 
 import config.JspConfig;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class ProjectList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException , IOException{
-        response.setContentType("text/html; charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         try {
             ArrayList<Project> projects = ProjectRepo.getInstance().getProjectsForUser(ProjectServiceConfig.USER_ID);
             request.setAttribute("projectList", projects);

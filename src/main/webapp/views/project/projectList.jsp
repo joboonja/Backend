@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-<div style="direction: rtl">
+<div style="direction: rtl;">
     <table>
         <c:forEach var="project" items="${projectList}">
             <tr>
