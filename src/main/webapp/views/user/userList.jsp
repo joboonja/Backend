@@ -25,14 +25,16 @@
     </style>
 </head>
 <body>
-<table>
-    <c:forEach var="user" items="${userList}">
-        <tr>
-            <td><c:out value="${user.id}"/></td>
-            <td><c:out value="${user.firstName} ${user.lastName}"/></td>
-            <td>${user.jobTitle}</td>
-        </tr>
-    </c:forEach>
-</table>
+    <div style="direction: rtl">
+        <table>
+            <c:forEach var="user" items="${userList}">
+                <tr>
+                    <td><c:out value="${user.id}"/></td>
+                    <td><c:out value="${user.firstName} ${user.lastName}"/></td>
+                    <td>${user.jobTitle}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </body>
 </html>

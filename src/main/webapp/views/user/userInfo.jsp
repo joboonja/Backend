@@ -5,29 +5,31 @@
     <title>User</title>
 </head>
 <body>
-<ul>
-    <li><c:out value="${user.id}"/> </li>
-    <li><c:out value="${user.firstName}"/></li>
-    <li><c:out value="${user.lastName}"/></li>
-    <li><c:out value="${user.jobTitle}"/></li>
-    <li><c:out value="${user.bio}"/></li>
-    <li>
-        skills:
+    <div style="direction: rtl">
         <ul>
-            <c:forEach var="skill" items="${skills}">
-                <li>
-                    <c:out value="${skill.name}"/>
-                    <form action="/endorse" method="POST">
-                        <input type="hidden" name="skill" value="${skill.name}"/>
-                        <input type="hidden" name="id" value="${user.id}"/>
-                        <c:if test="${canEndorse}">
-                            <input type="submit" value="Endorse" />
-                        </c:if>
-                    </form>
-                </li>
-            </c:forEach>
+            <li><c:out value="${user.id}"/> </li>
+            <li><c:out value="${user.firstName}"/></li>
+            <li><c:out value="${user.lastName}"/></li>
+            <li><c:out value="${user.jobTitle}"/></li>
+            <li><c:out value="${user.bio}"/></li>
+            <li>
+                skills:
+                <ul>
+                    <c:forEach var="skill" items="${skills}">
+                        <li>
+                            <c:out value="${skill.name}"/>
+                            <form action="/endorse" method="POST">
+                                <input type="hidden" name="skill" value="${skill.name}"/>
+                                <input type="hidden" name="id" value="${user.id}"/>
+                                <c:if test="${canEndorse}">
+                                    <input type="submit" value="Endorse" />
+                                </c:if>
+                            </form>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </li>
         </ul>
-    </li>
-</ul>
+    </div>
 </body>
 </html>
