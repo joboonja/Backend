@@ -1,5 +1,6 @@
-package controllers.user;
+package controllers.skill;
 
+import config.JspConfig;
 import config.UserConfig;
 
 import javax.servlet.RequestDispatcher;
@@ -16,8 +17,9 @@ public class EndorseUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String skill = request.getParameter("skill");
-        request.setAttribute("skill", skill);
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(UserConfig.ENDORSE_USER_VIEW_PATH);
+        String id = request.getParameter("id");
+
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(JspConfig.ENDORSE_USER_VIEW_PATH);
         requestDispatcher.forward(request, response);
     }
 }

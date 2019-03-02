@@ -18,8 +18,11 @@
                 <li>
                     <c:out value="${skill.name}"/>
                     <form action="/endorse" method="POST">
-                        <input type="hidden" name="skill" value="<c:out value="${skill.name}"/>"/>
-                        <input type="submit" value="Endorse"/>
+                        <input type="hidden" name="skill" value="${skill.name}"/>
+                        <input type="hidden" name="id" value="${user.id}"/>
+                        <c:if test="${canEndorse}">
+                            <input type="submit" value="Endorse" />
+                        </c:if>
                     </form>
                 </li>
             </c:forEach>
