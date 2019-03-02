@@ -15,18 +15,24 @@
 </head>
 <body>
 <ul>
-    <li>id: <c:out value="${project.ID}"/></li>
-    <li>title: <c:out value="${project.title}"/></li>
-    <li>description: <c:out value="${project.description}"/></li>
-    <li>imageUrl: <img src= "${project.imageURL}"  style="width: 50px; height: 50px;"></li>
-    <li>budget: <c:out value="${project.budget}"/> </li>
+    <li>id: <c:out value = "${project.ID}"/></li>
+    <li>title: <c:out value = "${project.title}"/></li>
+    <li>description: <c:out value = "${project.description}"/></li>
+    <li>imageUrl: <img src = "${project.imageURL}"  style="width: 50px; height: 50px;"></li>
+    <li>budget: <c:out value ="${project.budget}"/> </li>
 </ul>
 <!-- display form if user has not bidded before -->
-<%--<form action="" method="">--%>
-    <%--<label for="bidAmount">Bid Amount:</label>--%>
-    <%--<input type="number" name="bidAmount">--%>
 
-    <%--<button>Submit</button>--%>
-<%--</form>--%>
+<c:if test = "${canBid}">
+    <form action = "/bid" method = "">
+        <label> Bid Amount: </label>
+        <input type = "number" name = "bidAmount">
+        <input type = "hidden" name = "projectID" value = "${project.ID}">
+        <input type = "hidden" name = "projectID" value = "${project.ID}">
+
+        <button>Submit</button>
+    </form>
+</c:if>
+
 </body>
 </html>

@@ -8,8 +8,8 @@ public class Bid {
     private Project project;
     private long offer;
 
-    public Bid(String _biddingUserName, Project project, long offer){
-        this.biddingUserName = _biddingUserName;
+    public Bid(String biddingUserID, Project project, long offer){
+        this.biddingUserName = biddingUserID;
         this.project = project;
         this.offer = offer;
     }
