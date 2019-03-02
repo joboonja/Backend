@@ -14,22 +14,15 @@
     <li>
         skills:
         <ul>
-            <li>
-                HTML: 2
-                <form action="" method="">
-                    <button>Endorse</button>
-                </form>
-            </li>
-            <li>
-                Java: 1
-                <form action="" method="">
-                    <button>Endorse</button>
-                </form>
-            </li>
-            <li>
-                CSS: 2
-                <!-- no form if already endorsed -->
-            </li>
+            <c:forEach var="skill" items="${skills}">
+                <li>
+                    <c:out value="${skill.name}"/>
+                    <form action="/endorse" method="POST">
+                        <input type="hidden" name="skill" value="<c:out value="${skill.name}"/>"/>
+                        <input type="submit" value="Endorse"/>
+                    </form>
+                </li>
+            </c:forEach>
         </ul>
     </li>
 </ul>

@@ -25,6 +25,7 @@ public class UserInfo extends HttpServlet {
         try {
             User user = UserService.getUserByID(tools.HttpTokenizer.getID(request));
             request.setAttribute("user", user);
+            request.setAttribute("skills", user.getSkills().values());
             RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(UserConfig.SINGLE_USER_VIEW_PATH);
             requestDispatcher.forward(request, response);
         } catch (Exception e) {
