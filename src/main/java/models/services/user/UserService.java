@@ -8,4 +8,5 @@ public class UserService {
     public static User getUserByID(String userId) throws Exception {
         return UserRepo.getInstance().getUserById(userId);
     }
+
 }

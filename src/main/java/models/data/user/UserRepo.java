@@ -48,5 +48,42 @@ public class UserRepo {
         String jobTitle = "برنامه‌نویس وب";
         String bio = "روی سنگ قبرم بنویسید: خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت";
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+
+        id = "2";
+        firstName = "فرزاد";
+        lastName = "حبیبی";
+        skills = new HashMap<String, UserSkill>();
+        skills.put("HTML", new UserSkill("HTML", 5));
+        skills.put("Javascript", new UserSkill("Javascript", 4));
+        skills.put("C++", new UserSkill("C++", 2));
+        skills.put("Java", new UserSkill("Java", 3));
+        jobTitle = "دانشجو";
+        bio = "بیو ندارم";
+        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+
+        id = "3";
+        firstName = "یاسمن";
+        lastName = "جعفری";
+        skills = new HashMap<String, UserSkill>();
+        skills.put("HTML", new UserSkill("HTML", 5));
+        skills.put("Javascript", new UserSkill("Javascript", 4));
+        skills.put("C++", new UserSkill("C++", 2));
+        skills.put("Java", new UserSkill("Java", 3));
+        jobTitle = "دانشجو";
+        bio = "بیو؟";
+        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+
+        id = "4";
+        firstName = "ممد";
+        lastName = "فراهانی";
+        skills = new HashMap<String, UserSkill>();
+        skills.put("HTML", new UserSkill("HTML", 5));
+        skills.put("Javascript", new UserSkill("Javascript", 4));
+        skills.put("C++", new UserSkill("C++", 2));
+        skills.put("Java", new UserSkill("Java", 3));
+        jobTitle = "برنامه‌نویس";
+        bio = "دنبال کار می‌گردم";
+        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+
     }
 }

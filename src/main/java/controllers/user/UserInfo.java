@@ -1,6 +1,8 @@
 package controllers.user;
 
 
+import config.JspConfig;
+import config.ProjectServiceConfig;
 import config.UserConfig;
 import models.data.user.User;
 
@@ -20,15 +22,20 @@ public class UserInfo extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException , IOException{
         response.setContentType("text/html; charset=UTF-8");
         try {
             User user = UserService.getUserByID(tools.HttpTokenizer.getID(request));
             request.setAttribute("user", user);
-            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(UserConfig.SINGLE_USER_VIEW_PATH);
+            request.setAttribute("skills", user.getSkills().values());
+            request.setAttribute("canEndorse", !user.getId().equals(ProjectServiceConfig.USER_ID));
+
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(JspConfig.SINGLE_USER_VIEW_PATH);
             requestDispatcher.forward(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
+            request.setAttribute("message", e.getMessage());
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(JspConfig.ERROR_VIEW);
+            requestDispatcher.forward(request, response);
         }
     }
 }
