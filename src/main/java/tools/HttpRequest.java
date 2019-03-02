@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class HttpRequest {
     public static String getRemoteData(String requestedData) throws Exception {
@@ -15,11 +16,13 @@ public class HttpRequest {
         HttpURLConnection connection = (HttpURLConnection) new URL(baseRemoteURL).openConnection();
 
         connection.setRequestMethod("GET");
+        connection.setRequestProperty("Content-Type", "UTF-8");
+
 
         int status = connection.getResponseCode();
 
         BufferedReader dataReader = new BufferedReader(status > 299 ? new InputStreamReader(connection.getErrorStream())
-                : new InputStreamReader(connection.getInputStream()));
+                : new InputStreamReader(connection.getInputStream(), "UTF-8"));
         String line;
         StringBuffer response = new StringBuffer();
 
@@ -27,6 +30,8 @@ public class HttpRequest {
             response.append(line);
         }
         dataReader.close();
+
+
 
         return response.toString();
     }
