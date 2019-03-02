@@ -17,4 +17,13 @@ public class SkillRepo {
     {
         skills.addAll(skills);
     }
+    public boolean contains(String skillName)
+    {
+        for (Skill skill :
+                skills) {
+            if(skill.getName().equals(skillName))
+                return true;
+        }
+        return  false;
+    }
 }
