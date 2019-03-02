@@ -28,6 +28,10 @@ public class User {
         this.bio = bio;
         this.profilePictureURL = UserConfig.DEFAULT_PROFILE_PIC_URL;
     }
+    public void addSkill(UserSkill skill)
+    {
+        skills.put(skill.getName(), skill);
+    }
 
     public String getId() {
         return id;
@@ -66,5 +70,14 @@ public class User {
     {
         UserSkill userSkill = skills.get(skillName);
         userSkill.endorse(id);
+    }
+    public boolean haveSkill(String skillName)
+    {
+        for(UserSkill skill : skills.values())
+        {
+            if(skill.getName().equals(skillName))
+                return true;
+        }
+        return false;
     }
 }

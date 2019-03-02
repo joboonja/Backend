@@ -1,5 +1,8 @@
 package models.data.skill;
 
+import models.data.user.User;
+import models.data.user.UserRepo;
+
 import java.util.ArrayList;
 
 public class SkillRepo {
@@ -13,10 +16,9 @@ public class SkillRepo {
     private SkillRepo() {
         skills = new ArrayList<Skill>();
     }
-
-    public void addNewSkills(ArrayList<Skill> skills)
+    public void addNewSkills(ArrayList<Skill> skillsToAdd)
     {
-        skills.addAll(skills);
+        skills.addAll(skillsToAdd);
     }
 
     public boolean contains(String skillName)
@@ -27,5 +29,17 @@ public class SkillRepo {
                 return true;
         }
         return  false;
+    }
+
+    public ArrayList<Skill> notSubmittedSkills(User user) throws Exception
+    {
+
+        ArrayList<Skill> notSumbitted = new ArrayList<>();
+        for (Skill skill:
+                skills) {
+            if(!user.haveSkill(skill.getName()))
+                notSumbitted.add(skill);
+        }
+        return notSumbitted;
     }
 }

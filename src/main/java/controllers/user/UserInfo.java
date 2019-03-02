@@ -6,6 +6,7 @@ import config.ProjectServiceConfig;
 import config.UserConfig;
 import models.data.user.User;
 
+import models.services.skill.SkillService;
 import models.services.user.UserService;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,7 +30,15 @@ public class UserInfo extends HttpServlet {
             request.setAttribute("user", user);
             request.setAttribute("skills", user.getSkills().values());
 
-            String jsp = user.getId().equals(ProjectServiceConfig.USER_ID) ? JspConfig.SINGLE_LOGGED_IN_USER_VIEW_PATH : JspConfig.SINGLE_GUEST_USER_VIEW_PATH;
+            String jsp;
+            if(user.getId().equals(ProjectServiceConfig.USER_ID))
+            {
+                jsp = JspConfig.SINGLE_LOGGED_IN_USER_VIEW_PATH;
+                request.setAttribute("availableSkills", SkillService.notSubmittedSkills(user.getId()));
+            }
+            else
+                jsp = JspConfig.SINGLE_GUEST_USER_VIEW_PATH;
+
             RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(jsp);
             requestDispatcher.forward(request, response);
 
