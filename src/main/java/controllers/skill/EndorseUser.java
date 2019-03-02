@@ -2,6 +2,7 @@ package controllers.skill;
 
 import config.JspConfig;
 import config.UserConfig;
+import models.services.skill.EndorseService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,8 +19,19 @@ public class EndorseUser extends HttpServlet {
 
         String skill = request.getParameter("skill");
         String id = request.getParameter("id");
+        try {
+            EndorseService.endorseUserSkill(id, skill);
+            request.setAttribute("skill", skill);
+            request.setAttribute("userPath", "/user/" + id);
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(JspConfig.ENDORSE_USER_VIEW_PATH);
+            requestDispatcher.forward(request, response);
+        }
+        catch (Exception e)
+        {
+            request.setAttribute("message", e.getMessage());
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(JspConfig.ERROR_VIEW);
+            requestDispatcher.forward(request, response);
+        }
 
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(JspConfig.ENDORSE_USER_VIEW_PATH);
-        requestDispatcher.forward(request, response);
     }
 }
