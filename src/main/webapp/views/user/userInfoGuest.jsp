@@ -27,7 +27,6 @@
                 </li>
             </c:forEach>
         </ul>
-    </li>
-</ul>
+    </div>
 </body>
 </html>
