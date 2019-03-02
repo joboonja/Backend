@@ -1,4 +1,5 @@
 package controllers.project;
+import config.ProjectConfig;
 import models.data.project.Project;
 import models.services.project.ProjectService;
 
@@ -12,12 +13,12 @@ import java.io.IOException;
 
 @WebServlet(value = "/project/*")
 public class ProjectInfo extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html; charset=UTF-8");
         try {
             Project project = ProjectService.getProjectByID(tools.HttpTokenizer.getID(request));
             request.setAttribute("project", project);
-            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/views/project/projectInfo.jsp");
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(ProjectConfig.SINGLE_PROJECT_VIEW_PATH);
             requestDispatcher.forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();

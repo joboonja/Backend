@@ -12,4 +12,5 @@ public class ProjectConfig {
     public static final String PROJECT_TITLE_ALREADY_EXISTS_ERROR = "This models.data.project title already exists.";
     public static final String PROJECT_INIT_URL = "projects";
     public static final String USER_CANNOT_SATISFY_PROJECT = "UserInfo cannot satisfy this models.data.project";
+    public static final String SINGLE_PROJECT_VIEW_PATH = "/views/project/projectInfo.jsp";
 }

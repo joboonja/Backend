@@ -1,6 +1,7 @@
 package controllers.user;
 
 
+import config.UserConfig;
 import models.data.user.User;
 
 import models.services.user.UserService;
@@ -19,12 +20,12 @@ public class UserInfo extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html; charset=UTF-8");
         try {
             User user = UserService.getUserByID(tools.HttpTokenizer.getID(request));
             request.setAttribute("user", user);
-            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/views/user/userInfo.jsp");
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(UserConfig.SINGLE_USER_VIEW_PATH);
             requestDispatcher.forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
