@@ -28,7 +28,7 @@ public class UserSkill extends Skill {
             points ++;
         }
         else
-            throw new DuplicateEndorse(name);
+            throw new DuplicateEndorse();
     }
 
 }

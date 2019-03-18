@@ -1,6 +1,7 @@
 package controllers.user;
 
 import config.JspConfig;
+import exceptions.UserNotFound;
 import models.data.user.User;
 import models.data.user.UserRepo;
 import models.services.user.UserService;
@@ -24,6 +25,12 @@ public class Users {
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
     public User getUser(@PathVariable(value = "userId") String userId) throws Exception
     {
-        return UserService.getUserByID(userId);
+        try {
+            return UserService.getUserByID(userId);
+        } catch (Exception e)
+        {
+            throw new UserNotFound();
+        }
+
     }
 }

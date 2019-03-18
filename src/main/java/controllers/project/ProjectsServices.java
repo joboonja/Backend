@@ -16,19 +16,19 @@ import java.util.ArrayList;
 @RestController
 public class ProjectsServices {
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
-    public ArrayList <Project> getAllProjects() {
+    public ArrayList <Project> getAllProjects() throws UserNotFound {
         try {
             return ProjectRepo.getInstance().getProjectsForUser(ProjectServiceConfig.USER_ID);
         } catch (Exception e) {
-            throw new UserNotFound(ProjectServiceConfig.USER_ID);
+            throw new UserNotFound();
         }
     }
     @RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)
-    public Project getSingleProject(@PathVariable(value = "id") String id) {
+    public Project getSingleProject(@PathVariable(value = "id") String id) throws Exception {
         try {
             return ProjectService.getProjectByID(id);
         } catch (Exception e) {
-            throw new ProjectNotFound(id);
+            throw new ProjectNotFound();
         }
     }
 }

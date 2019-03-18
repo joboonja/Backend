@@ -23,7 +23,7 @@ public class Skills {
         try {
             return SkillService.getSkillsOfUser();
         } catch (Exception e) {
-           throw new UserNotFound(ProjectServiceConfig.USER_ID);
+           throw new UserNotFound();
         }
     }
 
@@ -36,7 +36,7 @@ public class Skills {
         } catch (Exception e) {
             if(e instanceof DuplicateSkill)
                 throw (DuplicateSkill) e;
-            throw new UserNotFound(ProjectServiceConfig.USER_ID);
+            throw new UserNotFound();
         }
     }
 
@@ -48,7 +48,7 @@ public class Skills {
             User user = UserRepo.getInstance().getUserById(ProjectServiceConfig.USER_ID);
             user.deleteSkill(skillName);
         } catch (Exception e) {
-            throw new UserNotFound(ProjectServiceConfig.USER_ID);
+            throw new UserNotFound();
         }
     }
 
@@ -61,7 +61,7 @@ public class Skills {
         } catch (Exception e) {
             if(e instanceof DuplicateEndorse)
                 throw (DuplicateEndorse) e;
-            throw new UserNotFound(userID);
+            throw new UserNotFound();
         }
     }
 }

@@ -33,7 +33,7 @@ public class User {
     public void addSkill(UserSkill skill) throws Exception
     {
         if(skills.containsKey(skill.getName()))
-            throw new DuplicateSkill(skill.getName());
+            throw new DuplicateSkill();
         skills.put(skill.getName(), skill);
     }
 
