@@ -20,8 +20,16 @@ public class BidRepo {
         bids = new ArrayList<Bid>();
     }
 
-    private boolean isValidToAdd(Bid newBid) throws Exception
-    {
+    public boolean hasAlreadyBid(Bid newBid) throws Exception {
+        ArrayList<Bid> bids = this.getBidsOfProject(newBid.getProjectID());
+        for(Bid bid : bids) {
+            if(bid.getBiddingUserName().equals(newBid.getBiddingUserName()))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean isValidToAdd(Bid newBid) throws Exception {
         UserRepo userRepo = UserRepo.getInstance();
         ProjectRepo projectRepo = ProjectRepo.getInstance();
 
@@ -32,7 +40,7 @@ public class BidRepo {
     }
     public void addNewBid(Bid newBid) {
         try{
-            if(isValidToAdd(newBid))
+            if(isValidToAdd(newBid) && !hasAlreadyBid(newBid))
                 bids.add(newBid);
             else
                 throw new Exception(BidConfig.BID_ADD_ERROR);

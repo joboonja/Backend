@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.ArrayList;
 
 @RestController
-public class ProjectsServices {
+public class Projects {
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
     public ArrayList <Project> getAllProjects() {
         try {
