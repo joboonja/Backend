@@ -3,6 +3,8 @@ package models.data.project;
 import config.ProjectConfig;
 
 import java.util.ArrayList;
+
+import exceptions.ProjectNotFound;
 import models.data.user.User;
 import models.data.user.UserRepo;
 
@@ -18,14 +20,14 @@ public class ProjectRepo {
         projects = new ArrayList<Project>();
     }
 
-    public Project getProjectByProjectID(String projectID) throws Exception
+    public Project getProjectByProjectID(String projectID) throws ProjectNotFound
     {
         for (Project project : projects)
         {
             if (project.getID().equals(projectID))
                 return project;
         }
-        throw new Exception(ProjectConfig.PROJECT_NOT_FOUND_ERROR);
+        throw new ProjectNotFound();
     }
     public Project getProjectByIDForUser(String projectID, String userID) throws Exception
     {
