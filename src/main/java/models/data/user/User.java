@@ -3,6 +3,7 @@ package models.data.user;
 import config.UserConfig;
 import models.data.skill.UserSkill;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
@@ -79,5 +80,9 @@ public class User {
                 return true;
         }
         return false;
+    }
+    public ArrayList<UserSkill> getSkillsList()
+    {
+        return new ArrayList<>(skills.values());
     }
 }

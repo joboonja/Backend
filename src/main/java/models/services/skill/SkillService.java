@@ -20,4 +20,9 @@ public class SkillService {
         User user = UserRepo.getInstance().getUserById(userID);
         return SkillRepo.getInstance().notSubmittedSkills(user);
     }
+    public static ArrayList<UserSkill> getSkillsOfUser() throws Exception{
+        User user = UserRepo.getInstance().getUserById(ProjectServiceConfig.USER_ID);
+        return user.getSkillsList();
+
+    }
 }
