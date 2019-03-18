@@ -2,7 +2,7 @@ package models.data.skill;
 
 public class Skill {
 
-    private String name;
+    protected String name;
 
     public Skill(String name){
         this.name = name;

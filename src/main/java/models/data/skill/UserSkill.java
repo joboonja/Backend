@@ -1,5 +1,8 @@
 package models.data.skill;
 
+import exceptions.DuplicateEndorse;
+import exceptions.DuplicateSkill;
+
 import java.util.ArrayList;
 
 public class UserSkill extends Skill {
@@ -25,7 +28,7 @@ public class UserSkill extends Skill {
             points ++;
         }
         else
-            throw new Exception("This User Endorsed Already");
+            throw new DuplicateEndorse(name);
     }
 
 }
