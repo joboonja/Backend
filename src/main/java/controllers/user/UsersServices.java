@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.RequestDispatcher;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class UsersServices {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public ArrayList<User> getAllUsers()
+    public List<User> getAllUsers()
     {
         return UserRepo.getInstance().getAllUsers();
     }

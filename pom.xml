@@ -22,6 +22,7 @@
     </build>
     <properties>
         <springframework.version>4.3.0.RELEASE</springframework.version>
+        <jackson.version>2.5.3</jackson.version>
     </properties>
     <dependencies>
         <dependency>
@@ -70,7 +71,11 @@
             <artifactId>spring-test</artifactId>
             <version>${springframework.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
 
     </dependencies>
 
