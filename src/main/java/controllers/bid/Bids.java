@@ -5,10 +5,7 @@ import models.data.bid.Bid;
 import models.data.bid.BidRepo;
 import models.data.project.Project;
 import models.data.project.ProjectRepo;
-import models.services.project.ProjectService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 
 @RestController
 public class Bids {
