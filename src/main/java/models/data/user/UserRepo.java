@@ -1,6 +1,7 @@
 package models.data.user;
 
 import config.UserConfig;
+import exceptions.UserNotFound;
 import models.data.skill.UserSkill;
 
 import java.util.ArrayList;
@@ -19,13 +20,13 @@ public class UserRepo {
         users = new ArrayList<User>();
     }
 
-    public User getUserById(String id) throws Exception
+    public User getUserById(String id) throws UserNotFound
     {
         for (User user : users) {
             if (user.getId().equals(id))
                 return user;
         }
-        throw new Exception(UserConfig.USER_NOT_FOUND_ERROR);
+        throw new UserNotFound();
     }
 
     public void registerNewUser(User newUser)

@@ -1,6 +1,10 @@
 package models.data.bid;
 
 import config.BidConfig;
+import exceptions.AlreadyBid;
+import exceptions.InvalidBidRequirements;
+import exceptions.ProjectNotFound;
+import exceptions.UserNotFound;
 import models.data.project.Project;
 import models.data.project.ProjectRepo;
 import models.data.user.User;
@@ -20,8 +24,16 @@ public class BidRepo {
         bids = new ArrayList<Bid>();
     }
 
-    private boolean isValidToAdd(Bid newBid) throws Exception
-    {
+    public boolean hasAlreadyBid(Bid newBid) {
+        ArrayList<Bid> bids = this.getBidsOfProject(newBid.getProjectID());
+        for(Bid bid : bids) {
+            if(bid.getBiddingUserName().equals(newBid.getBiddingUserName()))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean isValidToAdd(Bid newBid) throws UserNotFound, ProjectNotFound {
         UserRepo userRepo = UserRepo.getInstance();
         ProjectRepo projectRepo = ProjectRepo.getInstance();
 
@@ -30,16 +42,12 @@ public class BidRepo {
 
         return project.checkSkillSatisfaction(user.getSkills()) && project.checkBudgetSatisfaction(newBid.getOffer());
     }
-    public void addNewBid(Bid newBid) {
-        try{
-            if(isValidToAdd(newBid))
-                bids.add(newBid);
-            else
-                throw new Exception(BidConfig.BID_ADD_ERROR);
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    public void addNewBid(Bid newBid) throws AlreadyBid, InvalidBidRequirements, UserNotFound, ProjectNotFound {
+        if(hasAlreadyBid(newBid))
+            throw new AlreadyBid();
+        if(!isValidToAdd(newBid))
+            throw new InvalidBidRequirements();
+        bids.add(newBid);
     }
     public ArrayList<Bid> getBidsOfProject(String projectID)
     {
