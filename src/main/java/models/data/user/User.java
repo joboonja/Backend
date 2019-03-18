@@ -1,8 +1,10 @@
 package models.data.user;
 
 import config.UserConfig;
+import exceptions.DuplicateSkill;
 import models.data.skill.UserSkill;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
@@ -28,8 +30,10 @@ public class User {
         this.bio = bio;
         this.profilePictureURL = UserConfig.DEFAULT_PROFILE_PIC_URL;
     }
-    public void addSkill(UserSkill skill)
+    public void addSkill(UserSkill skill) throws Exception
     {
+        if(skills.containsKey(skill.getName()))
+            throw new DuplicateSkill(skill.getName());
         skills.put(skill.getName(), skill);
     }
 
@@ -79,5 +83,9 @@ public class User {
                 return true;
         }
         return false;
+    }
+    public ArrayList<UserSkill> getSkillsList()
+    {
+        return new ArrayList<>(skills.values());
     }
 }
