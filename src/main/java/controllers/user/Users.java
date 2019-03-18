@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class UsersServices {
+public class Users {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<User> getAllUsers()
     {

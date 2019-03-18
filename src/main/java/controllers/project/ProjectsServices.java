@@ -1,8 +1,8 @@
 package controllers.project;
 
 import config.ProjectServiceConfig;
-import controllers.exceptions.ProjectNotFound;
-import controllers.exceptions.UserNotFound;
+import exceptions.ProjectNotFound;
+import exceptions.UserNotFound;
 import models.data.project.Project;
 import models.data.project.ProjectRepo;
 import models.services.project.ProjectService;

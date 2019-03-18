@@ -1,7 +1,9 @@
 package controllers.skill;
 
 
-import models.data.skill.Skill;
+import config.ProjectServiceConfig;
+import exceptions.DuplicateSkill;
+import exceptions.UserNotFound;
 import models.data.skill.UserSkill;
 import models.services.skill.SkillService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,19 +22,20 @@ public class SkillsServices {
         try {
             return SkillService.getSkillsOfUser();
         } catch (Exception e) {
-            e.printStackTrace();
+           throw new UserNotFound(ProjectServiceConfig.USER_ID);
         }
     }
 
     @RequestMapping(value = "/skills", method = RequestMethod.POST)
-    public ArrayList<UserSkill> addSkill(@RequestParam("skill") String skillName)
+    public ArrayList<UserSkill> addSkill(@RequestParam("skill") String skillName) throws Exception
     {
         try {
             SkillService.addSkill(skillName);
-//            SkillService.
+            return SkillService.getSkillsOfUser();
         } catch (Exception e) {
-
+            if(e instanceof DuplicateSkill)
+                throw e;
+            throw new UserNotFound(ProjectServiceConfig.USER_ID);
         }
-
     }
 }
