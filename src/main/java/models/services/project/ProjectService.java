@@ -1,5 +1,6 @@
 package models.services.project;
 
+import exceptions.ProjectNotFound;
 import models.data.bid.Bid;
 import models.data.bid.BidRepo;
 import models.data.project.Project;
@@ -10,7 +11,7 @@ import models.data.user.UserRepo;
 import java.util.ArrayList;
 
 public class ProjectService {
-    public static Project getProjectByID(String id) throws Exception {
+    public static Project getProjectByID(String id) throws ProjectNotFound {
         return ProjectRepo.getInstance().getProjectByProjectID(id);
     }
 

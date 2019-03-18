@@ -1,6 +1,7 @@
 package models.data.user;
 
 import config.UserConfig;
+import exceptions.DuplicateEndorse;
 import exceptions.DuplicateSkill;
 import models.data.skill.UserSkill;
 
@@ -30,7 +31,7 @@ public class User {
         this.bio = bio;
         this.profilePictureURL = UserConfig.DEFAULT_PROFILE_PIC_URL;
     }
-    public void addSkill(UserSkill skill) throws Exception
+    public void addSkill(UserSkill skill) throws DuplicateSkill
     {
         if(skills.containsKey(skill.getName()))
             throw new DuplicateSkill();
@@ -70,7 +71,7 @@ public class User {
         skills.remove(name);
     }
 
-    public void endorse(String skillName) throws Exception
+    public void endorse(String skillName) throws DuplicateEndorse
     {
         UserSkill userSkill = skills.get(skillName);
         userSkill.endorse(id);

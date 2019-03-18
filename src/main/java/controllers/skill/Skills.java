@@ -4,6 +4,7 @@ package controllers.skill;
 import config.ProjectServiceConfig;
 import exceptions.DuplicateEndorse;
 import exceptions.DuplicateSkill;
+import exceptions.ServerException;
 import exceptions.UserNotFound;
 import models.data.skill.UserSkill;
 import models.data.user.User;
@@ -20,48 +21,31 @@ public class Skills {
     @RequestMapping(value = "/skills", method = RequestMethod.GET)
     public ArrayList<UserSkill> getAllSkills() throws Exception
     {
-        try {
-            return SkillService.getSkillsOfUser();
-        } catch (Exception e) {
-           throw new UserNotFound();
-        }
+        return SkillService.getSkillsOfUser();
     }
 
     @RequestMapping(value = "/skills", method = RequestMethod.POST)
-    public ArrayList<UserSkill> addSkill(@RequestParam("skillName") String skillName) throws DuplicateSkill, UserNotFound
+    public ArrayList<UserSkill> addSkill(@RequestParam("skillName") String skillName)
+            throws UserNotFound, DuplicateSkill
     {
-        try {
-            SkillService.addSkill(skillName);
-            return SkillService.getSkillsOfUser();
-        } catch (Exception e) {
-            if(e instanceof DuplicateSkill)
-                throw (DuplicateSkill) e;
-            throw new UserNotFound();
-        }
+        SkillService.addSkill(skillName);
+        return SkillService.getSkillsOfUser();
     }
 
     @RequestMapping(value = "/skills/{skillName}", method = RequestMethod.DELETE)
     public void removeSkill(@PathVariable(value = "skillName") String skillName) throws UserNotFound
     {
-        try
-        {
-            User user = UserRepo.getInstance().getUserById(ProjectServiceConfig.USER_ID);
-            user.deleteSkill(skillName);
-        } catch (Exception e) {
-            throw new UserNotFound();
-        }
+        User user = UserRepo.getInstance().getUserById(ProjectServiceConfig.USER_ID);
+        user.deleteSkill(skillName);
     }
 
     @RequestMapping(value = "/skills/{userId}", method = RequestMethod.POST)
     public void endorseSkill(@PathVariable(value = "userId") String userID,
-                             @RequestParam("skillName") String skillName) throws DuplicateEndorse, UserNotFound
+                             @RequestParam("skillName") String skillName)
+                                throws DuplicateEndorse, UserNotFound
     {
-        try {
-            EndorseService.endorseUserSkill(userID, skillName);
-        } catch (Exception e) {
-            if(e instanceof DuplicateEndorse)
-                throw (DuplicateEndorse) e;
-            throw new UserNotFound();
-        }
+
+        EndorseService.endorseUserSkill(userID, skillName);
+
     }
 }

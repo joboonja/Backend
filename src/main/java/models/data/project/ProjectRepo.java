@@ -5,6 +5,7 @@ import config.ProjectConfig;
 import java.util.ArrayList;
 
 import exceptions.ProjectNotFound;
+import exceptions.UserNotFound;
 import models.data.user.User;
 import models.data.user.UserRepo;
 
@@ -52,7 +53,7 @@ public class ProjectRepo {
         projects.addAll(newProjects);
     }
 
-    public ArrayList<Project> getProjectsForUser(String userId) throws Exception {
+    public ArrayList<Project> getProjectsForUser(String userId) throws UserNotFound {
         ArrayList<Project> projectsForUser = new ArrayList<Project>();
         User user = UserRepo.getInstance().getUserById(userId);
         for(Project project : projects)

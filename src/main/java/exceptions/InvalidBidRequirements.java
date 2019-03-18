@@ -1,15 +1,12 @@
 package exceptions;
 
+import config.ExceptionsConfig;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE, reason = "You do not have the right requirements needed for this project.")  // 406
-public class InvalidBidRequirements extends RuntimeException {
+public class InvalidBidRequirements extends ServerException {
     public InvalidBidRequirements() {
-        super();
+        super(ExceptionsConfig.InvalidBidRequirementsStatus, ExceptionsConfig.InvalidBidRequirementsMsg);
     }
 
-    public InvalidBidRequirements(String id) {
-        super(id);
-    }
 }

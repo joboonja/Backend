@@ -21,7 +21,7 @@ public class UserSkill extends Skill {
     {
         return !peopleWhoEndrosed.contains(userID);
     }
-    public void endorse(String userID) throws Exception
+    public void endorse(String userID) throws DuplicateEndorse
     {
         if(canEndorse(userID)){
             peopleWhoEndrosed.add(userID);
