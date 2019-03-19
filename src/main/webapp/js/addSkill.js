@@ -19,8 +19,8 @@ function loadXMLDoc() {
         }
     };
 
-    const params ="skillName=" + document.querySelector('#skillName').value;
-
+    let params ="skillName=" + encodeURIComponent(document.getElementById("skillName").value);
+    console.log(params);
 
     xhttp.open("POST", "http://localhost:8080/skills", true);
     xhttp.setRequestHeader("Content-type",  "application/x-www-form-urlencoded");
