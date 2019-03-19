@@ -19,9 +19,11 @@ public class SkillService {
         if(user.haveSkill(skillName))
             throw new DuplicateSkill();
         ArrayList <Skill> notSubmitted = notSubmittedSkills(ProjectServiceConfig.USER_ID);
-        for(Skill skill: notSubmitted){
-            if(skillName.equals(skill.getName()))
+        for(Skill skill: notSubmitted) {
+            if (skillName.equals(skill.getName())) {
                 user.addSkill(new UserSkill(skillName, 0));
+                return ;
+            }
         }
         throw new InvalidSkill();
     }
