@@ -27,6 +27,7 @@ public class CORSFilter implements Filter {
         // Authorize (allow) all domains to consume the content
         ((HttpServletResponse) response).addHeader("Access-Control-Allow-Origin", "*");
         ((HttpServletResponse) response).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
+        ((HttpServletResponse) response).addHeader("Access-Control-Allow-Headers","content-type");
 
         HttpServletResponse resp = (HttpServletResponse) response;
 
