@@ -2,10 +2,7 @@ package controllers.skill;
 
 
 import config.ProjectServiceConfig;
-import exceptions.DuplicateEndorse;
-import exceptions.DuplicateSkill;
-import exceptions.ServerException;
-import exceptions.UserNotFound;
+import exceptions.*;
 import models.data.skill.UserSkill;
 import models.data.user.User;
 import models.data.user.UserRepo;
@@ -26,7 +23,7 @@ public class Skills {
 
     @RequestMapping(value = "/skills", method = RequestMethod.POST)
     public ArrayList<UserSkill> addSkill(@RequestParam("skillName") String skillName)
-            throws UserNotFound, DuplicateSkill
+            throws UserNotFound, DuplicateSkill, InvalidSkill
     {
         SkillService.addSkill(skillName);
         return SkillService.getSkillsOfUser();

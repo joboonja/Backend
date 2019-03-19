@@ -31,7 +31,7 @@ public class SkillRepo {
         return  false;
     }
 
-    public ArrayList<Skill> notSubmittedSkills(User user) throws Exception
+    public ArrayList<Skill> notSubmittedSkills(User user)
     {
 
         ArrayList<Skill> notSumbitted = new ArrayList<>();
