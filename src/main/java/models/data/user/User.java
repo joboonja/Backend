@@ -1,5 +1,6 @@
 package models.data.user;
 
+import config.ProjectServiceConfig;
 import config.UserConfig;
 import exceptions.DuplicateEndorse;
 import exceptions.DuplicateSkill;
@@ -29,7 +30,7 @@ public class User {
         this.lastName = lastName;
         this.jobTitle = jobTitle;
         this.bio = bio;
-        this.profilePictureURL = UserConfig.DEFAULT_PROFILE_PIC_URL;
+        this.profilePictureURL = id == ProjectServiceConfig.USER_ID ? UserConfig.MAIN_USER_PROFILE_PIC_URL : UserConfig.DEFAULT_PROFILE_PIC_URL;
     }
     public void addSkill(UserSkill skill) throws DuplicateSkill
     {
@@ -56,6 +57,10 @@ public class User {
 
     public String getBio() {
         return bio;
+    }
+
+    public String getProfilePictureURL() {
+        return profilePictureURL;
     }
 
     public void setProfilePictureURL(String profilePictureURL) {

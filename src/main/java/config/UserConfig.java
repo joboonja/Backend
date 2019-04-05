@@ -11,5 +11,5 @@ public class UserConfig {
     public static final String USER_NOT_FOUND_ERROR = "UserInfo not found.";
     public static final String USERNAME_ALREADY_EXISTS_ERROR = "This username already exists.";
     public static final String DEFAULT_PROFILE_PIC_URL = "";
-
+    public static final String MAIN_USER_PROFILE_PIC_URL = "https://www.morpht.com/sites/morpht/files/styles/landscape/public/dalibor-matura_1.jpg?itok=gxCAhwAV";
 }

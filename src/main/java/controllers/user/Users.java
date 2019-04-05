@@ -23,8 +23,7 @@ public class Users {
     }
 
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
-    public User getUser(@PathVariable(value = "userId") String userId) throws UserNotFound
-    {
+    public User getUser(@PathVariable(value = "userId") String userId) throws UserNotFound{
         return UserService.getUserByID(userId);
     }
 }
