@@ -22,10 +22,10 @@ public class Skills {
     }
 
     @RequestMapping(value = "/skills", method = RequestMethod.POST)
-    public ArrayList<UserSkill> addSkill(@RequestParam("skillName") String skillName)
+    public ArrayList<UserSkill> addSkill(@RequestBody final AddSkillRequest request)
             throws UserNotFound, DuplicateSkill, InvalidSkill
     {
-        SkillService.addSkill(skillName);
+        SkillService.addSkill(request.getSkillName());
         return SkillService.getSkillsOfUser();
     }
 
