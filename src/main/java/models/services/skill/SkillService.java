@@ -37,4 +37,9 @@ public class SkillService {
         return user.getSkillsList();
 
     }
+    public static ArrayList<UserSkill> getSkillsOfUser(String userID) throws UserNotFound {
+        User user = UserRepo.getInstance().getUserById(userID);
+        return user.getSkillsList();
+
+    }
 }

@@ -31,4 +31,7 @@ public class UserSkill extends Skill {
             throw new DuplicateEndorse();
     }
 
+    public ArrayList<String> getPeopleWhoEndrosed() {
+        return peopleWhoEndrosed;
+    }
 }

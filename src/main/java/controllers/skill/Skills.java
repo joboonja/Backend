@@ -2,6 +2,8 @@ package controllers.skill;
 
 
 import config.ProjectServiceConfig;
+import controllers.skill.Requests.AddSkillRequest;
+import controllers.skill.Requests.EndorseRequest;
 import exceptions.*;
 import models.data.skill.Skill;
 import models.data.skill.UserSkill;
@@ -11,7 +13,6 @@ import models.services.skill.EndorseService;
 import models.services.skill.SkillService;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @RestController
@@ -39,12 +40,13 @@ public class Skills {
     }
 
     @RequestMapping(value = "/skills/{userId}", method = RequestMethod.POST)
-    public void endorseSkill(@PathVariable(value = "userId") String userID,
-                             @RequestParam("skillName") String skillName)
+    public ArrayList<UserSkill> endorseSkill(@PathVariable(value = "userId") String userID,
+                             @RequestBody final EndorseRequest request)
                                 throws DuplicateEndorse, UserNotFound
     {
 
-        EndorseService.endorseUserSkill(userID, skillName);
+        EndorseService.endorseUserSkill(userID, request.getSkillName());
+        return SkillService.getSkillsOfUser(userID);
 
     }
 
@@ -53,4 +55,7 @@ public class Skills {
     {
         return SkillService.notSubmittedSkills(ProjectServiceConfig.USER_ID);
     }
+
+
+
 }
