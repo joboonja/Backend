@@ -3,6 +3,7 @@ package controllers.skill;
 
 import config.ProjectServiceConfig;
 import exceptions.*;
+import models.data.skill.Skill;
 import models.data.skill.UserSkill;
 import models.data.user.User;
 import models.data.user.UserRepo;
@@ -10,6 +11,7 @@ import models.services.skill.EndorseService;
 import models.services.skill.SkillService;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @RestController
@@ -44,5 +46,11 @@ public class Skills {
 
         EndorseService.endorseUserSkill(userID, skillName);
 
+    }
+
+    @RequestMapping(value = "/endorsableSkills", method = RequestMethod.GET)
+    public ArrayList<Skill> getAllEndorsableSkills() throws Exception
+    {
+        return SkillService.notSubmittedSkills(ProjectServiceConfig.USER_ID);
     }
 }
