@@ -1,6 +1,8 @@
 package models.data.project;
 
+import config.ProjectServiceConfig;
 import models.data.skill.UserSkill;
+import models.services.project.ProjectService;
 
 import java.util.HashMap;
 
@@ -66,5 +68,10 @@ public class Project {
 
     public String getImageURL() {
         return imageURL;
+    }
+
+
+    public Boolean getHasBidOrNot() throws Exception {
+        return ProjectService.hasBidOnProject(this.id, ProjectServiceConfig.USER_ID);
     }
 }
