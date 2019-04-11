@@ -1,6 +1,7 @@
 package controllers.user;
 
 import config.JspConfig;
+import controllers.user.responses.AllUsersResponse;
 import exceptions.UserNotFound;
 import models.data.user.User;
 import models.data.user.UserRepo;
@@ -17,9 +18,14 @@ import java.util.List;
 @RestController
 public class Users {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public List<User> getAllUsers()
+    public List<AllUsersResponse> getAllUsers()
     {
-        return UserRepo.getInstance().getAllUsers();
+        List<AllUsersResponse> response = new ArrayList<>();
+        for(User user : UserRepo.getInstance().getAllUsers())
+        {
+            response.add(new AllUsersResponse(user));
+        }
+        return response;
     }
 
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)

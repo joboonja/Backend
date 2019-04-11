@@ -50,10 +50,14 @@ public class UserRepo {
         String firstName = "علی";
         String lastName = "شریف‌زاده";
         HashMap<String, UserSkill> skills = new HashMap<String, UserSkill>();
-        skills.put("HTML", new UserSkill("HTML", 5));
-        skills.put("Javascript", new UserSkill("Javascript", 4));
-        skills.put("C++", new UserSkill("C++", 2));
-        skills.put("Java", new UserSkill("Java", 3));
+        skills.put("HTML", new UserSkill("HTML", 10));
+        skills.put("Javascript", new UserSkill("Javascript", 13));
+        skills.put("C++", new UserSkill("C++", 12));
+        skills.put("Java", new UserSkill("Java", 11));
+        skills.put("MySQL", new UserSkill("MySQL", 11));
+        skills.put("Linux", new UserSkill("Linux", 11));
+        skills.put("C", new UserSkill("C", 11));
+        skills.put("Node.js", new UserSkill("Node.js", 11));
         String jobTitle = "برنامه‌نویس وب";
         String bio = "روی سنگ قبرم بنویسید: خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت";
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
@@ -93,6 +97,44 @@ public class UserRepo {
         jobTitle = "برنامه‌نویس";
         bio = "دنبال کار می‌گردم";
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+
+        id = "5";
+        firstName = "بهار";
+        lastName = "باطنی";
+        skills = new HashMap<String, UserSkill>();
+        skills.put("HTML", new UserSkill("HTML", 5));
+        skills.put("Javascript", new UserSkill("Javascript", 4));
+        skills.put("C++", new UserSkill("C++", 2));
+        skills.put("Java", new UserSkill("Java", 3));
+        jobTitle = "دانشجو";
+        bio = "دنبال کار می‌گردم";
+        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+
+        id = "6";
+        firstName = "امیرحسین";
+        lastName = "احمدی";
+        skills = new HashMap<String, UserSkill>();
+        skills.put("HTML", new UserSkill("HTML", 5));
+        skills.put("Javascript", new UserSkill("Javascript", 4));
+        skills.put("C++", new UserSkill("C++", 2));
+        skills.put("Java", new UserSkill("Java", 3));
+        jobTitle = "دانشجو";
+        bio = "دنبال کار می‌گردم";
+        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+
+        id = "7";
+        firstName = "غلام";
+        lastName = "حسنی";
+        skills = new HashMap<String, UserSkill>();
+        skills.put("HTML", new UserSkill("HTML", 5));
+        skills.put("Javascript", new UserSkill("Javascript", 4));
+        skills.put("C++", new UserSkill("C++", 2));
+        skills.put("Java", new UserSkill("Java", 3));
+        jobTitle = "برنامه‌نویس وب";
+        bio = "دنبال کار می‌گردم";
+        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+
+
 
     }
 }
