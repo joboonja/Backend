@@ -14,11 +14,12 @@ public class Project {
     private long budget;
     private HashMap<String, UserSkill> skills;
     private long deadline;
+    private long creationDate;
 //    private List <Bid> bids;
 //    private UserInfo winner;
 
 
-    public Project(String id, String title, String description, String imageURL, long budget, HashMap<String, UserSkill> skills, long deadline)
+    public Project(String id, String title, String description, String imageURL, long budget, HashMap<String, UserSkill> skills, long deadline, long creationDate)
     {
         this.id = id;
         this.title = title;
@@ -27,6 +28,7 @@ public class Project {
         this.budget = budget;
         this.skills = skills;
         this.deadline = deadline;
+        this.creationDate = creationDate;
     }
 
     public String getTitle()
@@ -70,6 +72,7 @@ public class Project {
         return imageURL;
     }
 
+    public long getCreationDate() {return creationDate; }
 
     public Boolean getHasBidOrNot() throws Exception {
         return ProjectService.hasBidOnProject(this.id, ProjectServiceConfig.USER_ID);

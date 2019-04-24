@@ -46,6 +46,7 @@ public class JSONDecoder {
         String imageURL = projectInfo.getString(ProjectConfig.IMAGE_URL);
         long budget = projectInfo.getLong(ProjectConfig.BUDGET);
         long deadline = projectInfo.getLong(ProjectConfig.DEADLINE);
+        long creationDate = projectInfo.getLong(ProjectConfig.CREATION_DATE);
         HashMap<String, UserSkill> skills = new HashMap<String, UserSkill>();
         JSONArray skillsInfo;
         skillsInfo = (JSONArray) projectInfo.get(ProjectConfig.SKILLS);
@@ -55,7 +56,7 @@ public class JSONDecoder {
             skills.put(skill.getName(), skill);
         }
 
-        return new Project(id, title, description, imageURL, budget, skills, deadline);
+        return new Project(id, title, description, imageURL, budget, skills, deadline, creationDate);
     }
 
     public static Bid decodeJSONtoBid(JSONObject bidInfo) throws Exception{
