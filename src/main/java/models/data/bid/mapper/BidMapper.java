@@ -1,10 +1,12 @@
-package models.data.bid;
+package models.data.bid.mapper;
 
-import config.BidConfig;
 import exceptions.AlreadyBid;
 import exceptions.InvalidBidRequirements;
 import exceptions.ProjectNotFound;
 import exceptions.UserNotFound;
+import models.data.bid.Bid;
+import models.data.mapper.IMapper;
+import models.data.mapper.Mapper;
 import models.data.project.Project;
 import models.data.project.ProjectRepo;
 import models.data.user.User;
@@ -12,16 +14,17 @@ import models.data.user.UserRepo;
 
 import java.util.ArrayList;
 
-public class BidRepo {
-    private static BidRepo ourInstance = new BidRepo();
+public class BidMapper extends Mapper<Bid, String> {
+    private static BidMapper ourInstance = new BidMapper();
     private ArrayList<Bid> bids;
 
-    public static BidRepo getInstance() {
+    public static BidMapper getInstance() {
         return ourInstance;
     }
 
-    private BidRepo() {
+    private BidMapper() {
         bids = new ArrayList<Bid>();
+
     }
 
     public boolean hasAlreadyBid(Bid newBid) {
@@ -64,4 +67,8 @@ public class BidRepo {
         return bids.size() == 0;
     }
 
+    @Override
+    protected String getCreateTableStatement() {
+        return "";
+    }
 }

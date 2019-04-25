@@ -7,7 +7,7 @@ import exceptions.InvalidBidRequirements;
 import exceptions.ProjectNotFound;
 import exceptions.UserNotFound;
 import models.data.bid.Bid;
-import models.data.bid.BidRepo;
+import models.data.bid.mapper.BidMapper;
 import models.data.project.Project;
 import models.data.project.ProjectRepo;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class Bids {
     {
         Project project = ProjectRepo.getInstance().getProjectByProjectID(request.getProjectID());
         Bid newBid = new Bid(ProjectServiceConfig.USER_ID, project, request.getBidAmount());
-        BidRepo.getInstance().addNewBid(newBid);
+        BidMapper.getInstance().addNewBid(newBid);
         return newBid;
     }
 }

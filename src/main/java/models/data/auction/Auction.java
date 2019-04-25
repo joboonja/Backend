@@ -1,7 +1,7 @@
 package models.data.auction;
 
 import models.data.bid.Bid;
-import models.data.bid.BidRepo;
+import models.data.bid.mapper.BidMapper;
 import config.AuctionConfig;
 import models.data.project.Project;
 import models.data.project.ProjectRepo;
@@ -26,14 +26,14 @@ public class Auction {
         int maxAuctionRate = 0;
         boolean firstVisited = false;
         User winner = null;
-        BidRepo bidRepo = BidRepo.getInstance();
+        BidMapper bidMapper = BidMapper.getInstance();
         UserRepo userRepo = UserRepo.getInstance();
         ProjectRepo projectRepo = ProjectRepo.getInstance();
 
         try {
             project = projectRepo.getProjectByProjectID(projectTitle);
 
-            for(Bid bid : bidRepo.getBidsOfProject(projectTitle)) {
+            for(Bid bid : bidMapper.getBidsOfProject(projectTitle)) {
 
                 user = userRepo.getUserById(bid.getBiddingUserName());
                 int auctionRate = calcAuctionFormula(user, project, bid);

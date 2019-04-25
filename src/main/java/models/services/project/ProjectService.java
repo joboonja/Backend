@@ -2,7 +2,7 @@ package models.services.project;
 
 import exceptions.ProjectNotFound;
 import models.data.bid.Bid;
-import models.data.bid.BidRepo;
+import models.data.bid.mapper.BidMapper;
 import models.data.project.Project;
 import models.data.project.ProjectRepo;
 import models.data.user.User;
@@ -22,7 +22,7 @@ public class ProjectService {
     }
 
     public static boolean hasBidOnProject(String project_id, String user_id) throws Exception {
-        ArrayList<Bid> bids = BidRepo.getInstance().getBidsOfProject(project_id);
+        ArrayList<Bid> bids = BidMapper.getInstance().getBidsOfProject(project_id);
         for(Bid bid : bids) {
             if(bid.getBiddingUserName().equals(user_id))
                 return true;
