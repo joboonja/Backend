@@ -21,8 +21,6 @@ public class ConnectionPool {
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName(ConnectionPoolConfig.driver);
         basicDataSource.setUrl(ConnectionPoolConfig.url);
-        basicDataSource.setUsername(ConnectionPoolConfig.username);
-        basicDataSource.setPassword(ConnectionPoolConfig.password);
         basicDataSource.setMinIdle(ConnectionPoolConfig.minPools);
         basicDataSource.setMaxIdle(ConnectionPoolConfig.maxPools);
         basicDataSource.setMaxOpenPreparedStatements(ConnectionPoolConfig.maxOpenPreparedStatement);

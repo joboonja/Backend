@@ -17,6 +17,22 @@ public class Initializer implements ServletContextListener {
         SkillInitializer.initSkills();
         ProjectInitializer.initProjects();
         UserRepo.getInstance().addDefaultUser();
+        try {
+            Statement stmt = null;
+            Connection conn = ConnectionPool.getInstance().getConnection();
+            stmt = conn.createStatement();
+
+            String sql = "CREATE TABLE REGISTRATION " +
+                    "(id INTEGER not NULL, " +
+                    " first VARCHAR(255), " +
+                    " last VARCHAR(255), " +
+                    " age INTEGER, " +
+                    " PRIMARY KEY ( id ))";
+
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
