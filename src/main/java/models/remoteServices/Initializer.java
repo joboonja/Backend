@@ -8,6 +8,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 @WebListener
 public class Initializer implements ServletContextListener {
@@ -16,11 +17,6 @@ public class Initializer implements ServletContextListener {
         SkillInitializer.initSkills();
         ProjectInitializer.initProjects();
         UserRepo.getInstance().addDefaultUser();
-        try {
-            Connection c = ConnectionPool.getInstance().getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
