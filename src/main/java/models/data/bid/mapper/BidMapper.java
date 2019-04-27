@@ -69,6 +69,8 @@ public class BidMapper extends Mapper<Bid, String> {
 
     @Override
     protected String getCreateTableStatement() {
-        return "";
+        return "CREATE TABLE BID(" +
+                "" +
+                ");";
     }
 }
