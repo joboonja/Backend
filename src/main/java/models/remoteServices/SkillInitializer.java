@@ -2,7 +2,7 @@ package models.remoteServices;
 
 import config.SkillsConfig;
 import models.data.skill.Skill;
-import models.data.skill.SkillRepo;
+import models.data.skill.mapper.SkillMapper;
 import tools.HttpRequest;
 import tools.JSONDecoder;
 
@@ -22,7 +22,7 @@ public class SkillInitializer {
     public static void initSkills()
     {
         ArrayList<Skill> skills = getSkills();
-        SkillRepo skillRepo =  SkillRepo.getInstance();
-        skillRepo.addNewSkills(skills);
+        SkillMapper skillMapper =  SkillMapper.getInstance();
+        skillMapper.addNewSkills(skills);
     }
 }

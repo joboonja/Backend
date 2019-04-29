@@ -53,16 +53,19 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     }
 
     @Override
-    protected String getCreateTableStatement() {
-        return "CREATE TABLE IF NOT EXISTS JoboonjaUser(" +
-                "uid CHAR(20), " +
+    protected ArrayList<String> getCreateTableStatement() {
+        ArrayList<String> statements = new ArrayList<String>();
+        String stmt1 = "CREATE TABLE IF NOT EXISTS JoboonjaUser(" +
+                "userId CHAR(20), " +
                 "firstName CHAR(20)," +
                 "lastName CHAR(20)," +
                 "profilePictureUrl TEXT," +
                 "bio TEXT," +
                 "jobTitle CHAR(50)," +
-                "PRIMARY KEY(uid)" +
+                "PRIMARY KEY(userId)" +
                 ");";
+        statements.add(stmt1);
+        return statements;
     }
 
     public void addDefaultUser()

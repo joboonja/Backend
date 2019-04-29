@@ -5,7 +5,7 @@ import exceptions.DuplicateSkill;
 import exceptions.InvalidSkill;
 import exceptions.UserNotFound;
 import models.data.skill.Skill;
-import models.data.skill.SkillRepo;
+import models.data.skill.mapper.SkillMapper;
 import models.data.skill.UserSkill;
 import models.data.user.User;
 import models.data.user.mapper.UserMapper;
@@ -30,7 +30,7 @@ public class SkillService {
     public static ArrayList<Skill> notSubmittedSkills(String userID) throws UserNotFound
     {
         User user = UserMapper.getInstance().getUserById(userID);
-        return SkillRepo.getInstance().notSubmittedSkills(user);
+        return SkillMapper.getInstance().notSubmittedSkills(user);
     }
     public static ArrayList<UserSkill> getSkillsOfUser() throws UserNotFound {
         User user = UserMapper.getInstance().getUserById(ProjectServiceConfig.USER_ID);
