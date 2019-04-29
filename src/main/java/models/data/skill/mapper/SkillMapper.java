@@ -5,6 +5,7 @@ import models.data.skill.Skill;
 import models.data.user.User;
 
 import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
@@ -16,6 +17,11 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
     }
 
     private SkillMapper() {
+        try {
+            createTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         skills = new ArrayList<Skill>();
     }
 
