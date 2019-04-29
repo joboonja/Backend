@@ -1,5 +1,6 @@
 package models.data.bid.mapper;
 
+import config.DatabaseErrorsConfig;
 import exceptions.AlreadyBid;
 import exceptions.InvalidBidRequirements;
 import exceptions.ProjectNotFound;
@@ -11,6 +12,7 @@ import models.data.project.ProjectRepo;
 import models.data.user.User;
 import models.data.user.mapper.UserMapper;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BidMapper extends Mapper<Bid, String> {
@@ -23,6 +25,12 @@ public class BidMapper extends Mapper<Bid, String> {
 
     private BidMapper() {
         bids = new ArrayList<Bid>();
+        try {
+            createTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(DatabaseErrorsConfig.canNotCreateTable("Bid"));
+        }
     }
 
     public boolean hasAlreadyBid(Bid newBid) {
@@ -67,6 +75,13 @@ public class BidMapper extends Mapper<Bid, String> {
 
     @Override
     protected String getCreateTableStatement() {
-        return "";
+        return "CREATE TABLE IF NOT EXISTS Bid(" +
+                "    offer BIGINT," +
+                "    userId CHAR(20) NOT NULL," +
+                "    projectId CHAR(20) NOT NULL," +
+                "    FOREIGN KEY(userId) REFERENCES JoboonjaUser ON DELETE CASCADE," +
+                "    FOREIGN KEY(projectId) REFERENCES Project ON DELETE CASCADE," +
+                "    PRIMARY KEY(offer)" +
+                ");";
     }
 }
