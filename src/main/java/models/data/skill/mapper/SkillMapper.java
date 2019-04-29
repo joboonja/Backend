@@ -5,6 +5,7 @@ import models.data.skill.Skill;
 import models.data.user.User;
 
 import java.lang.reflect.Array;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -51,6 +52,21 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
                 notSumbitted.add(skill);
         }
         return notSumbitted;
+    }
+
+    @Override
+    protected String getFindStatement() {
+        return null;
+    }
+
+    @Override
+    protected Skill convertResultSetToDomainModel(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    protected String getDeleteStatement() {
+        return null;
     }
 
     @Override

@@ -6,6 +6,7 @@ import models.data.mapper.Mapper;
 import models.data.skill.UserSkill;
 import models.data.user.User;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +51,21 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
     public ArrayList<User> getAllUsers() {
         return users;
+    }
+
+    @Override
+    protected String getFindStatement() {
+        return null;
+    }
+
+    @Override
+    protected User convertResultSetToDomainModel(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    protected String getDeleteStatement() {
+        return null;
     }
 
     @Override
