@@ -84,7 +84,8 @@ public class ProjectMapper extends Mapper<Project, String> {
                 "    imageUrl TEXT," +
                 "    projectDescription TEXT," +
                 "    budget BIGINT," +
-                "    deadline BIGINT" +
+                "    deadline BIGINT," +
+                "    PRIMARY KEY(pid)" +
                 ");");
         statements.add("CREATE TABLE IF NOT EXISTS ProjectRequires(" +
                 "    usid CHAR(20)," +
