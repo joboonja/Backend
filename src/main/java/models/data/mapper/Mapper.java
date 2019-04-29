@@ -41,7 +41,7 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
              PreparedStatement stmt = con.prepareStatement(getCreateTableStatement());
         ) {
             try {
-                stmt.executeQuery();
+                stmt.execute();
             } catch (SQLException ex) {
                 System.out.println();
                 throw ex;
