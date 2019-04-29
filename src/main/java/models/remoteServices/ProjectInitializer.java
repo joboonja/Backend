@@ -3,7 +3,7 @@ package models.remoteServices;
 
 import config.ProjectConfig;
 import models.data.project.Project;
-import models.data.project.ProjectRepo;
+import models.data.project.mapper.ProjectMapper;
 import tools.HttpRequest;
 import tools.JSONDecoder;
 
@@ -23,7 +23,7 @@ public class ProjectInitializer {
     public static void initProjects()
     {
         ArrayList<Project> projects = getProjects();
-        ProjectRepo projectRepo = ProjectRepo.getInstance();
-        projectRepo.addNewProjects(projects);
+        ProjectMapper projectMapper = ProjectMapper.getInstance();
+        projectMapper.addNewProjects(projects);
     }
 }

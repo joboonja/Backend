@@ -2,6 +2,8 @@ package models.remoteServices;
 
 import models.data.bid.mapper.BidMapper;
 import models.data.connectionPool.ConnectionPool;
+import models.data.project.mapper.ProjectMapper;
+import models.data.user.UserRepo;
 import models.data.user.mapper.UserMapper;
 
 import javax.servlet.ServletContextEvent;
@@ -16,6 +18,7 @@ public class Initializer implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         BidMapper.getInstance();
+        ProjectMapper.getInstance();
         SkillInitializer.initSkills();
         ProjectInitializer.initProjects();
         UserMapper.getInstance().addDefaultUser();

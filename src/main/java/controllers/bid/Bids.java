@@ -9,7 +9,7 @@ import exceptions.UserNotFound;
 import models.data.bid.Bid;
 import models.data.bid.mapper.BidMapper;
 import models.data.project.Project;
-import models.data.project.ProjectRepo;
+import models.data.project.mapper.ProjectMapper;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +18,7 @@ public class Bids {
     public Bid addBid(@RequestBody final AddBidRequest request)
             throws AlreadyBid, InvalidBidRequirements, UserNotFound, ProjectNotFound
     {
-        Project project = ProjectRepo.getInstance().getProjectByProjectID(request.getProjectID());
+        Project project = ProjectMapper.getInstance().getProjectByProjectID(request.getProjectID());
         Bid newBid = new Bid(ProjectServiceConfig.USER_ID, project, request.getBidAmount());
         BidMapper.getInstance().addNewBid(newBid);
         return newBid;

@@ -8,7 +8,7 @@ import exceptions.UserNotFound;
 import models.data.bid.Bid;
 import models.data.mapper.Mapper;
 import models.data.project.Project;
-import models.data.project.ProjectRepo;
+import models.data.project.mapper.ProjectMapper;
 import models.data.user.User;
 import models.data.user.mapper.UserMapper;
 
@@ -44,10 +44,9 @@ public class BidMapper extends Mapper<Bid, String> {
 
     private boolean isValidToAdd(Bid newBid) throws UserNotFound, ProjectNotFound {
         UserMapper userMapper = UserMapper.getInstance();
-        ProjectRepo projectRepo = ProjectRepo.getInstance();
-
+        ProjectMapper projectMapper = ProjectMapper.getInstance();
+        Project project = projectMapper.getProjectByProjectID(newBid.getProjectID());
         User user = userMapper.getUserById(newBid.getBiddingUserName());
-        Project project = projectRepo.getProjectByProjectID(newBid.getProjectID());
 
         return project.checkSkillSatisfaction(user.getSkills()) && project.checkBudgetSatisfaction(newBid.getOffer());
     }
@@ -74,14 +73,16 @@ public class BidMapper extends Mapper<Bid, String> {
     }
 
     @Override
-    protected String getCreateTableStatement() {
-        return "CREATE TABLE IF NOT EXISTS Bid(" +
+    protected ArrayList<String> getCreateTableStatement() {
+        ArrayList<String> statements = new ArrayList<>();
+        statements.add ("CREATE TABLE IF NOT EXISTS Bid(" +
                 "    offer BIGINT," +
                 "    userId CHAR(20) NOT NULL," +
-                "    projectId CHAR(20) NOT NULL," +
+                "    pid CHAR(20) NOT NULL," +
                 "    FOREIGN KEY(userId) REFERENCES JoboonjaUser ON DELETE CASCADE," +
-                "    FOREIGN KEY(projectId) REFERENCES Project ON DELETE CASCADE," +
-                "    PRIMARY KEY(offer)" +
-                ");";
+                "    FOREIGN KEY(pid) REFERENCES Project ON DELETE CASCADE," +
+                "    PRIMARY KEY(offer, userId, pid)" +
+                ");");
+        return statements;
     }
 }
