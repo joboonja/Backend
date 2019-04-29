@@ -1,24 +1,32 @@
-package models.data.project;
+package models.data.project.mapper;
 
 import config.ProjectConfig;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import exceptions.ProjectNotFound;
 import exceptions.UserNotFound;
+import models.data.mapper.Mapper;
+import models.data.project.Project;
 import models.data.user.User;
 import models.data.user.UserRepo;
 
-public class ProjectRepo {
-    private static ProjectRepo ourInstance = new ProjectRepo();
+public class ProjectMapper extends Mapper<Project, String> {
+    private static ProjectMapper ourInstance = new ProjectMapper();
     private ArrayList<Project> projects ;
 
-    public static ProjectRepo getInstance() {
+    public static ProjectMapper getInstance() {
         return ourInstance;
     }
 
-    private ProjectRepo() {
+    private ProjectMapper() {
         projects = new ArrayList<Project>();
+        try {
+            createTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Project getProjectByProjectID(String projectID) throws ProjectNotFound
@@ -66,4 +74,25 @@ public class ProjectRepo {
         return projectsForUser;
     }
 
+    @Override
+    protected ArrayList<String> getCreateTableStatement() {
+        ArrayList<String> statements = new ArrayList<>();
+        statements.add("CREATE TABLE IF NOT EXISTS Project(" +
+                "    creationDate BIGINT," +
+                "    pid CHAR(20)," +
+                "    title CHAR(20)," +
+                "    imageUrl TEXT," +
+                "    projectDescription TEXT," +
+                "    budget BIGINT," +
+                "    deadline BIGINT" +
+                ");");
+        statements.add("CREATE TABLE IF NOT EXISTS ProjectRequires(" +
+                "    usid CHAR(20)," +
+                "    pid CHAR(20)," +
+                "    FOREIGN KEY(usid) REFERENCES UserSkill ON DELETE CASCADE," +
+                "    FOREIGN KEY(pid) REFERENCES Project ON DELETE CASCADE," +
+                "    PRIMARY KEY(usid, pid)" +
+                ");");
+        return statements;
+    }
 }

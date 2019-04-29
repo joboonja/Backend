@@ -4,7 +4,7 @@ import exceptions.ProjectNotFound;
 import models.data.bid.Bid;
 import models.data.bid.mapper.BidMapper;
 import models.data.project.Project;
-import models.data.project.ProjectRepo;
+import models.data.project.mapper.ProjectMapper;
 import models.data.user.User;
 import models.data.user.UserRepo;
 
@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 public class ProjectService {
     public static Project getProjectByID(String id) throws ProjectNotFound {
-        return ProjectRepo.getInstance().getProjectByProjectID(id);
+        return ProjectMapper.getInstance().getProjectByProjectID(id);
     }
 
     public static boolean hasSkillsForProject(String project_id, String user_id) throws Exception {
-        Project project = ProjectRepo.getInstance().getProjectByProjectID(project_id);
+        Project project = ProjectMapper.getInstance().getProjectByProjectID(project_id);
         User user = UserRepo.getInstance().getUserById(user_id);
         return project.checkSkillSatisfaction(user.getSkills());
     }

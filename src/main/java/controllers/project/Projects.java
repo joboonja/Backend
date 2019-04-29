@@ -4,7 +4,7 @@ import config.ProjectServiceConfig;
 import exceptions.ProjectNotFound;
 import exceptions.UserNotFound;
 import models.data.project.Project;
-import models.data.project.ProjectRepo;
+import models.data.project.mapper.ProjectMapper;
 import models.services.project.ProjectService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +18,7 @@ public class Projects {
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
     public ArrayList <Project> getAllProjects() throws UserNotFound
     {
-        return ProjectRepo.getInstance().getProjectsForUser(ProjectServiceConfig.USER_ID);
+        return ProjectMapper.getInstance().getProjectsForUser(ProjectServiceConfig.USER_ID);
     }
 
     @RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)

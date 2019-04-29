@@ -2,7 +2,9 @@ package models.data.mapper;
 
 import models.data.connectionPool.ConnectionPool;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,13 +37,17 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
 //        }
 //    }
 
-    abstract protected String getCreateTableStatement();
+    abstract protected ArrayList<String> getCreateTableStatement();
     public void createTable() throws SQLException {
         try (Connection con = ConnectionPool.getConnection();
-             PreparedStatement stmt = con.prepareStatement(getCreateTableStatement());
+             Statement stmt = con.createStatement();
         ) {
             try {
-                stmt.execute();
+                for (String stmtString :
+                        getCreateTableStatement()) {
+                    stmt.addBatch(stmtString);
+                }
+                stmt.executeBatch();
             } catch (SQLException ex) {
                 System.out.println();
                 throw ex;

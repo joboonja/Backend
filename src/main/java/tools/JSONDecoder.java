@@ -8,7 +8,7 @@ import config.UserConfig;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import models.data.project.Project;
-import models.data.project.ProjectRepo;
+import models.data.project.mapper.ProjectMapper;
 import models.data.auction.Auction;
 import models.data.skill.Skill;
 import models.data.skill.UserSkill;
@@ -64,7 +64,7 @@ public class JSONDecoder {
         String projectID = bidInfo.getString(BidConfig.PROJECT_ID);
         long offer = bidInfo.getInt(BidConfig.BID_AMOUNT);
 
-        return new Bid(biddingUserName, ProjectRepo.getInstance().getProjectByProjectID(projectID), offer);
+        return new Bid(biddingUserName, ProjectMapper.getInstance().getProjectByProjectID(projectID), offer);
     }
 
     public static UserSkill decodeJSONtoUserSkill(JSONObject skillInfo){
