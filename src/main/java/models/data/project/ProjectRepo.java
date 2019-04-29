@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import exceptions.ProjectNotFound;
 import exceptions.UserNotFound;
 import models.data.user.User;
-import models.data.user.UserRepo;
+import models.data.user.mapper.UserMapper;
 
 public class ProjectRepo {
     private static ProjectRepo ourInstance = new ProjectRepo();
@@ -33,7 +33,7 @@ public class ProjectRepo {
     public Project getProjectByIDForUser(String projectID, String userID) throws Exception
     {
         Project project = getProjectByProjectID(projectID);
-        User user = UserRepo.getInstance().getUserById(userID);
+        User user = UserMapper.getInstance().getUserById(userID);
         if(!project.checkSkillSatisfaction(user.getSkills()))
             throw new Exception(ProjectConfig.USER_CANNOT_SATISFY_PROJECT);
         return project;
@@ -55,7 +55,7 @@ public class ProjectRepo {
 
     public ArrayList<Project> getProjectsForUser(String userId) throws UserNotFound {
         ArrayList<Project> projectsForUser = new ArrayList<Project>();
-        User user = UserRepo.getInstance().getUserById(userId);
+        User user = UserMapper.getInstance().getUserById(userId);
         for(Project project : projects)
         {
             if(project.checkSkillSatisfaction(user.getSkills()))

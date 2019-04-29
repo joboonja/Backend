@@ -1,7 +1,7 @@
 package models.remoteServices;
 
 import models.data.connectionPool.ConnectionPool;
-import models.data.user.UserRepo;
+import models.data.user.mapper.UserMapper;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -16,7 +16,7 @@ public class Initializer implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         SkillInitializer.initSkills();
         ProjectInitializer.initProjects();
-        UserRepo.getInstance().addDefaultUser();
+        UserMapper.getInstance().addDefaultUser();
     }
 
     @Override

@@ -5,12 +5,11 @@ import exceptions.InvalidBidRequirements;
 import exceptions.ProjectNotFound;
 import exceptions.UserNotFound;
 import models.data.bid.Bid;
-import models.data.mapper.IMapper;
 import models.data.mapper.Mapper;
 import models.data.project.Project;
 import models.data.project.ProjectRepo;
 import models.data.user.User;
-import models.data.user.UserRepo;
+import models.data.user.mapper.UserMapper;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,6 @@ public class BidMapper extends Mapper<Bid, String> {
 
     private BidMapper() {
         bids = new ArrayList<Bid>();
-
     }
 
     public boolean hasAlreadyBid(Bid newBid) {
@@ -37,10 +35,10 @@ public class BidMapper extends Mapper<Bid, String> {
     }
 
     private boolean isValidToAdd(Bid newBid) throws UserNotFound, ProjectNotFound {
-        UserRepo userRepo = UserRepo.getInstance();
+        UserMapper userMapper = UserMapper.getInstance();
         ProjectRepo projectRepo = ProjectRepo.getInstance();
 
-        User user = userRepo.getUserByUsername(newBid.getBiddingUserName());
+        User user = userMapper.getUserById(newBid.getBiddingUserName());
         Project project = projectRepo.getProjectByProjectID(newBid.getProjectID());
 
         return project.checkSkillSatisfaction(user.getSkills()) && project.checkBudgetSatisfaction(newBid.getOffer());

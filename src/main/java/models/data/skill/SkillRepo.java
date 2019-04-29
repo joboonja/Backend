@@ -1,7 +1,6 @@
 package models.data.skill;
 
 import models.data.user.User;
-import models.data.user.UserRepo;
 
 import java.util.ArrayList;
 

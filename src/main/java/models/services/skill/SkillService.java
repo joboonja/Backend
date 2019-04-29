@@ -8,14 +8,14 @@ import models.data.skill.Skill;
 import models.data.skill.SkillRepo;
 import models.data.skill.UserSkill;
 import models.data.user.User;
-import models.data.user.UserRepo;
+import models.data.user.mapper.UserMapper;
 
 import java.util.ArrayList;
 
 public class SkillService {
     public static void addSkill(String skillName) throws UserNotFound, DuplicateSkill, InvalidSkill
     {
-        User user = UserRepo.getInstance().getUserById(ProjectServiceConfig.USER_ID);
+        User user = UserMapper.getInstance().getUserById(ProjectServiceConfig.USER_ID);
         if(user.haveSkill(skillName))
             throw new DuplicateSkill();
         ArrayList <Skill> notSubmitted = notSubmittedSkills(ProjectServiceConfig.USER_ID);
@@ -29,16 +29,16 @@ public class SkillService {
     }
     public static ArrayList<Skill> notSubmittedSkills(String userID) throws UserNotFound
     {
-        User user = UserRepo.getInstance().getUserById(userID);
+        User user = UserMapper.getInstance().getUserById(userID);
         return SkillRepo.getInstance().notSubmittedSkills(user);
     }
     public static ArrayList<UserSkill> getSkillsOfUser() throws UserNotFound {
-        User user = UserRepo.getInstance().getUserById(ProjectServiceConfig.USER_ID);
+        User user = UserMapper.getInstance().getUserById(ProjectServiceConfig.USER_ID);
         return user.getSkillsList();
 
     }
     public static ArrayList<UserSkill> getSkillsOfUser(String userID) throws UserNotFound {
-        User user = UserRepo.getInstance().getUserById(userID);
+        User user = UserMapper.getInstance().getUserById(userID);
         return user.getSkillsList();
 
     }

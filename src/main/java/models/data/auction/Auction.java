@@ -7,7 +7,7 @@ import models.data.project.Project;
 import models.data.project.ProjectRepo;
 import models.data.skill.UserSkill;
 import models.data.user.User;
-import models.data.user.UserRepo;
+import models.data.user.mapper.UserMapper;
 
 import java.util.HashMap;
 
@@ -27,7 +27,7 @@ public class Auction {
         boolean firstVisited = false;
         User winner = null;
         BidMapper bidMapper = BidMapper.getInstance();
-        UserRepo userRepo = UserRepo.getInstance();
+        UserMapper userMapper = UserMapper.getInstance();
         ProjectRepo projectRepo = ProjectRepo.getInstance();
 
         try {
@@ -35,7 +35,7 @@ public class Auction {
 
             for(Bid bid : bidMapper.getBidsOfProject(projectTitle)) {
 
-                user = userRepo.getUserById(bid.getBiddingUserName());
+                user = userMapper.getUserById(bid.getBiddingUserName());
                 int auctionRate = calcAuctionFormula(user, project, bid);
                 if (!firstVisited) {
                     maxAuctionRate = auctionRate;
