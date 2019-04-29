@@ -1,23 +1,31 @@
-package models.data.user;
+package models.data.user.mapper;
 
 import config.UserConfig;
 import exceptions.UserNotFound;
+import models.data.mapper.Mapper;
 import models.data.skill.UserSkill;
+import models.data.user.User;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserRepo {
-    private static UserRepo ourInstance = new UserRepo();
+public class UserMapper extends Mapper<User, String> implements IUserMapper{
+    private static UserMapper ourInstance = new UserMapper();
 
     private ArrayList<User> users = new ArrayList<User>();
 
-    public static UserRepo getInstance() {
+    public static UserMapper getInstance() {
         return ourInstance;
     }
 
-    private UserRepo() {
+    private UserMapper() {
         users = new ArrayList<User>();
+        try {
+            createTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public User getUserById(String id) throws UserNotFound
@@ -42,6 +50,19 @@ public class UserRepo {
 
     public ArrayList<User> getAllUsers() {
         return users;
+    }
+
+    @Override
+    protected String getCreateTableStatement() {
+        return "CREATE TABLE IF NOT EXISTS JoboonjaUser(" +
+                "uid CHAR(20), " +
+                "firstName CHAR(20)," +
+                "lastName CHAR(20)," +
+                "profilePictureUrl TEXT," +
+                "bio TEXT," +
+                "jobTitle CHAR(50)," +
+                "PRIMARY KEY(uid)" +
+                ");";
     }
 
     public void addDefaultUser()
@@ -133,8 +154,6 @@ public class UserRepo {
         jobTitle = "برنامه‌نویس وب";
         bio = "دنبال کار می‌گردم";
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
-
-
 
     }
 }

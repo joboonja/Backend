@@ -10,7 +10,7 @@ import exceptions.UserNotFound;
 import models.data.mapper.Mapper;
 import models.data.project.Project;
 import models.data.user.User;
-import models.data.user.UserRepo;
+import models.data.user.mapper.UserMapper;
 
 public class ProjectMapper extends Mapper<Project, String> {
     private static ProjectMapper ourInstance = new ProjectMapper();
@@ -41,7 +41,7 @@ public class ProjectMapper extends Mapper<Project, String> {
     public Project getProjectByIDForUser(String projectID, String userID) throws Exception
     {
         Project project = getProjectByProjectID(projectID);
-        User user = UserRepo.getInstance().getUserById(userID);
+        User user = UserMapper.getInstance().getUserById(userID);
         if(!project.checkSkillSatisfaction(user.getSkills()))
             throw new Exception(ProjectConfig.USER_CANNOT_SATISFY_PROJECT);
         return project;
@@ -63,7 +63,7 @@ public class ProjectMapper extends Mapper<Project, String> {
 
     public ArrayList<Project> getProjectsForUser(String userId) throws UserNotFound {
         ArrayList<Project> projectsForUser = new ArrayList<Project>();
-        User user = UserRepo.getInstance().getUserById(userId);
+        User user = UserMapper.getInstance().getUserById(userId);
         for(Project project : projects)
         {
             if(project.checkSkillSatisfaction(user.getSkills()))

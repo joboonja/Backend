@@ -6,7 +6,7 @@ import models.data.bid.mapper.BidMapper;
 import models.data.project.Project;
 import models.data.project.mapper.ProjectMapper;
 import models.data.user.User;
-import models.data.user.UserRepo;
+import models.data.user.mapper.UserMapper;
 
 import java.util.ArrayList;
 
@@ -16,8 +16,11 @@ public class ProjectService {
     }
 
     public static boolean hasSkillsForProject(String project_id, String user_id) throws Exception {
+
         Project project = ProjectMapper.getInstance().getProjectByProjectID(project_id);
-        User user = UserRepo.getInstance().getUserById(user_id);
+        User user = UserMapper.getInstance().getUserById(user_id);
+
+
         return project.checkSkillSatisfaction(user.getSkills());
     }
 

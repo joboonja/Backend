@@ -10,7 +10,7 @@ import models.data.mapper.Mapper;
 import models.data.project.Project;
 import models.data.project.mapper.ProjectMapper;
 import models.data.user.User;
-import models.data.user.UserRepo;
+import models.data.user.mapper.UserMapper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,11 +43,10 @@ public class BidMapper extends Mapper<Bid, String> {
     }
 
     private boolean isValidToAdd(Bid newBid) throws UserNotFound, ProjectNotFound {
-        UserRepo userRepo = UserRepo.getInstance();
+        UserMapper userMapper = UserMapper.getInstance();
         ProjectMapper projectMapper = ProjectMapper.getInstance();
-
-        User user = userRepo.getUserById(newBid.getBiddingUserName());
         Project project = projectMapper.getProjectByProjectID(newBid.getProjectID());
+        User user = userMapper.getUserById(newBid.getBiddingUserName());
 
         return project.checkSkillSatisfaction(user.getSkills()) && project.checkBudgetSatisfaction(newBid.getOffer());
     }
