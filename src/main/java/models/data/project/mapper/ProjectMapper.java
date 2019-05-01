@@ -37,12 +37,15 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
     public Project getProjectByProjectID(String projectID) throws ProjectNotFound
     {
-        for (Project project : projects)
-        {
-            if (project.getID().equals(projectID))
-                return project;
+        Project project = null;
+        try {
+            project = find(projectID);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        throw new ProjectNotFound();
+        if(project == null)
+            throw new ProjectNotFound();
+        return project;
     }
     public Project getProjectByIDForUser(String projectID, String userID) throws Exception
     {

@@ -8,10 +8,11 @@ import models.data.project.mapper.ProjectMapper;
 import models.data.user.User;
 import models.data.user.mapper.UserMapper;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProjectService {
-    public static Project getProjectByID(String id) throws ProjectNotFound {
+    public static Project getProjectByID(String id) throws ProjectNotFound{
         return ProjectMapper.getInstance().getProjectByProjectID(id);
     }
 
