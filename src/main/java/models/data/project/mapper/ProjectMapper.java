@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import exceptions.ProjectNotFound;
 import exceptions.UserNotFound;
@@ -61,9 +62,13 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             }
         projects.add(newProject);
     }
-    public void addNewProjects(ArrayList<Project> newProjects)
+    public void addNewProjects(ArrayList<Project> newProjects) throws SQLException
     {
         projects.addAll(newProjects);
+        for (Project newProject:
+             projects) {
+            insert(newProject);
+        }
     }
 
     public ArrayList<Project> getProjectsForUser(String userId) throws UserNotFound {
@@ -78,22 +83,6 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         }
         return projectsForUser;
     }
-
-    @Override
-    protected String getFindStatement() {
-        return null;
-    }
-
-    @Override
-    protected Project convertResultSetToDomainModel(ResultSet rs) throws SQLException {
-        return null;
-    }
-
-    @Override
-    protected String getDeleteStatement() {
-        return null;
-    }
-
     @Override
     protected ArrayList<String> getCreateTableStatement() {
         ArrayList<String> statements = new ArrayList<>();
@@ -117,6 +106,37 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                 ");");
         return statements;
     }
+
+    @Override
+    protected String getFindStatement() {
+        return "SELECT *" +
+                "FROM Project , ProjectRequires " +
+                "WHERE Project.pid = ? AND Project.pid = ProjectRequires.pid" +
+                ";";
+    }
+
+    @Override
+    protected Project convertResultSetToDomainModel(ResultSet rs) throws SQLException {
+        long creationDate = rs.getLong(1);
+        String pid = rs.getString(2);
+        String title = rs.getString(3);
+        String imageUrl = rs.getString(4);
+        String description = rs.getString(5);
+        long budget = rs.getLong(6);
+        long deadline = rs.getLong(7);
+        HashMap<String, UserSkill> skills = new HashMap<>();
+        do {
+            skills.put(rs.getString(9), new UserSkill(rs.getString(9), rs.getInt(8)));
+        }while(rs.next());
+        return new Project(pid, title, description, imageUrl, budget, skills, deadline, creationDate);
+    }
+
+    @Override
+    protected String getDeleteStatement() {
+        return null;
+    }
+
+
 
     private String getInsertStatement() {
         return "INSERT INTO Project ( creationDate, pid, title, imageUrl, projectDescription," +
@@ -146,9 +166,9 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     }
     @Override
     public void insert(Project project) throws SQLException {
-        //TODO : after adding find
-//        if(find(project.getID()) != null)
-//            return;
+//        TODO : after adding find
+        if(find(project.getID()) != null)
+            return;
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement pStmt = con.prepareStatement(getInsertStatement());
              PreparedStatement rStmt = con.prepareStatement(getRequireInsertStatement())

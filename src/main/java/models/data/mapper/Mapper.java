@@ -1,5 +1,6 @@
 package models.data.mapper;
 
+import exceptions.ProjectNotFound;
 import models.data.connectionPool.ConnectionPool;
 
 import javax.swing.plaf.nimbus.State;
@@ -22,7 +23,8 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
             ResultSet resultSet;
             try {
                 resultSet = stmt.executeQuery();
-                resultSet.next();
+                if(!resultSet.next())
+                    return null;
                 return convertResultSetToDomainModel(resultSet);
             } catch (SQLException ex) {
                 System.out.println("error in Mapper.findByID query.");
