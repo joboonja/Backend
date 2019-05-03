@@ -173,7 +173,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         id = "4";
         firstName = "ممد";
         lastName = "فراهانی";
-        skills = new HashMap<String, UserSkill>();
+        skills = new HashMap<>();
         skills.put("HTML", new UserSkill("HTML", 5, "4"));
         skills.put("Javascript", new UserSkill("Javascript", 4, "4"));
         skills.put("C++", new UserSkill("C++", 2, "4"));
@@ -185,7 +185,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         id = "5";
         firstName = "بهار";
         lastName = "باطنی";
-        skills = new HashMap<String, UserSkill>();
+        skills = new HashMap<>();
         skills.put("HTML", new UserSkill("HTML", 5, "5"));
         skills.put("Javascript", new UserSkill("Javascript", 4, "5"));
         skills.put("C++", new UserSkill("C++", 2, "5"));
@@ -197,7 +197,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         id = "6";
         firstName = "امیرحسین";
         lastName = "احمدی";
-        skills = new HashMap<String, UserSkill>();
+        skills = new HashMap<>();
         skills.put("HTML", new UserSkill("HTML", 5, "6"));
         skills.put("Javascript", new UserSkill("Javascript", 4, "6"));
         skills.put("C++", new UserSkill("C++", 2, "6"));
@@ -209,7 +209,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         id = "7";
         firstName = "غلام";
         lastName = "حسنی";
-        skills = new HashMap<String, UserSkill>();
+        skills = new HashMap<>();
         skills.put("HTML", new UserSkill("HTML", 5, "7"));
         skills.put("Javascript", new UserSkill("Javascript", 4, "7"));
         skills.put("C++", new UserSkill("C++", 2, "7"));
