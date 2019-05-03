@@ -63,7 +63,7 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
 
     protected String getUserSkillsStatement() {
         return "SELECT " + DatabaseColumns.USER_SKILL +
-                "FROM UserSkill S, Knows N WHERE N.userId = ? AND S.usid = N.usid AND S.name = N.name";
+                "FROM UserSkill S WHERE S.usid = ?";
     }
 
     @Override
