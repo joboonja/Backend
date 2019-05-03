@@ -64,7 +64,7 @@ public class JSONDecoder {
         String projectID = bidInfo.getString(BidConfig.PROJECT_ID);
         long offer = bidInfo.getInt(BidConfig.BID_AMOUNT);
 
-        return new Bid(biddingUserName, ProjectMapper.getInstance().getProjectByProjectID(projectID), offer);
+        return new Bid(biddingUserName, projectID, offer);
     }
 
     public static UserSkill decodeJSONtoUserSkill(JSONObject skillInfo){

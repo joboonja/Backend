@@ -6,27 +6,28 @@ import exceptions.InvalidBidRequirements;
 import exceptions.ProjectNotFound;
 import exceptions.UserNotFound;
 import models.data.bid.Bid;
+import models.data.connectionPool.ConnectionPool;
 import models.data.mapper.Mapper;
 import models.data.project.Project;
 import models.data.project.mapper.ProjectMapper;
 import models.data.user.User;
 import models.data.user.mapper.UserMapper;
+import sun.jvm.hotspot.ui.tree.SimpleTreeModel;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class BidMapper extends Mapper<Bid, String> {
+public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
     private static BidMapper ourInstance = new BidMapper();
-    private ArrayList<Bid> bids;
 
     public static BidMapper getInstance() {
         return ourInstance;
     }
 
     private BidMapper() {
-        bids = new ArrayList<Bid>();
         try {
             createTable();
         } catch (SQLException e) {
@@ -35,16 +36,47 @@ public class BidMapper extends Mapper<Bid, String> {
         }
     }
 
-    private boolean hasAlreadyBid(Bid newBid) {
-        ArrayList<Bid> bids = this.getBidsOfProject(newBid.getProjectID());
-        for(Bid bid : bids) {
-            if(bid.getBiddingUserName().equals(newBid.getBiddingUserName()))
-                return true;
-        }
-        return false;
+    private String getHasAlreadyBidStatement()
+    {
+        return "SELECT * " +
+                "FROM Bid " +
+                "WHERE Bid.userId = ? ";
     }
 
-    private boolean isValidToAdd(Bid newBid) throws UserNotFound, ProjectNotFound {
+    @Override
+    public boolean hasAlreadyBid(Bid newBid) throws SQLException{
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(getHasAlreadyBidStatement())
+        ) {
+            stmt.setString(1, newBid.getBiddingUserName());
+            ResultSet resultSet;
+            resultSet = stmt.executeQuery();
+            return resultSet.next();
+        }
+    }
+
+    private String getHasBidOnProjectStatement()
+    {
+        return "SELECT * " +
+                "FROM Bid " +
+                "WHERE Bid.pid = ? AND Bid.userId = ? ;";
+    }
+    @Override
+    public boolean hasBidOnProject(String projectId, String userId) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(getHasBidOnProjectStatement())
+        ) {
+            stmt.setString(1, projectId);
+            stmt.setString(2, userId);
+            ResultSet resultSet;
+            resultSet = stmt.executeQuery();
+            return resultSet.next();
+        }
+    }
+
+    @Override
+    public boolean isValidToAdd(Bid newBid) throws UserNotFound, ProjectNotFound {
+        ProjectMapper projectMapper = ProjectMapper.getInstance();
         UserMapper userMapper = UserMapper.getInstance();
         ProjectMapper projectMapper = ProjectMapper.getInstance();
         Project project = projectMapper.getProjectByProjectID(newBid.getProjectID());
@@ -52,36 +84,31 @@ public class BidMapper extends Mapper<Bid, String> {
 
         return project.checkSkillSatisfaction(user.getSkills()) && project.checkBudgetSatisfaction(newBid.getOffer());
     }
+
     public void addNewBid(Bid newBid) throws AlreadyBid, InvalidBidRequirements, UserNotFound, ProjectNotFound {
-        if(hasAlreadyBid(newBid))
-            throw new AlreadyBid();
-        if(!isValidToAdd(newBid))
-            throw new InvalidBidRequirements();
-        bids.add(newBid);
-    }
-    public ArrayList<Bid> getBidsOfProject(String projectID)
-    {
-        ArrayList<Bid> bidsOfProject = new ArrayList<Bid>();
-        for(Bid bid : bids)
+        try {
+            if (hasAlreadyBid(newBid))
+                throw new AlreadyBid();
+            if (!isValidToAdd(newBid))
+                throw new InvalidBidRequirements();
+            insert(newBid);
+        } catch (SQLException e)
         {
-            if(bid.getProjectID().equals(projectID))
-                bidsOfProject.add(bid);
+            e.printStackTrace();
         }
-        return bidsOfProject;
     }
-    public boolean isEmpty()
-    {
-        return bids.size() == 0;
-    }
+
 
     @Override
     protected String getFindStatement() {
-        return null;
+        return "SELECT offer, userId, pid" +
+                "FROM Bid, Project " +
+                "WHERE Bid.pid = Project.pid AND Project.pid = ?;";
     }
 
     @Override
     protected Bid convertResultSetToDomainModel(ResultSet rs) throws SQLException {
-        return null;
+        return new Bid(rs.getString(2), rs.getString(3), rs.getLong(1));
     }
 
 
@@ -101,11 +128,14 @@ public class BidMapper extends Mapper<Bid, String> {
 
     @Override
     public String getInsertStatement() {
-        return null;
+        return "INSERT INTO Bid(offer, userId, pid) " +
+                "VALUES(?, ?, ?);";
     }
 
     @Override
     public void fillInsertStatement(PreparedStatement stmt, Bid object) throws SQLException {
-
+        stmt.setLong(1, object.getOffer());
+        stmt.setString(2, object.getBiddingUserName());
+        stmt.setString(3, object.getProjectID());
     }
 }

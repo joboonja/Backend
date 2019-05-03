@@ -138,7 +138,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Javascript", new UserSkill("Javascript", 13));
         skills.put("C++", new UserSkill("C++", 12));
         skills.put("Java", new UserSkill("Java", 11));
-        skills.put("MySQL", new UserSkill("MySQL", 11));
+        skills.put("SQL", new UserSkill("SQL", 11));
         skills.put("Linux", new UserSkill("Linux", 11));
         skills.put("C", new UserSkill("C", 11));
         skills.put("Node.js", new UserSkill("Node.js", 11));

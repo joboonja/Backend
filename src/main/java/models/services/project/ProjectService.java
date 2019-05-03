@@ -16,12 +16,7 @@ public class ProjectService {
         return ProjectMapper.getInstance().getProjectByProjectID(id);
     }
 
-    public static boolean hasBidOnProject(String project_id, String user_id) throws Exception {
-        ArrayList<Bid> bids = BidMapper.getInstance().getBidsOfProject(project_id);
-        for(Bid bid : bids) {
-            if(bid.getBiddingUserName().equals(user_id))
-                return true;
-        }
-        return false;
+    public static boolean hasBidOnProject(String projectId, String userId) throws Exception {
+        return BidMapper.getInstance().hasBidOnProject(projectId, userId);
     }
 }
