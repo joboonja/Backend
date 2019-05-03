@@ -10,7 +10,7 @@ import tools.JSONDecoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ProjectInitializer {
+public class ProjectInitializer implements Runnable{
     private static ArrayList<Project> getProjects()
     {
         String projectsInfo = null;
@@ -30,5 +30,9 @@ public class ProjectInitializer {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    @Override
+    public void run() {
+        initProjects();
     }
 }

@@ -39,8 +39,8 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
     private String getHasAlreadyBidStatement()
     {
         return "SELECT * " +
-                "FROM Bid " +
-                "WHERE Bid.userId = ? ";
+                "FROM Bid, Project " +
+                "WHERE Bid.userId = ? AND Bid.pid = Project.pid AND Project.pid = ? ";
     }
 
     @Override
@@ -49,6 +49,7 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
              PreparedStatement stmt = con.prepareStatement(getHasAlreadyBidStatement())
         ) {
             stmt.setString(1, newBid.getBiddingUserName());
+            stmt.setString(2, newBid.getProjectID());
             ResultSet resultSet;
             resultSet = stmt.executeQuery();
             return resultSet.next();
