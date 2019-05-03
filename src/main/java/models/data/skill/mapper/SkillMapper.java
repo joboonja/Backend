@@ -4,6 +4,7 @@ import config.DatabaseColumns;
 import models.data.connectionPool.ConnectionPool;
 import models.data.mapper.Mapper;
 import models.data.skill.Skill;
+import models.data.skill.UserSkill;
 import models.data.user.User;
 
 import java.lang.reflect.Array;
@@ -48,6 +49,17 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
 
     public ArrayList<Skill> getNotSubmittedSkills(String userId) throws SQLException {
         return findListForUser(userId, getNotSubmittedSkillsStatement());
+    }
+
+    @Override
+    public void insertUserSkill(UserSkill userskill) throws SQLException {
+
+    }
+
+    @Override
+    public String getInsertUserSkillStatement() {
+        return "INSERT INTO UserSkill (usid, points, name) " +
+                "VALUES(? , ?, ?) ";
     }
 
     public ArrayList<Skill> getUserSkills(String userId) throws SQLException {

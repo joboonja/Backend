@@ -27,7 +27,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     }
 
     private ProjectMapper() {
-        projects = new ArrayList<Project>();
+        projects = new ArrayList<>();
         try {
             createTable();
         } catch (SQLException e) {

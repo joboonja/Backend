@@ -2,7 +2,9 @@ package models.data.skill;
 
 import exceptions.DuplicateEndorse;
 import exceptions.DuplicateSkill;
+import models.data.project.Project;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserSkill extends Skill {
@@ -29,6 +31,10 @@ public class UserSkill extends Skill {
         }
         else
             throw new DuplicateEndorse();
+    }
+
+    void insert(UserSkill userskill) throws SQLException{
+
     }
 
     public ArrayList<String> getPeopleWhoEndrosed() {
