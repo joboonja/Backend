@@ -2,6 +2,7 @@ package models.data.project.mapper;
 
 import config.ProjectConfig;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -72,6 +73,21 @@ public class ProjectMapper extends Mapper<Project, String> {
             }
         }
         return projectsForUser;
+    }
+
+    @Override
+    protected String getFindStatement() {
+        return null;
+    }
+
+    @Override
+    protected Project convertResultSetToDomainModel(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    protected String getDeleteStatement() {
+        return null;
     }
 
     @Override

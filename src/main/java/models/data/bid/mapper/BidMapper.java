@@ -12,6 +12,7 @@ import models.data.project.mapper.ProjectMapper;
 import models.data.user.User;
 import models.data.user.mapper.UserMapper;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -70,6 +71,21 @@ public class BidMapper extends Mapper<Bid, String> {
     public boolean isEmpty()
     {
         return bids.size() == 0;
+    }
+
+    @Override
+    protected String getFindStatement() {
+        return null;
+    }
+
+    @Override
+    protected Bid convertResultSetToDomainModel(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    protected String getDeleteStatement() {
+        return null;
     }
 
     @Override

@@ -2,11 +2,8 @@ package models.data.mapper;
 
 import models.data.connectionPool.ConnectionPool;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class Mapper<T, I> implements IMapper<T, I> {
 

@@ -1,14 +1,20 @@
 package models.data.user.mapper;
 
+import config.DatabaseColumns;
 import config.UserConfig;
 import exceptions.UserNotFound;
+import models.data.connectionPool.ConnectionPool;
 import models.data.mapper.Mapper;
 import models.data.skill.UserSkill;
 import models.data.user.User;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class UserMapper extends Mapper<User, String> implements IUserMapper{
     private static UserMapper ourInstance = new UserMapper();
@@ -53,6 +59,53 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     }
 
     @Override
+    public List<UserSkill> findUserSkills(String userId) throws SQLException{
+        try (Connection con = ConnectionPool.getConnection();
+             Statement stmt = con.createStatement();
+        ) {
+            ResultSet resultSet;
+            try {
+                String query = "SELECT " + DatabaseColumns.USER_SKILL + "FROM UserSkill WHERE usid = " + userId;
+                resultSet = stmt.executeQuery(query);
+                resultSet.next();
+                //TODO: return statement
+//                return convertResultSetToDomainModel(resultSet);
+                return null;
+            } catch (SQLException ex) {
+                System.out.println();
+                throw ex;
+            }
+        }
+    }
+
+    @Override
+    public String getInsertStatement() {
+        return "INSERT ";
+    }
+
+    @Override
+    public void insert(User user) {
+
+    }
+
+    @Override
+    protected String getFindStatement() {
+        return "SELECT " + DatabaseColumns.USER_COLUMNS +
+                " FROM JoboonjaUser" +
+                " WHERE id = ?";
+    }
+
+    @Override
+    protected User convertResultSetToDomainModel(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    protected String getDeleteStatement() {
+        return null;
+    }
+
+    @Override
     protected ArrayList<String> getCreateTableStatement() {
         ArrayList<String> statements = new ArrayList<String>();
         String stmt1 = "CREATE TABLE IF NOT EXISTS JoboonjaUser(" +
@@ -64,15 +117,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
                 "jobTitle CHAR(50)," +
                 "PRIMARY KEY(userId)" +
                 ");";
-        String stmt2 = "CREATE TABLE IF NOT EXISTS userKnows(" +
-                "userId CHAR(20)," +
-                "name CHAR(20)," +
-                "usid CHAR(20)," +
-                "PRIMARY KEY(userId, name, usid)," +
-                "FOREIGN KEY(userId) REFERENCES JoboonjaUser on DELETE CASCADE," +
-                "FOREIGN KEY (name, usid) REFERENCES UserSkill on DELETE CASCADE" +
-            ");";
-        String stmt3 = "CREATE TABLE IF NOT EXISTS endorsement(" +
+        String stmt2 = "CREATE TABLE IF NOT EXISTS Endorsement(" +
                 "userId CHAR(20)," +
                 "name CHAR(20)," +
                 "usid CHAR(20)," +
@@ -82,7 +127,6 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
                 ");";
         statements.add(stmt1);
         statements.add(stmt2);
-        statements.add(stmt3);
         return statements;
     }
 
@@ -177,4 +221,5 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
 
     }
+
 }
