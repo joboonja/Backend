@@ -47,24 +47,6 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             throw new ProjectNotFound();
         return project;
     }
-    public Project getProjectByIDForUser(String projectID, String userID) throws Exception
-    {
-        Project project = getProjectByProjectID(projectID);
-        User user = UserMapper.getInstance().getUserById(userID);
-        if(!project.checkSkillSatisfaction(user.getSkills()))
-            throw new Exception(ProjectConfig.USER_CANNOT_SATISFY_PROJECT);
-        return project;
-    }
-
-    public void addNewProject(Project newProject)
-    {
-        for (Project project : projects)
-            if (project.getTitle().equals(project.getTitle())){
-                System.out.println(ProjectConfig.PROJECT_TITLE_ALREADY_EXISTS_ERROR);
-                return;
-            }
-        projects.add(newProject);
-    }
     public void addNewProjects(ArrayList<Project> newProjects) throws SQLException
     {
         projects.addAll(newProjects);
@@ -112,10 +94,32 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
     @Override
     protected String getFindStatement() {
-        return "SELECT *" +
+        return "SELECT " + ProjectConfig.PROJECT_FIND_COLOUMNS("Project")+ " " +
                 "FROM Project , ProjectRequires " +
-                "WHERE Project.pid = ? AND Project.pid = ProjectRequires.pid" +
+                "WHERE Project.pid = ?" +
                 ";";
+    }
+    private String getFindRequirementsStatement()
+    {
+        return "SELECT " + ProjectConfig.PROJECT_REQ_FIND_COLOUMNS("R") + " " +
+                "FROM Project P , ProjectRequires R " +
+                "WHERE P.pid = R.pid AND P.pid = ? ";
+    }
+    @Override
+    public HashMap<String, UserSkill> findProjectRequires(String projectId) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(getFindRequirementsStatement());
+        ) {
+            stmt.setString(1, projectId);
+            ResultSet rs;
+            rs = stmt.executeQuery();
+            HashMap<String, UserSkill> skills = new HashMap<>();
+            while(rs.next())
+            {
+                skills.put(rs.getString(1), new UserSkill(rs.getString(1), rs.getInt(2)));
+            }
+            return skills;
+        }
     }
 
     @Override
@@ -127,10 +131,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         String description = rs.getString(5);
         long budget = rs.getLong(6);
         long deadline = rs.getLong(7);
-        HashMap<String, UserSkill> skills = new HashMap<>();
-        do {
-            skills.put(rs.getString(9), new UserSkill(rs.getString(9), rs.getInt(8)));
-        }while(rs.next());
+        HashMap<String, UserSkill> skills = findProjectRequires(pid);
         return new Project(pid, title, description, imageUrl, budget, skills, deadline, creationDate);
     }
 
@@ -167,32 +168,59 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         stmt.setString(2, userSkill.getName());
         stmt.setString(3, project.getID());
     }
+
     @Override
     public void insert(Project project) throws SQLException {
-//        TODO : after adding find
         if(find(project.getID()) != null)
             return;
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement pStmt = con.prepareStatement(getInsertStatement());
              PreparedStatement rStmt = con.prepareStatement(getRequireInsertStatement())
         ) {
-            try {
-                fillInsertStatement(pStmt, project);
-                pStmt.execute();
+            fillInsertStatement(pStmt, project);
+            pStmt.execute();
 
-                con.setAutoCommit(false);
-                for(UserSkill userSkill : project.getSkills().values())
-                {
-                    fillInsertRequireStatement(rStmt, userSkill, project);
-                    rStmt.addBatch();
-                }
-                rStmt.executeBatch();
-                con.commit();
-
-            } catch (SQLException ex) {
-                System.out.println("error in Mapper.deleteByID query.");
-                throw ex;
+            con.setAutoCommit(false);
+            for(UserSkill userSkill : project.getSkills().values())
+            {
+                fillInsertRequireStatement(rStmt, userSkill, project);
+                rStmt.addBatch();
             }
+            rStmt.executeBatch();
+            con.commit();
         }
     }
+
+
+    private String getFindByUserIdStatement()
+    {
+        return "SELECT "+ ProjectConfig.PROJECT_FIND_COLOUMNS("P") +"\n" +
+                "FROM Project P, ProjectRequires R\n" +
+                "WHERE R.pid = P.pid AND NOT EXISTS ( SELECT *\n" +
+                "                 FROM ProjectRequires R1\n" +
+                "                 WHERE P.pid = R1.pid\n" +
+                "                AND NOT EXISTS ( SELECT *\n" +
+                "                                    FROM UserSkill L\n" +
+                "                                    WHERE L.usid = ? AND R1.points <= L.points AND " +
+                "                                    L.name = R1.name\n" +
+                "                ))\n";
+    }
+    @Override
+    public ArrayList<Project> findUserProjects(String userId) throws SQLException{
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(getFindByUserIdStatement())
+        ) {
+            stmt.setString(1, userId.toString());
+            ArrayList<Project> projects = new ArrayList<>();
+            ResultSet resultSet;
+            resultSet = stmt.executeQuery();
+            while(resultSet.next())
+            {
+                projects.add(convertResultSetToDomainModel(resultSet));
+            }
+            return projects;
+        }
+    }
+
+
 }
