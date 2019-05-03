@@ -34,7 +34,7 @@ public class BidMapper extends Mapper<Bid, String> {
         }
     }
 
-    public boolean hasAlreadyBid(Bid newBid) {
+    private boolean hasAlreadyBid(Bid newBid) {
         ArrayList<Bid> bids = this.getBidsOfProject(newBid.getProjectID());
         for(Bid bid : bids) {
             if(bid.getBiddingUserName().equals(newBid.getBiddingUserName()))
@@ -83,10 +83,6 @@ public class BidMapper extends Mapper<Bid, String> {
         return null;
     }
 
-    @Override
-    protected String getDeleteStatement() {
-        return null;
-    }
 
     @Override
     protected ArrayList<String> getCreateTableStatement() {

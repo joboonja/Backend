@@ -20,14 +20,12 @@ import models.data.user.mapper.UserMapper;
 
 public class ProjectMapper extends Mapper<Project, String> implements IProjectMapper{
     private static ProjectMapper ourInstance = new ProjectMapper();
-    private ArrayList<Project> projects ;
 
     public static ProjectMapper getInstance() {
         return ourInstance;
     }
 
     private ProjectMapper() {
-        projects = new ArrayList<>();
         try {
             createTable();
         } catch (SQLException e) {
@@ -49,24 +47,18 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     }
     public void addNewProjects(ArrayList<Project> newProjects) throws SQLException
     {
-        projects.addAll(newProjects);
         for (Project newProject:
-             projects) {
+             newProjects) {
             insert(newProject);
         }
     }
 
     public ArrayList<Project> getProjectsForUser(String userId) throws UserNotFound {
-        ArrayList<Project> projectsForUser = new ArrayList<Project>();
-        User user = UserMapper.getInstance().getUserById(userId);
-        for(Project project : projects)
-        {
-            if(project.checkSkillSatisfaction(user.getSkills()))
-            {
-                projectsForUser.add(project);
-            }
+        try {
+            return findUserProjects(userId);
+        } catch (SQLException e) {
+            throw new UserNotFound();
         }
-        return projectsForUser;
     }
 
     @Override
@@ -136,10 +128,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         return new Project(pid, title, description, imageUrl, budget, skills, deadline, creationDate);
     }
 
-    @Override
-    protected String getDeleteStatement() {
-        return null;
-    }
+
 
 
 
@@ -208,19 +197,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     }
     @Override
     public ArrayList<Project> findUserProjects(String userId) throws SQLException{
-        try (Connection con = ConnectionPool.getConnection();
-             PreparedStatement stmt = con.prepareStatement(getFindByUserIdStatement())
-        ) {
-            stmt.setString(1, userId.toString());
-            ArrayList<Project> projects = new ArrayList<>();
-            ResultSet resultSet;
-            resultSet = stmt.executeQuery();
-            while(resultSet.next())
-            {
-                projects.add(convertResultSetToDomainModel(resultSet));
-            }
-            return projects;
-        }
+       return findListForUser(userId, getFindByUserIdStatement());
     }
 
 

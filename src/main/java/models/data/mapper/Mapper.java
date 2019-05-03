@@ -2,6 +2,8 @@ package models.data.mapper;
 
 import exceptions.ProjectNotFound;
 import models.data.connectionPool.ConnectionPool;
+import models.data.project.Project;
+import models.data.skill.UserSkill;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -45,20 +47,6 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
         }
     }
 
-    abstract protected String getDeleteStatement();
-    public void delete(I id) throws SQLException {
-        try (Connection con = ConnectionPool.getConnection();
-             PreparedStatement stmt = con.prepareStatement(getDeleteStatement())
-        ) {
-            stmt.setString(1, id.toString());
-            try {
-                stmt.execute();
-            } catch (SQLException ex) {
-                System.out.println("error in Mapper.deleteByID query.");
-                throw ex;
-            }
-        }
-    }
 
     abstract protected ArrayList<String> getCreateTableStatement();
     public void createTable() throws SQLException {
@@ -75,6 +63,17 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
                 System.out.println();
                 throw ex;
             }
+        }
+    }
+
+    abstract String getInsertStatement();
+    abstract void fillInsertStatement(PreparedStatement stmt, T object);
+    public void insert(T object) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(getInsertStatement())
+        ) {
+            fillInsertStatement(stmt, object);
+            stmt.execute();
         }
     }
 }

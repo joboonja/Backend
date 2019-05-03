@@ -92,10 +92,6 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
                 ")";
     }
 
-    @Override
-    protected String getDeleteStatement() {
-        return null;
-    }
 
     @Override
     protected ArrayList<String> getCreateTableStatement() {
