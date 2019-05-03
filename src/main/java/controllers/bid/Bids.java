@@ -12,6 +12,8 @@ import models.data.project.Project;
 import models.data.project.mapper.ProjectMapper;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+
 @RestController
 public class Bids {
     @RequestMapping(value = "/bids", method = RequestMethod.POST)

@@ -7,6 +7,7 @@ import models.data.project.mapper.ProjectMapper;
 import tools.HttpRequest;
 import tools.JSONDecoder;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProjectInitializer {
@@ -24,6 +25,10 @@ public class ProjectInitializer {
     {
         ArrayList<Project> projects = getProjects();
         ProjectMapper projectMapper = ProjectMapper.getInstance();
-        projectMapper.addNewProjects(projects);
+        try {
+            projectMapper.addNewProjects(projects);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

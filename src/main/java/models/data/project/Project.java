@@ -77,4 +77,8 @@ public class Project {
     public Boolean getHasBidOrNot() throws Exception {
         return ProjectService.hasBidOnProject(this.id, ProjectServiceConfig.USER_ID);
     }
+
+    public void setSkills(HashMap<String, UserSkill> skills) {
+        this.skills = skills;
+    }
 }
