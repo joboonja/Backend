@@ -53,7 +53,7 @@ public class Skills {
     @RequestMapping(value = "/endorsableSkills", method = RequestMethod.GET)
     public ArrayList<Skill> getAllEndorsableSkills() throws Exception
     {
-        return SkillService.notSubmittedSkills(ProjectServiceConfig.USER_ID);
+        return SkillService.getNotSubmittedSkills(ProjectServiceConfig.USER_ID);
     }
 
 

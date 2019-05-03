@@ -68,6 +68,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         }
         return projectsForUser;
     }
+
     @Override
     protected ArrayList<String> getCreateTableStatement() {
         ArrayList<String> statements = new ArrayList<>();

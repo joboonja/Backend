@@ -1,12 +1,16 @@
 package models.data.skill.mapper;
 
+import config.DatabaseColumns;
+import models.data.connectionPool.ConnectionPool;
 import models.data.mapper.Mapper;
 import models.data.skill.Skill;
 import models.data.user.User;
 
 import java.lang.reflect.Array;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
@@ -42,16 +46,9 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
         return  false;
     }
 
-    public ArrayList<Skill> notSubmittedSkills(User user)
-    {
-
-        ArrayList<Skill> notSumbitted = new ArrayList<>();
-        for (Skill skill:
-                skills) {
-            if(!user.haveSkill(skill.getName()))
-                notSumbitted.add(skill);
-        }
-        return notSumbitted;
+    public ArrayList<Skill> getNotSubmittedSkills(String userId) throws SQLException {
+        ArrayList<Skill> notSubmitted = new ArrayList<>();
+        return findListForUser(userId, getUserSkillsStatement());
     }
 
     @Override
@@ -62,6 +59,11 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
     @Override
     protected Skill convertResultSetToDomainModel(ResultSet rs) throws SQLException {
         return null;
+    }
+
+    protected String getUserSkillsStatement() {
+        return "SELECT " + DatabaseColumns.USER_SKILL +
+                "FROM UserSkill S WHERE S.usid = ?";
     }
 
     @Override
