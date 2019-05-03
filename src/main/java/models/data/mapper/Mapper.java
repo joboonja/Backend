@@ -1,10 +1,5 @@
 package models.data.mapper;
-
-import exceptions.ProjectNotFound;
 import models.data.connectionPool.ConnectionPool;
-import models.data.project.Project;
-import models.data.skill.UserSkill;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -47,9 +42,8 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
         }
     }
 
-
     abstract protected ArrayList<String> getCreateTableStatement();
-    public void createTable() throws SQLException {
+    protected void createTable() throws SQLException {
         try (Connection con = ConnectionPool.getConnection();
              Statement stmt = con.createStatement();
         ) {
@@ -66,8 +60,8 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
         }
     }
 
-    abstract String getInsertStatement();
-    abstract void fillInsertStatement(PreparedStatement stmt, T object);
+    abstract public String getInsertStatement();
+    abstract public void fillInsertStatement(PreparedStatement stmt, T object) throws SQLException;
     public void insert(T object) throws SQLException {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement stmt = con.prepareStatement(getInsertStatement())

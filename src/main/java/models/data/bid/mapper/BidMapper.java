@@ -12,6 +12,7 @@ import models.data.project.mapper.ProjectMapper;
 import models.data.user.User;
 import models.data.user.mapper.UserMapper;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -96,5 +97,15 @@ public class BidMapper extends Mapper<Bid, String> {
                 "    PRIMARY KEY(offer, userId, pid)" +
                 ");");
         return statements;
+    }
+
+    @Override
+    public String getInsertStatement() {
+        return null;
+    }
+
+    @Override
+    public void fillInsertStatement(PreparedStatement stmt, Bid object) throws SQLException {
+
     }
 }

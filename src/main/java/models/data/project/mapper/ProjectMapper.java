@@ -131,14 +131,15 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
 
 
-
-    private String getInsertStatement() {
+    @Override
+    public String getInsertStatement() {
         return "INSERT INTO Project ( creationDate, pid, title, imageUrl, projectDescription," +
                 "budget, deadline) " +
                 "VALUES(? , ?, ?, ?, ?, ?, ?) ";
     }
 
-    private void fillInsertStatement(PreparedStatement stmt, Project project) throws SQLException {
+    @Override
+    public void fillInsertStatement(PreparedStatement stmt, Project project) throws SQLException {
         stmt.setLong(1, project.getCreationDate());
         stmt.setString(2, project.getID());
         stmt.setString(3, project.getTitle());
@@ -153,7 +154,8 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                 "VALUES(?, ?, ?)";
     }
 
-    private void fillInsertRequireStatement(PreparedStatement stmt, UserSkill userSkill, Project project) throws SQLException{
+
+    public void fillInsertRequireStatement(PreparedStatement stmt, UserSkill userSkill, Project project) throws SQLException{
         stmt.setInt(1, userSkill.getPoints());
         stmt.setString(2, userSkill.getName());
         stmt.setString(3, project.getID());

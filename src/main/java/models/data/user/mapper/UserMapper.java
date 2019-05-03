@@ -8,9 +8,7 @@ import models.data.mapper.Mapper;
 import models.data.skill.UserSkill;
 import models.data.user.User;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +56,6 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     }
 
     @Override
-<<<<<<< HEAD
     public List<UserSkill> findUserSkills(String userId) throws SQLException{
         try (Connection con = ConnectionPool.getConnection();
              Statement stmt = con.createStatement()
@@ -84,6 +81,11 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     }
 
     @Override
+    public void fillInsertStatement(PreparedStatement stmt, User object) throws SQLException {
+
+    }
+
+    @Override
     public void insert(User user) {
 
     }
@@ -93,10 +95,6 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         return "SELECT " + DatabaseColumns.USER_COLUMNS +
                 " FROM JoboonjaUser" +
                 " WHERE id = ?";
-=======
-    protected String getFindStatement() {
-        return null;
->>>>>>> ac777e1805bfe89a550b3d4d9bca7544e5214596
     }
 
     @Override

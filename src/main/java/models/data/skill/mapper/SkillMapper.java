@@ -7,10 +7,7 @@ import models.data.skill.Skill;
 import models.data.user.User;
 
 import java.lang.reflect.Array;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
@@ -98,5 +95,15 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
         statements.add(stmt1);
         statements.add(stmt2);
         return statements;
+    }
+
+    @Override
+    public String getInsertStatement() {
+        return null;
+    }
+
+    @Override
+    public void fillInsertStatement(PreparedStatement stmt, Skill object) throws SQLException {
+
     }
 }
