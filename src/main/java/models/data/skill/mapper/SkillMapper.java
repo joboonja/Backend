@@ -47,7 +47,10 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
     }
 
     public ArrayList<Skill> getNotSubmittedSkills(String userId) throws SQLException {
-        ArrayList<Skill> notSubmitted = new ArrayList<>();
+        return findListForUser(userId, getNotSubmittedSkillsStatement());
+    }
+
+    public ArrayList<Skill> getUserSkills(String userId) throws SQLException {
         return findListForUser(userId, getUserSkillsStatement());
     }
 
@@ -63,7 +66,18 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
 
     protected String getUserSkillsStatement() {
         return "SELECT " + DatabaseColumns.USER_SKILL +
-                "FROM UserSkill S WHERE S.usid = ?";
+                "FROM UserSkill S" +
+                "WHERE S.usid = ?";
+    }
+
+    protected String getNotSubmittedSkillsStatement() {
+        return "SELECT " + DatabaseColumns.USER_SKILL +
+                "FROM Skill S " +
+                "WHERE NOT EXISTS" +
+                "(SELECT * " +
+                "FROM UserSkill S1 " +
+                "WHERE S1.usid = ? AND S.name = S1.name" +
+                ")";
     }
 
     @Override
