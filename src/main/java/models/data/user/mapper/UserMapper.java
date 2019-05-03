@@ -3,15 +3,14 @@ package models.data.user.mapper;
 import config.DatabaseColumns;
 import config.UserConfig;
 import exceptions.UserNotFound;
-import models.data.connectionPool.ConnectionPool;
 import models.data.mapper.Mapper;
 import models.data.skill.UserSkill;
 import models.data.user.User;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class UserMapper extends Mapper<User, String> implements IUserMapper{
     private static UserMapper ourInstance = new UserMapper();
@@ -55,39 +54,40 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         return users;
     }
 
-    @Override
-    public List<UserSkill> findUserSkills(String userId) throws SQLException{
-        try (Connection con = ConnectionPool.getConnection();
-             Statement stmt = con.createStatement()
-        ) {
-            ResultSet resultSet;
-            try {
-                String query = "SELECT " + DatabaseColumns.USER_SKILL + "FROM UserSkill WHERE usid = " + userId;
-                resultSet = stmt.executeQuery(query);
-                resultSet.next();
-                //TODO: return statement
-//                return convertResultSetToDomainModel(resultSet);
-                return null;
-            } catch (SQLException ex) {
-                System.out.println();
-                throw ex;
-            }
-        }
-    }
+//    @Override
+//    public List<UserSkill> findUserSkills(String userId) throws SQLException{
+//        try (Connection con = ConnectionPool.getConnection();
+//             Statement stmt = con.createStatement()
+//        ) {
+//            ResultSet resultSet;
+//            try {
+//                String query = "SELECT " + DatabaseColumns.USER_SKILL + "FROM UserSkill WHERE usid = " + userId;
+//                resultSet = stmt.executeQuery(query);
+//                resultSet.next();
+//                //TODO: return statement
+////                return convertResultSetToDomainModel(resultSet);
+//                return null;
+//            } catch (SQLException ex) {
+//                System.out.println();
+//                throw ex;
+//            }
+//        }
+//    }
 
     @Override
     public String getInsertStatement() {
-        return "INSERT ";
+        return "INSERT OR IGNORE INTO JoboonjaUser (" + DatabaseColumns.USER_COLUMNS + ")" +
+                "VALUES(?, ?, ?, ?, ?, ?) ";
     }
 
     @Override
     public void fillInsertStatement(PreparedStatement stmt, User object) throws SQLException {
-
-    }
-
-    @Override
-    public void insert(User user) {
-
+        stmt.setString(1, object.getId());
+        stmt.setString(2, object.getFirstName());
+        stmt.setString(3, object.getLastName());
+        stmt.setString(4, object.getProfilePictureURL());
+        stmt.setString(5, object.getBio());
+        stmt.setString(6, object.getJobTitle());
     }
 
     @Override
@@ -99,6 +99,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
     @Override
     protected User convertResultSetToDomainModel(ResultSet rs) throws SQLException {
+//        " userId, firstName, lastName, profilePictureUrl, bio, jobTitle"
         return null;
     }
 
@@ -128,8 +129,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         return statements;
     }
 
-    public void addDefaultUser()
-    {
+    public void addDefaultUser() throws SQLException {
+        User newUser;
+        UserMapper userMapper = UserMapper.getInstance();
+
         String id = "1";
         String firstName = "علی";
         String lastName = "شریف‌زاده";
@@ -144,7 +147,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Node.js", new UserSkill("Node.js", 11));
         String jobTitle = "برنامه‌نویس وب";
         String bio = "روی سنگ قبرم بنویسید: خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت";
-        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+        newUser = new User(id, skills, firstName, lastName, jobTitle, bio);
+        users.add(newUser);
+        userMapper.insert(newUser);
 
         id = "2";
         firstName = "فرزاد";
@@ -156,7 +161,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "2"));
         jobTitle = "دانشجو";
         bio = "بیو ندارم";
-        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+        newUser = new User(id, skills, firstName, lastName, jobTitle, bio);
+        users.add(newUser);
+        userMapper.insert(newUser);
 
         id = "3";
         firstName = "یاسمن";
@@ -168,7 +175,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "3"));
         jobTitle = "دانشجو";
         bio = "بیو؟";
-        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+        newUser = new User(id, skills, firstName, lastName, jobTitle, bio);
+        users.add(newUser);
+        userMapper.insert(newUser);
 
         id = "4";
         firstName = "ممد";
@@ -180,7 +189,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "4"));
         jobTitle = "برنامه‌نویس";
         bio = "دنبال کار می‌گردم";
-        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+        newUser = new User(id, skills, firstName, lastName, jobTitle, bio);
+        users.add(newUser);
+        userMapper.insert(newUser);
 
         id = "5";
         firstName = "بهار";
@@ -192,7 +203,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "5"));
         jobTitle = "دانشجو";
         bio = "دنبال کار می‌گردم";
-        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+        newUser = new User(id, skills, firstName, lastName, jobTitle, bio);
+        users.add(newUser);
+        userMapper.insert(newUser);
 
         id = "6";
         firstName = "امیرحسین";
@@ -204,7 +217,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "6"));
         jobTitle = "دانشجو";
         bio = "دنبال کار می‌گردم";
-        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+        newUser = new User(id, skills, firstName, lastName, jobTitle, bio);
+        users.add(newUser);
+        userMapper.insert(newUser);
 
         id = "7";
         firstName = "غلام";
@@ -216,7 +231,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "7"));
         jobTitle = "برنامه‌نویس وب";
         bio = "دنبال کار می‌گردم";
-        users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
+        newUser = new User(id, skills, firstName, lastName, jobTitle, bio);
+        users.add(newUser);
+        userMapper.insert(newUser);
 
     }
 
