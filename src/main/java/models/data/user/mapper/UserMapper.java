@@ -104,10 +104,6 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         return null;
     }
 
-    @Override
-    protected String getDeleteStatement() {
-        return null;
-    }
 
     @Override
     protected ArrayList<String> getCreateTableStatement() {

@@ -128,10 +128,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         return new Project(pid, title, description, imageUrl, budget, skills, deadline, creationDate);
     }
 
-    @Override
-    protected String getDeleteStatement() {
-        return null;
-    }
+
 
 
 

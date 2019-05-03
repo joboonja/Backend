@@ -45,20 +45,6 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
         }
     }
 
-    abstract protected String getDeleteStatement();
-    public void delete(I id) throws SQLException {
-        try (Connection con = ConnectionPool.getConnection();
-             PreparedStatement stmt = con.prepareStatement(getDeleteStatement())
-        ) {
-            stmt.setString(1, id.toString());
-            try {
-                stmt.execute();
-            } catch (SQLException ex) {
-                System.out.println("error in Mapper.deleteByID query.");
-                throw ex;
-            }
-        }
-    }
 
     abstract protected ArrayList<String> getCreateTableStatement();
     public void createTable() throws SQLException {
