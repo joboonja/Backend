@@ -208,19 +208,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     }
     @Override
     public ArrayList<Project> findUserProjects(String userId) throws SQLException{
-        try (Connection con = ConnectionPool.getConnection();
-             PreparedStatement stmt = con.prepareStatement(getFindByUserIdStatement())
-        ) {
-            stmt.setString(1, userId.toString());
-            ArrayList<Project> projects = new ArrayList<>();
-            ResultSet resultSet;
-            resultSet = stmt.executeQuery();
-            while(resultSet.next())
-            {
-                projects.add(convertResultSetToDomainModel(resultSet));
-            }
-            return projects;
-        }
+       return findListForUser(userId, getFindByUserIdStatement());
     }
 
 
