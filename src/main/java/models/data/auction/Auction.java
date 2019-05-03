@@ -21,36 +21,36 @@ public class Auction {
 
     public void start()
     {
-        User user;
-        Project project;
-        int maxAuctionRate = 0;
-        boolean firstVisited = false;
-        User winner = null;
-        BidMapper bidMapper = BidMapper.getInstance();
-        UserMapper userMapper = UserMapper.getInstance();
-        ProjectMapper projectMapper = ProjectMapper.getInstance();
-
-        try {
-            project = projectMapper.getProjectByProjectID(projectTitle);
-
-            for(Bid bid : bidMapper.getBidsOfProject(projectTitle)) {
-
-                user = userMapper.getUserById(bid.getBiddingUserName());
-                int auctionRate = calcAuctionFormula(user, project, bid);
-                if (!firstVisited) {
-                    maxAuctionRate = auctionRate;
-                    firstVisited = true;
-                    winner = user;
-                } else if (auctionRate > maxAuctionRate) {
-                    maxAuctionRate = auctionRate;
-                    winner = user;
-                }
-            }
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-            return;
-        }
-        System.out.println(AuctionConfig.WINNER_MSG(winner));
+//        User user;
+//        Project project;
+//        int maxAuctionRate = 0;
+//        boolean firstVisited = false;
+//        User winner = null;
+//        BidMapper bidMapper = BidMapper.getInstance();
+//        ProjectMapper projectMapper = ProjectMapper.getInstance();
+//        UserMapper userMapper = UserMapper.getInstance();
+//
+//        try {
+//            project = projectMapper.getProjectByProjectID(projectTitle);
+//
+//            for(Bid bid : bidMapper.getBidsOfProject(projectTitle)) {
+//
+//                user = userMapper.getUserById(bid.getBiddingUserName());
+//                int auctionRate = calcAuctionFormula(user, project, bid);
+//                if (!firstVisited) {
+//                    maxAuctionRate = auctionRate;
+//                    firstVisited = true;
+//                    winner = user;
+//                } else if (auctionRate > maxAuctionRate) {
+//                    maxAuctionRate = auctionRate;
+//                    winner = user;
+//                }
+//            }
+//        }catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            return;
+//        }
+//        System.out.println(AuctionConfig.WINNER_MSG(winner));
     }
 
     private int calcAuctionFormula(User user, Project project, Bid bid)

@@ -5,12 +5,12 @@ import models.data.project.Project;
 
 public class Bid {
     private String biddingUserName;
-    private Project project;
+    private String projectID;
     private long offer;
 
-    public Bid(String biddingUserID, Project project, long offer){
+    public Bid(String biddingUserID, String projectID, long offer){
         this.biddingUserName = biddingUserID;
-        this.project = project;
+        this.projectID = projectID;
         this.offer = offer;
     }
     public long getOffer()
@@ -18,7 +18,7 @@ public class Bid {
         return offer;
     }
 
-    public String getProjectID() { return project.getID(); }
+    public String getProjectID() { return projectID; }
 
     public String getBiddingUserName()
     {

@@ -20,8 +20,7 @@ public class Bids {
     public Bid addBid(@RequestBody final AddBidRequest request)
             throws AlreadyBid, InvalidBidRequirements, UserNotFound, ProjectNotFound
     {
-        Project project = ProjectMapper.getInstance().getProjectByProjectID(request.getProjectID());
-        Bid newBid = new Bid(ProjectServiceConfig.USER_ID, project, request.getBidAmount());
+        Bid newBid = new Bid(ProjectServiceConfig.USER_ID, request.getProjectID(), request.getBidAmount());
         BidMapper.getInstance().addNewBid(newBid);
         return newBid;
     }
