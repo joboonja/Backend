@@ -13,6 +13,7 @@ import models.services.skill.EndorseService;
 import models.services.skill.SkillService;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
@@ -26,8 +27,7 @@ public class Skills {
 
     @RequestMapping(value = "/skills", method = RequestMethod.POST)
     public ArrayList<UserSkill> addSkill(@RequestBody final AddSkillRequest request)
-            throws UserNotFound, DuplicateSkill, InvalidSkill
-    {
+            throws UserNotFound, DuplicateSkill, InvalidSkill, SQLException {
         SkillService.addSkill(request.getSkillName());
         return SkillService.getSkillsOfUser();
     }
