@@ -11,7 +11,6 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
     abstract protected String getFindStatement();
 
     abstract protected T convertResultSetToDomainModel(ResultSet rs) throws SQLException;
-
     public T find(I id) throws SQLException {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement stmt = con.prepareStatement(getFindStatement())
@@ -27,6 +26,22 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
                 System.out.println("error in Mapper.findByID query.");
                 throw ex;
             }
+        }
+    }
+
+    public ArrayList<T> findListForUser(I id, String query) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+            PreparedStatement stmt = con.prepareStatement(query)
+        ) {
+            stmt.setString(1, id.toString());
+            ArrayList<T> result = new ArrayList<>();
+            ResultSet resultSet;
+            resultSet = stmt.executeQuery();
+            while(resultSet.next())
+            {
+                result.add(convertResultSetToDomainModel(resultSet));
+            }
+        return result;
         }
     }
 

@@ -18,7 +18,7 @@ public class SkillService {
         User user = UserMapper.getInstance().getUserById(ProjectServiceConfig.USER_ID);
         if(user.haveSkill(skillName))
             throw new DuplicateSkill();
-        ArrayList <Skill> notSubmitted = notSubmittedSkills(ProjectServiceConfig.USER_ID);
+        ArrayList <Skill> notSubmitted = getNotSubmittedSkills(ProjectServiceConfig.USER_ID);
         for(Skill skill: notSubmitted) {
             if (skillName.equals(skill.getName())) {
                 user.addSkill(new UserSkill(skillName, 0));
@@ -27,10 +27,10 @@ public class SkillService {
         }
         throw new InvalidSkill();
     }
-    public static ArrayList<Skill> notSubmittedSkills(String userID) throws UserNotFound
+    public static ArrayList<Skill> getNotSubmittedSkills(String userID) throws UserNotFound
     {
         User user = UserMapper.getInstance().getUserById(userID);
-        return SkillMapper.getInstance().notSubmittedSkills(user);
+        return SkillMapper.getInstance().getNotSubmittedSkills(user);
     }
     public static ArrayList<UserSkill> getSkillsOfUser() throws UserNotFound {
         User user = UserMapper.getInstance().getUserById(ProjectServiceConfig.USER_ID);

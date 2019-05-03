@@ -61,7 +61,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 <<<<<<< HEAD
     public List<UserSkill> findUserSkills(String userId) throws SQLException{
         try (Connection con = ConnectionPool.getConnection();
-             Statement stmt = con.createStatement();
+             Statement stmt = con.createStatement()
         ) {
             ResultSet resultSet;
             try {
