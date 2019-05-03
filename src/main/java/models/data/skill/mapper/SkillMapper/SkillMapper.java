@@ -1,13 +1,9 @@
-package models.data.skill.mapper;
+package models.data.skill.mapper.SkillMapper;
 
 import config.DatabaseColumns;
-import models.data.connectionPool.ConnectionPool;
 import models.data.mapper.Mapper;
 import models.data.skill.Skill;
-import models.data.skill.UserSkill;
-import models.data.user.User;
 
-import java.lang.reflect.Array;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -25,7 +21,7 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        skills = new ArrayList<Skill>();
+        skills = new ArrayList<>();
     }
 
 
@@ -49,38 +45,21 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
     }
 
     @Override
-    public void insertUserSkill(UserSkill userskill) throws SQLException {
-
-    }
-
-    @Override
-    public String getInsertUserSkillStatement() {
-        return "INSERT INTO UserSkill (usid, points, name) " +
-                "VALUES(? , ?, ?) ";
-    }
-
-    public ArrayList<Skill> getUserSkills(String userId) throws SQLException {
-        return findListForUser(userId, getUserSkillsStatement());
-    }
-
-    @Override
     protected String getFindStatement() {
-        return null;
+        return "SELECT " + DatabaseColumns.SKILL +
+                "FROM Skill S" +
+                "WHERE S.name = ?";
     }
 
     @Override
     protected Skill convertResultSetToDomainModel(ResultSet rs) throws SQLException {
-        return null;
+        return new Skill(
+                rs.getString(1)
+        );
     }
 
-    protected String getUserSkillsStatement() {
-        return "SELECT " + DatabaseColumns.USER_SKILL +
-                "FROM UserSkill S" +
-                "WHERE S.usid = ?";
-    }
-
-    protected String getNotSubmittedSkillsStatement() {
-        return "SELECT " + DatabaseColumns.USER_SKILL +
+    private String getNotSubmittedSkillsStatement() {
+        return "SELECT " + DatabaseColumns.SKILL +
                 "FROM Skill S " +
                 "WHERE NOT EXISTS" +
                 "(SELECT * " +
@@ -92,30 +71,23 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
 
     @Override
     protected ArrayList<String> getCreateTableStatement() {
-        ArrayList<String> statements = new ArrayList<String>();
-        String stmt1 = "CREATE TABLE IF NOT EXISTS Skill(" +
+        ArrayList<String> statements = new ArrayList<>();
+        String stmt = "CREATE TABLE IF NOT EXISTS Skill(" +
                 "name CHAR(20)," +
                 "PRIMARY KEY(name)" +
                 ");";
-        String stmt2 = "CREATE TABLE IF NOT EXISTS UserSkill(" +
-                "usid CHAR(20)," +
-                "points INTEGER," +
-                "name CHAR(20)," +
-                "PRIMARY KEY(name, usid)," +
-                "FOREIGN KEY(name) REFERENCES Skill ON DELETE CASCADE" +
-                ");";
-        statements.add(stmt1);
-        statements.add(stmt2);
+        statements.add(stmt);
         return statements;
     }
 
     @Override
     public String getInsertStatement() {
-        return null;
+        return "INSERT INTO Skill (name) " +
+                "VALUES(?) ";
     }
 
     @Override
     public void fillInsertStatement(PreparedStatement stmt, Skill object) throws SQLException {
-
+        stmt.setString(1, object.getName());
     }
 }

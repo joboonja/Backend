@@ -16,14 +16,14 @@ import java.util.List;
 public class UserMapper extends Mapper<User, String> implements IUserMapper{
     private static UserMapper ourInstance = new UserMapper();
 
-    private ArrayList<User> users = new ArrayList<User>();
+    private ArrayList<User> users;
 
     public static UserMapper getInstance() {
         return ourInstance;
     }
 
     private UserMapper() {
-        users = new ArrayList<User>();
+        users = new ArrayList<>();
         try {
             createTable();
         } catch (SQLException e) {
@@ -134,14 +134,14 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         String firstName = "علی";
         String lastName = "شریف‌زاده";
         HashMap<String, UserSkill> skills = new HashMap<String, UserSkill>();
-        skills.put("HTML", new UserSkill("HTML", 10));
-        skills.put("Javascript", new UserSkill("Javascript", 13));
-        skills.put("C++", new UserSkill("C++", 12));
-        skills.put("Java", new UserSkill("Java", 11));
-        skills.put("MySQL", new UserSkill("MySQL", 11));
-        skills.put("Linux", new UserSkill("Linux", 11));
-        skills.put("C", new UserSkill("C", 11));
-        skills.put("Node.js", new UserSkill("Node.js", 11));
+        skills.put("HTML", new UserSkill("HTML", 10, "1"));
+        skills.put("Javascript", new UserSkill("Javascript", 13, "1"));
+        skills.put("C++", new UserSkill("C++", 12, "1"));
+        skills.put("Java", new UserSkill("Java", 11, "1"));
+        skills.put("MySQL", new UserSkill("MySQL", 11, "1"));
+        skills.put("Linux", new UserSkill("Linux", 11, "1"));
+        skills.put("C", new UserSkill("C", 11, "1"));
+        skills.put("Node.js", new UserSkill("Node.js", 11, "1"));
         String jobTitle = "برنامه‌نویس وب";
         String bio = "روی سنگ قبرم بنویسید: خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت";
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
@@ -149,11 +149,11 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         id = "2";
         firstName = "فرزاد";
         lastName = "حبیبی";
-        skills = new HashMap<String, UserSkill>();
-        skills.put("HTML", new UserSkill("HTML", 5));
-        skills.put("Javascript", new UserSkill("Javascript", 4));
-        skills.put("C++", new UserSkill("C++", 2));
-        skills.put("Java", new UserSkill("Java", 3));
+        skills = new HashMap<>();
+        skills.put("HTML", new UserSkill("HTML", 5, "2"));
+        skills.put("Javascript", new UserSkill("Javascript", 4, "2"));
+        skills.put("C++", new UserSkill("C++", 2, "2"));
+        skills.put("Java", new UserSkill("Java", 3, "2"));
         jobTitle = "دانشجو";
         bio = "بیو ندارم";
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
@@ -161,11 +161,11 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         id = "3";
         firstName = "یاسمن";
         lastName = "جعفری";
-        skills = new HashMap<String, UserSkill>();
-        skills.put("HTML", new UserSkill("HTML", 5));
-        skills.put("Javascript", new UserSkill("Javascript", 4));
-        skills.put("C++", new UserSkill("C++", 2));
-        skills.put("Java", new UserSkill("Java", 3));
+        skills = new HashMap<>();
+        skills.put("HTML", new UserSkill("HTML", 5, "3"));
+        skills.put("Javascript", new UserSkill("Javascript", 4, "3"));
+        skills.put("C++", new UserSkill("C++", 2, "3"));
+        skills.put("Java", new UserSkill("Java", 3, "3"));
         jobTitle = "دانشجو";
         bio = "بیو؟";
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
@@ -174,10 +174,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         firstName = "ممد";
         lastName = "فراهانی";
         skills = new HashMap<String, UserSkill>();
-        skills.put("HTML", new UserSkill("HTML", 5));
-        skills.put("Javascript", new UserSkill("Javascript", 4));
-        skills.put("C++", new UserSkill("C++", 2));
-        skills.put("Java", new UserSkill("Java", 3));
+        skills.put("HTML", new UserSkill("HTML", 5, "4"));
+        skills.put("Javascript", new UserSkill("Javascript", 4, "4"));
+        skills.put("C++", new UserSkill("C++", 2, "4"));
+        skills.put("Java", new UserSkill("Java", 3, "4"));
         jobTitle = "برنامه‌نویس";
         bio = "دنبال کار می‌گردم";
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
@@ -186,10 +186,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         firstName = "بهار";
         lastName = "باطنی";
         skills = new HashMap<String, UserSkill>();
-        skills.put("HTML", new UserSkill("HTML", 5));
-        skills.put("Javascript", new UserSkill("Javascript", 4));
-        skills.put("C++", new UserSkill("C++", 2));
-        skills.put("Java", new UserSkill("Java", 3));
+        skills.put("HTML", new UserSkill("HTML", 5, "5"));
+        skills.put("Javascript", new UserSkill("Javascript", 4, "5"));
+        skills.put("C++", new UserSkill("C++", 2, "5"));
+        skills.put("Java", new UserSkill("Java", 3, "5"));
         jobTitle = "دانشجو";
         bio = "دنبال کار می‌گردم";
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
@@ -198,10 +198,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         firstName = "امیرحسین";
         lastName = "احمدی";
         skills = new HashMap<String, UserSkill>();
-        skills.put("HTML", new UserSkill("HTML", 5));
-        skills.put("Javascript", new UserSkill("Javascript", 4));
-        skills.put("C++", new UserSkill("C++", 2));
-        skills.put("Java", new UserSkill("Java", 3));
+        skills.put("HTML", new UserSkill("HTML", 5, "6"));
+        skills.put("Javascript", new UserSkill("Javascript", 4, "6"));
+        skills.put("C++", new UserSkill("C++", 2, "6"));
+        skills.put("Java", new UserSkill("Java", 3, "6"));
         jobTitle = "دانشجو";
         bio = "دنبال کار می‌گردم";
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));
@@ -210,10 +210,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         firstName = "غلام";
         lastName = "حسنی";
         skills = new HashMap<String, UserSkill>();
-        skills.put("HTML", new UserSkill("HTML", 5));
-        skills.put("Javascript", new UserSkill("Javascript", 4));
-        skills.put("C++", new UserSkill("C++", 2));
-        skills.put("Java", new UserSkill("Java", 3));
+        skills.put("HTML", new UserSkill("HTML", 5, "7"));
+        skills.put("Javascript", new UserSkill("Javascript", 4, "7"));
+        skills.put("C++", new UserSkill("C++", 2, "7"));
+        skills.put("Java", new UserSkill("Java", 3, "7"));
         jobTitle = "برنامه‌نویس وب";
         bio = "دنبال کار می‌گردم";
         users.add(new User(id, skills, firstName, lastName, jobTitle, bio));

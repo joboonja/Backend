@@ -15,8 +15,6 @@ import models.data.connectionPool.ConnectionPool;
 import models.data.mapper.Mapper;
 import models.data.project.Project;
 import models.data.skill.UserSkill;
-import models.data.user.User;
-import models.data.user.mapper.UserMapper;
 
 public class ProjectMapper extends Mapper<Project, String> implements IProjectMapper{
     private static ProjectMapper ourInstance = new ProjectMapper();
@@ -109,7 +107,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             HashMap<String, UserSkill> skills = new HashMap<>();
             while(rs.next())
             {
-                skills.put(rs.getString(1), new UserSkill(rs.getString(1), rs.getInt(2)));
+                skills.put(rs.getString(1),  new UserSkill(rs.getString(1), rs.getInt(2)));
             }
             return skills;
         }
@@ -155,7 +153,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     }
 
 
-    public void fillInsertRequireStatement(PreparedStatement stmt, UserSkill userSkill, Project project) throws SQLException{
+    private void fillInsertRequireStatement(PreparedStatement stmt, UserSkill userSkill, Project project) throws SQLException{
         stmt.setInt(1, userSkill.getPoints());
         stmt.setString(2, userSkill.getName());
         stmt.setString(3, project.getID());
@@ -183,7 +181,6 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         }
     }
 
-
     private String getFindByUserIdStatement()
     {
         return "SELECT "+ ProjectConfig.PROJECT_FIND_COLOUMNS("P") +"\n" +
@@ -197,10 +194,10 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                 "                                    L.name = R1.name\n" +
                 "                ))\n";
     }
+
     @Override
     public ArrayList<Project> findUserProjects(String userId) throws SQLException{
        return findListForUser(userId, getFindByUserIdStatement());
     }
-
 
 }
