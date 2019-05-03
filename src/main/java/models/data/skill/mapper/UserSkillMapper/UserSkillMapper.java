@@ -82,7 +82,7 @@ public class UserSkillMapper extends Mapper<UserSkill, String> implements IUserS
 
     @Override
     public String getInsertStatement() {
-        return "INSERT INTO UserSkill (usid, points, name) " +
+        return "INSERT OR IGNORE INTO UserSkill (usid, points, name) " +
                 "VALUES(? , ?, ?) ";
     }
 
