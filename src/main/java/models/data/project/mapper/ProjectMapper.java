@@ -86,20 +86,6 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         }
         return projectsForUser;
     }
-    @Override
-    protected String getFindStatement() {
-        return null;
-    }
-
-    @Override
-    protected Project convertResultSetToDomainModel(ResultSet rs) throws SQLException {
-        return null;
-    }
-
-    @Override
-    protected String getDeleteStatement() {
-        return null;
-    }
 
     @Override
     protected ArrayList<String> getCreateTableStatement() {
