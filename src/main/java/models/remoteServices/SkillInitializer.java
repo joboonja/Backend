@@ -2,7 +2,8 @@ package models.remoteServices;
 
 import config.SkillsConfig;
 import models.data.skill.Skill;
-import models.data.skill.mapper.SkillMapper;
+import models.data.skill.mapper.SkillMapper.SkillMapper;
+import models.data.skill.mapper.UserSkillMapper.UserSkillMapper;
 import tools.HttpRequest;
 import tools.JSONDecoder;
 
