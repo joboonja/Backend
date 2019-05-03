@@ -7,6 +7,7 @@ import models.data.skill.mapper.UserSkillMapper.UserSkillMapper;
 import tools.HttpRequest;
 import tools.JSONDecoder;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SkillInitializer {
@@ -20,8 +21,7 @@ public class SkillInitializer {
         }
         return JSONDecoder.decodeJSONListToSkillList(skillsInfo);
     }
-    public static void initSkills()
-    {
+    public static void initSkills() throws SQLException {
         ArrayList<Skill> skills = getSkills();
         SkillMapper skillMapper =  SkillMapper.getInstance();
         skillMapper.addNewSkills(skills);

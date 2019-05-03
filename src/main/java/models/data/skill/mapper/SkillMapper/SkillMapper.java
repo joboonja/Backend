@@ -25,9 +25,11 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
     }
 
 
-    public void addNewSkills(ArrayList<Skill> skillsToAdd)
-    {
+    public void addNewSkills(ArrayList<Skill> skillsToAdd) throws SQLException {
         skills.addAll(skillsToAdd);
+        for(Skill skill : skills) {
+            insert(skill);
+        }
     }
 
     public boolean contains(String skillName)
@@ -82,7 +84,7 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
 
     @Override
     public String getInsertStatement() {
-        return "INSERT INTO Skill (name) " +
+        return "INSERT OR IGNORE INTO Skill (name) " +
                 "VALUES(?) ";
     }
 
