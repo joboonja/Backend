@@ -2,6 +2,8 @@ package models.data.mapper;
 
 import exceptions.ProjectNotFound;
 import models.data.connectionPool.ConnectionPool;
+import models.data.project.Project;
+import models.data.skill.UserSkill;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -61,6 +63,17 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
                 System.out.println();
                 throw ex;
             }
+        }
+    }
+
+    abstract String getInsertStatement();
+    abstract void fillInsertStatement(PreparedStatement stmt, T object);
+    public void insert(T object) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(getInsertStatement())
+        ) {
+            fillInsertStatement(stmt, object);
+            stmt.execute();
         }
     }
 }
