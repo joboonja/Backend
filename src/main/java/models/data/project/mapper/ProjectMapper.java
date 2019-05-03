@@ -113,6 +113,32 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         }
     }
 
+    private String getSearchByDescriptionOrNameStmt()
+    {
+        return "SELECT DISTINCT " + ProjectConfig.PROJECT_FIND_COLOUMNS("Projects") + " " +
+                "FROM ( " + getFindByUserIdStatement() + " ) AS Projects " +
+                "WHERE Projects.projectDescription LIKE ? OR " +
+                "Projects.title LIKE ? " +
+                "ORDER BY creationDate DESC;";
+    }
+
+    @Override
+    public ArrayList<Project> searchByDescriptionOrName(String query, String userId) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(getSearchByDescriptionOrNameStmt())
+        ) {
+            stmt.setString(1, userId);
+            stmt.setString(2, "%" + query + "%");
+            stmt.setString(3, "%" + query + "%");
+            ArrayList<Project> result = new ArrayList<>();
+            ResultSet resultSet;
+            resultSet = stmt.executeQuery();
+            while(resultSet.next())
+                result.add(convertResultSetToDomainModel(resultSet));
+            return result;
+        }
+    }
+
     @Override
     protected Project convertResultSetToDomainModel(ResultSet rs) throws SQLException {
         long creationDate = rs.getLong(1);
@@ -183,16 +209,18 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
     private String getFindByUserIdStatement()
     {
-        return "SELECT "+ ProjectConfig.PROJECT_FIND_COLOUMNS("P") +"\n" +
-                "FROM Project P, ProjectRequires R\n" +
-                "WHERE R.pid = P.pid AND NOT EXISTS ( SELECT *\n" +
-                "                 FROM ProjectRequires R1\n" +
-                "                 WHERE P.pid = R1.pid\n" +
-                "                AND NOT EXISTS ( SELECT *\n" +
-                "                                    FROM UserSkill L\n" +
+        return "SELECT DISTINCT "+ ProjectConfig.PROJECT_FIND_COLOUMNS("P") +" " +
+                "FROM Project P, ProjectRequires R " +
+                "WHERE R.pid = P.pid AND NOT EXISTS ( SELECT * " +
+                "                 FROM ProjectRequires R1 " +
+                "                 WHERE P.pid = R1.pid " +
+                "                AND NOT EXISTS ( SELECT * " +
+                "                                    FROM UserSkill L " +
                 "                                    WHERE L.usid = ? AND R1.points <= L.points AND " +
-                "                                    L.name = R1.name\n" +
-                "                ))\n";
+                "                                    L.name = R1.name " +
+                "                " +
+                ")) " +
+                "ORDER BY creationDate DESC; ";
     }
 
     @Override

@@ -1,6 +1,8 @@
 package models.services.project;
 
+import config.ProjectServiceConfig;
 import exceptions.ProjectNotFound;
+import exceptions.UserNotFound;
 import models.data.bid.Bid;
 import models.data.bid.mapper.BidMapper;
 import models.data.project.Project;
@@ -18,5 +20,14 @@ public class ProjectService {
 
     public static boolean hasBidOnProject(String projectId, String userId) throws Exception {
         return BidMapper.getInstance().hasBidOnProject(projectId, userId);
+    }
+
+    public static ArrayList<Project> searchProjects(String query) throws UserNotFound {
+        try {
+            return ProjectMapper.getInstance().searchByDescriptionOrName(query, ProjectServiceConfig.USER_ID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new UserNotFound();
+        }
     }
 }
