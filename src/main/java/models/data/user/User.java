@@ -5,6 +5,7 @@ import config.UserConfig;
 import exceptions.DuplicateEndorse;
 import exceptions.DuplicateSkill;
 import models.data.skill.UserSkill;
+import models.services.project.ProjectService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,7 +80,7 @@ public class User {
     public void endorse(String skillName) throws DuplicateEndorse
     {
         UserSkill userSkill = skills.get(skillName);
-        userSkill.endorse(id);
+        userSkill.endorse(ProjectServiceConfig.USER_ID);
     }
     public boolean haveSkill(String skillName)
     {
