@@ -46,6 +46,9 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
             {
                 result.add(convertResultSetToDomainModel(resultSet));
             }
+            resultSet.close();
+            stmt.close();
+            con.close();
         return result;
         }
     }
@@ -61,6 +64,8 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
                     stmt.addBatch(stmtString);
                 }
                 stmt.executeBatch();
+                stmt.close();
+                con.close();
             } catch (SQLException ex) {
                 System.out.println();
                 throw ex;
@@ -76,6 +81,8 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
         ) {
             fillInsertStatement(stmt, object);
             stmt.execute();
+            stmt.close();
+            con.close();
         }
     }
 

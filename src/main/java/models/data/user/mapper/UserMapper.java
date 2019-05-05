@@ -62,6 +62,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
             {
                 result.add(convertResultSetToDomainModel(resultSet));
             }
+            resultSet.close();
+            stmt.close();
+            con.close();
             return result;
         }
     }
@@ -91,6 +94,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
             resultSet = stmt.executeQuery();
             while(resultSet.next())
                 result.add(convertResultSetToDomainModel(resultSet));
+            resultSet.close();
+            stmt.close();
+            con.close();
             return result;
         }
     }
