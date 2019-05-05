@@ -12,6 +12,7 @@ import models.data.user.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.zip.CheckedOutputStream;
 
 import static models.data.skill.UserSkill.convertToNameAndSkill;
 
@@ -65,7 +66,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
     @Override
     public String getAllUsersStatement() { return "SELECT * " +
-            "FROM JoboonjaUser U "; }
+            "FROM JoboonjaUser U"; }
 
     @Override
     public String getInsertStatement() {
@@ -85,22 +86,25 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
     @Override
     protected String getFindStatement() {
-        return "SELECT " + DatabaseColumns.USER_COLUMNS +
+        return "SELECT *" +
                 " FROM JoboonjaUser" +
-                " WHERE id = ?";
+                " WHERE userId = ?";
     }
 
     @Override
     protected User convertResultSetToDomainModel(ResultSet rs) throws SQLException {
-        ArrayList <UserSkill> skills = UserSkillMapper.getInstance().getUserSkills(rs.getString(1));
-        return new User (
+        UserSkillMapper userSkillMapper = UserSkillMapper.getInstance();
+        ArrayList <UserSkill> skills = userSkillMapper.getUserSkills(rs.getString(1));
+        User newUser = new User (
                 rs.getString(1),
                 convertToNameAndSkill(skills),
                 rs.getString(2),
                 rs.getString(3),
-                rs.getString(4),
-                rs.getString(5)
+                rs.getString(5),
+                rs.getString(6)
         );
+        newUser.setProfilePictureURL(rs.getString(4));
+        return newUser;
     }
 
 

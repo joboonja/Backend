@@ -38,15 +38,15 @@ public class UserSkillMapper extends Mapper<UserSkill, String> implements IUserS
     @Override
     protected UserSkill convertResultSetToDomainModel(ResultSet rs) throws SQLException {
         return new UserSkill(
-                rs.getString(1),
+                rs.getString(2),
                 rs.getInt(3),
-                rs.getString(2)
+                rs.getString(1)
         );
     }
 
     private String getUserSkillsStatement() {
         return "SELECT " + DatabaseColumns.USER_SKILL +
-                "FROM UserSkill S" +
+                "FROM UserSkill S " +
                 "WHERE S.usid = ?";
     }
 
