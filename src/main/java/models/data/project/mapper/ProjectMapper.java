@@ -1,5 +1,6 @@
 package models.data.project.mapper;
 
+import config.DatabaseColumns;
 import config.ProjectConfig;
 
 import java.sql.Connection;
@@ -85,14 +86,14 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
     @Override
     protected String getFindStatement() {
-        return "SELECT " + ProjectConfig.PROJECT_FIND_COLOUMNS("Project")+ " " +
+        return "SELECT " + DatabaseColumns.PROJECT_FIND_COLOUMNS("Project")+ " " +
                 "FROM Project , ProjectRequires " +
                 "WHERE Project.pid = ?" +
                 ";";
     }
     private String getFindRequirementsStatement()
     {
-        return "SELECT " + ProjectConfig.PROJECT_REQ_FIND_COLOUMNS("R") + " " +
+        return "SELECT " + DatabaseColumns.PROJECT_REQ_FIND_COLOUMNS("R") + " " +
                 "FROM Project P , ProjectRequires R " +
                 "WHERE P.pid = R.pid AND P.pid = ? ";
     }
@@ -115,7 +116,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
     private String getSearchByDescriptionOrNameStmt()
     {
-        return "SELECT DISTINCT " + ProjectConfig.PROJECT_FIND_COLOUMNS("Projects") + " " +
+        return "SELECT DISTINCT " + DatabaseColumns.PROJECT_FIND_COLOUMNS("Projects") + " " +
                 "FROM ( " + getFindByUserIdStatement() + " ) AS Projects " +
                 "WHERE Projects.projectDescription LIKE ? OR " +
                 "Projects.title LIKE ? " +
@@ -153,9 +154,6 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         HashMap<String, UserSkill> skills = findProjectRequires(pid);
         return new Project(pid, title, description, imageUrl, budget, skills, deadline, creationDate);
     }
-
-
-
 
     @Override
     public String getInsertStatement() {
@@ -211,7 +209,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
     private String getFindByUserIdStatement()
     {
-        return "SELECT DISTINCT "+ ProjectConfig.PROJECT_FIND_COLOUMNS("P") +" " +
+        return "SELECT DISTINCT "+ DatabaseColumns.PROJECT_FIND_COLOUMNS("P") +" " +
                 "FROM Project P, ProjectRequires R " +
                 "WHERE R.pid = P.pid AND NOT EXISTS ( SELECT * " +
                 "                 FROM ProjectRequires R1 " +
@@ -223,10 +221,6 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                 "                " +
                 ")) " +
                 "ORDER BY creationDate DESC ";
-    }
-    private String getPaginationStatement(int pageNumber, int pageSize)
-    {
-        return "LIMIT " + pageSize +" OFFSET " + ( ( pageNumber - 1 ) * pageSize );
     }
 
     @Override

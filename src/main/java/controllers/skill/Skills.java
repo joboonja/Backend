@@ -7,6 +7,7 @@ import controllers.skill.Requests.EndorseRequest;
 import exceptions.*;
 import models.data.skill.Skill;
 import models.data.skill.UserSkill;
+import models.data.skill.mapper.UserSkillMapper.UserSkillMapper;
 import models.data.user.User;
 import models.data.user.mapper.UserMapper;
 import models.services.skill.EndorseService;
@@ -35,7 +36,9 @@ public class Skills {
     @RequestMapping(value = "/skills/{skillName}", method = RequestMethod.DELETE)
     public void removeSkill(@PathVariable(value = "skillName") String skillName) throws UserNotFound, SQLException {
         User user = UserMapper.getInstance().getUserById(ProjectServiceConfig.USER_ID);
-        user.deleteSkill(skillName);
+        if(skillName.equals("Node"))
+            skillName = "Node.js";
+        UserSkillMapper.getInstance().deleteUserSkill(skillName);
     }
 
     @RequestMapping(value = "/skills/{userId}", method = RequestMethod.POST)
