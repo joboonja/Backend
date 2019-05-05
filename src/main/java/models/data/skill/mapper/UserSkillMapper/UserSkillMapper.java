@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class UserSkillMapper extends Mapper<UserSkill, String> implements IUserSkillMapper {
     private static UserSkillMapper ourInstance = new UserSkillMapper();
-    private ArrayList<UserSkill> skills;
 
     public static UserSkillMapper getInstance() {
         return ourInstance;
@@ -22,23 +21,8 @@ public class UserSkillMapper extends Mapper<UserSkill, String> implements IUserS
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        skills = new ArrayList<>();
     }
 
-
-    public void addNewSkills(ArrayList<UserSkill> skillsToAdd)
-    {
-        skills.addAll(skillsToAdd);
-    }
-
-    public boolean contains(String skillName) {
-        for (Skill skill :
-                skills) {
-            if (skill.getName().equals(skillName))
-                return true;
-        }
-        return false;
-    }
 
     public ArrayList<UserSkill> getUserSkills(String userId) throws SQLException {
         return findListForUser(userId, getUserSkillsStatement());

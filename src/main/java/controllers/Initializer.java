@@ -1,8 +1,6 @@
 package controllers;
 
-import exceptions.ProjectNotFound;
 import models.data.bid.mapper.BidMapper;
-import models.data.project.mapper.ProjectMapper;
 import models.data.user.mapper.UserMapper;
 import models.remoteServices.ProjectInitializer;
 import models.remoteServices.SkillInitializer;

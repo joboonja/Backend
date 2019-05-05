@@ -6,6 +6,7 @@ import models.data.project.Project;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UserSkill extends Skill {
     private int points;
@@ -44,5 +45,13 @@ public class UserSkill extends Skill {
 
     public ArrayList<String> getPeopleWhoEndrosed() {
         return peopleWhoEndrosed;
+    }
+
+    public static HashMap<String, UserSkill> convertToNameAndSkill(ArrayList <UserSkill> allUserSkills) {
+        HashMap<String, UserSkill> skills = new HashMap<>();
+        for(UserSkill skill : allUserSkills) {
+            skills.put(skill.getName(), skill);
+        }
+        return skills;
     }
 }

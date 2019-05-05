@@ -4,9 +4,10 @@ import models.data.mapper.IMapper;
 import models.data.user.User;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface IUserMapper extends IMapper<User, String> {
-//        List<UserSkill> findUserSkills(String userId) throws SQLException;
-        String getInsertStatement();
+        ArrayList <User> getAllUsers() throws SQLException;
         void insert(User user) throws SQLException;
+        String getAllUsersStatement();
 }

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
     private static SkillMapper ourInstance = new SkillMapper();
-    private ArrayList<Skill> skills;
 
     public static SkillMapper getInstance() {
         return ourInstance;
@@ -21,25 +20,13 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        skills = new ArrayList<>();
     }
 
 
     public void addNewSkills(ArrayList<Skill> skillsToAdd) throws SQLException {
-        skills.addAll(skillsToAdd);
-        for(Skill skill : skills) {
+        for(Skill skill : skillsToAdd) {
             insert(skill);
         }
-    }
-
-    public boolean contains(String skillName)
-    {
-        for (Skill skill :
-                skills) {
-            if(skill.getName().equals(skillName))
-                return true;
-        }
-        return  false;
     }
 
     public ArrayList<Skill> getNotSubmittedSkills(String userId) throws SQLException {

@@ -3,27 +3,26 @@ package models.data.user.mapper;
 import config.DatabaseColumns;
 import config.UserConfig;
 import exceptions.UserNotFound;
+import models.data.connectionPool.ConnectionPool;
 import models.data.mapper.Mapper;
 import models.data.skill.UserSkill;
 import models.data.skill.mapper.UserSkillMapper.UserSkillMapper;
 import models.data.user.User;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static models.data.skill.UserSkill.convertToNameAndSkill;
+
 public class UserMapper extends Mapper<User, String> implements IUserMapper{
     private static UserMapper ourInstance = new UserMapper();
-
-    private ArrayList<User> users;
 
     public static UserMapper getInstance() {
         return ourInstance;
     }
 
     private UserMapper() {
-        users = new ArrayList<>();
         try {
             createTable();
         } catch (SQLException e) {
@@ -31,49 +30,42 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         }
     }
 
-    public User getUserById(String id) throws UserNotFound
-    {
-        for (User user : users) {
-            if (user.getId().equals(id))
-                return user;
-        }
-        throw new UserNotFound();
+    public User getUserById(String id) throws UserNotFound, SQLException {
+        User user;
+        user = find(id);
+        if(user != null)
+            return user;
+        else
+            throw new UserNotFound();
     }
 
-    public void registerNewUser(User newUser)
-    {
-        for (User user : users) {
-            if (user.getId().equals(newUser.getId())) {
-                System.out.println(UserConfig.USERNAME_ALREADY_EXISTS_ERROR);
-                return;
+    public void registerNewUser(User newUser) throws SQLException {
+        if(find(newUser.getId()) != null) {
+            System.out.println(UserConfig.USERNAME_ALREADY_EXISTS_ERROR);
+            return;
+        }
+        insert(newUser);
+    }
+
+    @Override
+    public ArrayList<User> getAllUsers() throws SQLException {
+        ArrayList<User> result = new ArrayList<>();
+        try (Connection con = ConnectionPool.getConnection();
+             Statement stmt = con.createStatement();
+        ) {
+            ResultSet resultSet;
+            resultSet = stmt.executeQuery(getAllUsersStatement());
+            while(resultSet.next())
+            {
+                result.add(convertResultSetToDomainModel(resultSet));
             }
+            return result;
         }
-        users.add(newUser);
     }
 
-    public ArrayList<User> getAllUsers() {
-        return users;
-    }
-
-//    @Override
-//    public List<UserSkill> findUserSkills(String userId) throws SQLException{
-//        try (Connection con = ConnectionPool.getConnection();
-//             Statement stmt = con.createStatement()
-//        ) {
-//            ResultSet resultSet;
-//            try {
-//                String query = "SELECT " + DatabaseColumns.USER_SKILL + "FROM UserSkill WHERE usid = " + userId;
-//                resultSet = stmt.executeQuery(query);
-//                resultSet.next();
-//                //TODO: return statement
-////                return convertResultSetToDomainModel(resultSet);
-//                return null;
-//            } catch (SQLException ex) {
-//                System.out.println();
-//                throw ex;
-//            }
-//        }
-//    }
+    @Override
+    public String getAllUsersStatement() { return "SELECT * " +
+            "FROM JoboonjaUser U "; }
 
     @Override
     public String getInsertStatement() {
@@ -100,8 +92,15 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
     @Override
     protected User convertResultSetToDomainModel(ResultSet rs) throws SQLException {
-//        " userId, firstName, lastName, profilePictureUrl, bio, jobTitle"
-        return null;
+        ArrayList <UserSkill> skills = UserSkillMapper.getInstance().getUserSkills(rs.getString(1));
+        return new User (
+                rs.getString(1),
+                convertToNameAndSkill(skills),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getString(4),
+                rs.getString(5)
+        );
     }
 
 
@@ -136,7 +135,6 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         UserSkillMapper userSkillMapper = UserSkillMapper.getInstance();
 
         newUser = new User(id, skills, firstName, lastName, jobTitle, bio);
-        users.add(newUser);
         userMapper.insert(newUser);
 
         for(UserSkill skill: skills.values()){
