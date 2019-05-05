@@ -44,8 +44,7 @@ public class UserSkillMapper extends Mapper<UserSkill, String> implements IUserS
         }
     }
 
-    @Override
-    public String getDeleteUserSkillStatement() {
+    private String getDeleteUserSkillStatement() {
         return "DELETE FROM UserSkill " +
                 "WHERE name = ? AND usid = ? ";
     }

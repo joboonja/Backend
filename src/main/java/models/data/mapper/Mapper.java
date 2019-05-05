@@ -70,4 +70,9 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
             stmt.execute();
         }
     }
+
+    protected String getPaginationStatement(int pageNumber, int pageSize)
+    {
+        return "LIMIT " + pageSize +" OFFSET " + ( ( pageNumber - 1 ) * pageSize );
+    }
 }

@@ -1,10 +1,12 @@
 package models.data.user.mapper;
 
 import config.DatabaseColumns;
+import config.ProjectConfig;
 import config.UserConfig;
 import exceptions.UserNotFound;
 import models.data.connectionPool.ConnectionPool;
 import models.data.mapper.Mapper;
+import models.data.project.Project;
 import models.data.skill.UserSkill;
 import models.data.skill.mapper.UserSkillMapper.UserSkillMapper;
 import models.data.user.User;
@@ -64,9 +66,34 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         }
     }
 
+    private String getAllUsersStatement() {
+        return "SELECT * " +
+            "FROM JoboonjaUser U";
+    }
+
+    private String getSearchByNameStatement() {
+        return "SELECT DISTINCT " + DatabaseColumns.USER_COLUMNS + " " +
+                "FROM JoboonjaUser U" +
+                "WHERE U.firstName LIKE ? OR " +
+                "U.lastName LIKE ? ";
+    }
+
     @Override
-    public String getAllUsersStatement() { return "SELECT * " +
-            "FROM JoboonjaUser U"; }
+    public ArrayList<User> searchByName(String query, int pageNumber, int pageSize) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(
+                     getSearchByNameStatement() + getPaginationStatement(pageNumber, pageSize))
+        ) {
+            stmt.setString(1, "%" + query + "%");
+            stmt.setString(2, "%" + query + "%");
+            ArrayList<User> result = new ArrayList<>();
+            ResultSet resultSet;
+            resultSet = stmt.executeQuery();
+            while(resultSet.next())
+                result.add(convertResultSetToDomainModel(resultSet));
+            return result;
+        }
+    }
 
     @Override
     public String getInsertStatement() {
@@ -106,7 +133,6 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         newUser.setProfilePictureURL(rs.getString(4));
         return newUser;
     }
-
 
     @Override
     protected ArrayList<String> getCreateTableStatement() {

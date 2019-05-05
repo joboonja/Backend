@@ -8,5 +8,4 @@ import java.sql.SQLException;
 
 public interface IUserSkillMapper extends IMapper<UserSkill, String> {
     void deleteUserSkill(String name);
-    String getDeleteUserSkillStatement();
 }
