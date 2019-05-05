@@ -38,6 +38,8 @@ public class UserSkillMapper extends Mapper<UserSkill, String> implements IUserS
             stmt.setString(2, ProjectServiceConfig.USER_ID);
             try {
                 stmt.execute();
+                stmt.close();
+                con.close();
             } catch (SQLException ex) {
                 System.out.println("error in Mapper.findByID query.");
                 throw ex;

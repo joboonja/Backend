@@ -110,6 +110,9 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             {
                 skills.put(rs.getString(1),  new UserSkill(rs.getString(1), rs.getInt(2)));
             }
+            rs.close();
+            stmt.close();
+            con.close();
             return skills;
         }
     }
@@ -138,6 +141,9 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             resultSet = stmt.executeQuery();
             while(resultSet.next())
                 result.add(convertResultSetToDomainModel(resultSet));
+            resultSet.close();
+            stmt.close();
+            con.close();
             return result;
         }
     }
@@ -204,6 +210,9 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             }
             rStmt.executeBatch();
             con.commit();
+            pStmt.close();
+            rStmt.close();
+            con.close();
         }
     }
 

@@ -52,7 +52,11 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
             stmt.setString(2, newBid.getProjectID());
             ResultSet resultSet;
             resultSet = stmt.executeQuery();
-            return resultSet.next();
+            boolean alreadyBid = resultSet.next();
+            resultSet.close();
+            stmt.close();
+            con.close();
+            return alreadyBid;
         }
     }
 
@@ -71,7 +75,11 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
             stmt.setString(2, userId);
             ResultSet resultSet;
             resultSet = stmt.executeQuery();
-            return resultSet.next();
+            boolean hasBid = resultSet.next();
+            resultSet.close();
+            stmt.close();
+            con.close();
+            return hasBid;
         }
     }
 
