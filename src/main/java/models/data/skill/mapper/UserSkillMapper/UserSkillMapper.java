@@ -1,11 +1,15 @@
 package models.data.skill.mapper.UserSkillMapper;
 
 import config.DatabaseColumns;
+import exceptions.DataBaseError;
+import exceptions.DuplicateEndorse;
+import models.data.connectionPool.ConnectionPool;
 import models.data.mapper.Mapper;
 import models.data.skill.Skill;
 import models.data.skill.UserSkill;
 
 import java.sql.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 public class UserSkillMapper extends Mapper<UserSkill, String> implements IUserSkillMapper {
@@ -60,14 +64,24 @@ public class UserSkillMapper extends Mapper<UserSkill, String> implements IUserS
                 "PRIMARY KEY(name, usid)," +
                 "FOREIGN KEY(name) REFERENCES Skill ON DELETE CASCADE" +
                 ");";
+        String stmt2 = "CREATE TABLE IF NOT EXISTS Endorsement(" +
+                "userId CHAR(20)," +
+                "name CHAR(20)," +
+                "usid CHAR(20)," +
+                "PRIMARY KEY(userId, name, usid)," +
+                "FOREIGN KEY(userId) REFERENCES JoboonjaUser on DELETE CASCADE," +
+                "FOREIGN KEY (name, usid) REFERENCES UserSkill on DELETE CASCADE" +
+                ");";
         statements.add(stmt);
+        statements.add(stmt2);
         return statements;
     }
+
 
     @Override
     public String getInsertStatement() {
         return "INSERT OR IGNORE INTO UserSkill (usid, points, name) " +
-                "VALUES(? , ?, ?) ";
+                "VALUES( ? , ? , ? ) ";
     }
 
     @Override
@@ -76,4 +90,83 @@ public class UserSkillMapper extends Mapper<UserSkill, String> implements IUserS
         stmt.setLong(2, object.getPoints());
         stmt.setString(3, object.getName());
     }
+
+
+    private String getCanEndorseStatement()
+    {
+        return "SELECT * " +
+                "FROM Endorsement E " +
+                "WHERE E.userId = ? AND E.usid = ? AND E.name = ? ;";
+    }
+    @Override
+    public boolean canEndorse(String endorserId, String endorsedId, String userSkillName) {
+        try {
+            Connection con = ConnectionPool.getConnection();
+            PreparedStatement stmt = con.prepareStatement(getCanEndorseStatement());
+            stmt.setString(1, endorserId);
+            stmt.setString(2, endorsedId);
+            stmt.setString(3, userSkillName);
+            ResultSet resultSet = stmt.executeQuery();
+            boolean can = !resultSet.next();
+            resultSet.close();
+            stmt.close();
+            con.close();
+            return can;
+        }
+        catch (SQLException e){
+            return false;
+        }
+    }
+
+
+
+    private String getCreateEndorseStatement()
+    {
+        return "INSERT INTO Endorsement (userId, name, usid) " +
+                "VALUES (? , ? , ?) ";
+    }
+    private String getUpdateEndorseStatement()
+    {
+        return "UPDATE UserSkill " +
+                "SET points = points + 1 " +
+                "WHERE usid = ? AND name = ? ";
+    }
+    @Override
+    public void endorse(String endorserId, String endorsedId, String userSkillName)
+            throws DuplicateEndorse, DataBaseError, SQLException {
+        if(!canEndorse(endorserId, endorsedId, userSkillName))
+            throw new DuplicateEndorse();
+        Connection con = ConnectionPool.getConnection();
+        try (
+             PreparedStatement createStmt = con.prepareStatement(getCreateEndorseStatement())
+        )
+        {
+            con.setAutoCommit(false);
+            createStmt.setString(1, endorserId);
+            createStmt.setString(2, userSkillName);
+            createStmt.setString(3, endorsedId);
+            createStmt.execute();
+            createStmt.close();
+
+            PreparedStatement updateStmt = con.prepareStatement(getUpdateEndorseStatement());
+            updateStmt.setString(1, endorsedId);
+            updateStmt.setString(2, userSkillName);
+            updateStmt.execute();
+            updateStmt.close();
+            con.commit();
+            con.close();
+
+        } catch (SQLException e) {
+            con.rollback();
+            e.printStackTrace();
+            throw new DataBaseError();
+        }
+    }
+
+    @Override
+    public boolean getEndorsedOrNot(String endorserId, String endorsedId, String userSkillName) {
+        return !canEndorse(endorserId, endorsedId, userSkillName);
+    }
+
+
 }

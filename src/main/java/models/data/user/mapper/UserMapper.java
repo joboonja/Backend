@@ -120,16 +120,8 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
                 "jobTitle CHAR(50)," +
                 "PRIMARY KEY(userId)" +
                 ");";
-        String stmt2 = "CREATE TABLE IF NOT EXISTS Endorsement(" +
-                "userId CHAR(20)," +
-                "name CHAR(20)," +
-                "usid CHAR(20)," +
-                "PRIMARY KEY(userId, name, usid)," +
-                "FOREIGN KEY(userId) REFERENCES JoboonjaUser on DELETE CASCADE," +
-                "FOREIGN KEY (name, usid) REFERENCES UserSkill on DELETE CASCADE" +
-                ");";
+
         statements.add(stmt1);
-        statements.add(stmt2);
         return statements;
     }
 

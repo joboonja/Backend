@@ -15,6 +15,7 @@ public class ConnectionPool {
         ds.setDriverClassName(ConnectionPoolConfig.driver);
         ds.setMinIdle(ConnectionPoolConfig.minPools);
         ds.setMaxIdle(ConnectionPoolConfig.maxPools);
+        ds.setMaxOpenPreparedStatements(ConnectionPoolConfig.maxOpenPreparedStatement);
     }
 
     public static Connection getConnection() throws SQLException {

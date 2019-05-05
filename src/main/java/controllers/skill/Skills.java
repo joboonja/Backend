@@ -41,7 +41,7 @@ public class Skills {
     @RequestMapping(value = "/skills/{userId}", method = RequestMethod.POST)
     public ArrayList<UserSkill> endorseSkill(@PathVariable(value = "userId") String userID,
                              @RequestBody final EndorseRequest request)
-            throws DuplicateEndorse, UserNotFound, SQLException {
+            throws DuplicateEndorse, UserNotFound, SQLException, DataBaseError {
 
         EndorseService.endorseUserSkill(userID, request.getSkillName());
         return SkillService.getSkillsOfUser(userID);

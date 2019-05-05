@@ -17,5 +17,7 @@ public class ExceptionsConfig {
     public static final HttpStatus InvalidBidRequirementsStatus  = HttpStatus.FORBIDDEN;
     public static final String InvalidSkillMsg = "This skill is not found.";
     public static final HttpStatus InvalidSkillStatus  = HttpStatus.NOT_FOUND;
+    public static final String DataBaseErrorMsg = "Database has error.";
+    public static final HttpStatus DataBaseErrorStatus = HttpStatus.EXPECTATION_FAILED;
 
 }

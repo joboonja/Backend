@@ -77,11 +77,7 @@ public class User {
         skills.remove(name);
     }
 
-    public void endorse(String skillName) throws DuplicateEndorse
-    {
-        UserSkill userSkill = skills.get(skillName);
-        userSkill.endorse(ProjectServiceConfig.USER_ID);
-    }
+
     public boolean haveSkill(String skillName)
     {
         for(UserSkill skill : skills.values())

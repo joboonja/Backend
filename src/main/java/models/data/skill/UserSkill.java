@@ -5,6 +5,7 @@ import config.ProjectServiceConfig;
 import exceptions.DuplicateEndorse;
 import exceptions.DuplicateSkill;
 import models.data.project.Project;
+import models.data.skill.mapper.UserSkillMapper.UserSkillMapper;
 import models.services.project.ProjectService;
 
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ public class UserSkill extends Skill {
         super(name);
         this.points = points;
         peopleWhoEndrosed = new ArrayList<>();
+        userId = "";
     }
     public UserSkill(String name, int points, String userId) {
         super(name);
@@ -32,27 +34,16 @@ public class UserSkill extends Skill {
     }
     public void setUserId(String userId) { this.userId = userId; }
     public String getUserId() { return userId; }
-    public boolean canEndorse(String userID)
-    {
-        return !peopleWhoEndrosed.contains(userID);
-    }
-    public void endorse(String userID) throws DuplicateEndorse
-    {
-        if(canEndorse(userID)){
-            peopleWhoEndrosed.add(userID);
-            points ++;
-        }
-        else
-            throw new DuplicateEndorse();
-    }
+
 
     public boolean getEndorsedOrNot() {
-        for( String person : peopleWhoEndrosed)
-        {
-            if(person.equals(ProjectServiceConfig.USER_ID))
-                return true;
-        }
-        return false;
+        if(userId.equals(""))
+            return false;
+        return UserSkillMapper.getInstance().getEndorsedOrNot(
+                ProjectServiceConfig.USER_ID,
+                userId,
+                name
+        );
     }
 
     public static HashMap<String, UserSkill> convertToNameAndSkill(ArrayList <UserSkill> allUserSkills) {
