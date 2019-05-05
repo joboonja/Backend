@@ -36,6 +36,8 @@ public class Skills {
     @RequestMapping(value = "/skills/{skillName}", method = RequestMethod.DELETE)
     public void removeSkill(@PathVariable(value = "skillName") String skillName) throws UserNotFound, SQLException {
         User user = UserMapper.getInstance().getUserById(ProjectServiceConfig.USER_ID);
+        if(skillName.equals("Node"))
+            skillName = "Node.js";
         UserSkillMapper.getInstance().deleteUserSkill(skillName);
     }
 
