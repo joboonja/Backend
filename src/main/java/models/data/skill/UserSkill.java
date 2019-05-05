@@ -1,8 +1,11 @@
 package models.data.skill;
 
+import config.ProjectConfig;
+import config.ProjectServiceConfig;
 import exceptions.DuplicateEndorse;
 import exceptions.DuplicateSkill;
 import models.data.project.Project;
+import models.services.project.ProjectService;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,8 +46,13 @@ public class UserSkill extends Skill {
             throw new DuplicateEndorse();
     }
 
-    public ArrayList<String> getPeopleWhoEndrosed() {
-        return peopleWhoEndrosed;
+    public boolean getEndorsedOrNot() {
+        for( String person : peopleWhoEndrosed)
+        {
+            if(person.equals(ProjectServiceConfig.USER_ID))
+                return true;
+        }
+        return false;
     }
 
     public static HashMap<String, UserSkill> convertToNameAndSkill(ArrayList <UserSkill> allUserSkills) {

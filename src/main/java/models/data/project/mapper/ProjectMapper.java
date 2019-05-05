@@ -51,9 +51,9 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         }
     }
 
-    public ArrayList<Project> getProjectsForUser(String userId) throws UserNotFound {
+    public ArrayList<Project> getProjectsForUser(String userId, int pageNumber, int pageSize) throws UserNotFound {
         try {
-            return findUserProjects(userId);
+            return findUserProjects(userId, pageNumber, pageSize);
         } catch (SQLException e) {
             throw new UserNotFound();
         }
@@ -119,13 +119,15 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                 "FROM ( " + getFindByUserIdStatement() + " ) AS Projects " +
                 "WHERE Projects.projectDescription LIKE ? OR " +
                 "Projects.title LIKE ? " +
-                "ORDER BY creationDate DESC;";
+                "ORDER BY creationDate DESC ";
     }
 
     @Override
-    public ArrayList<Project> searchByDescriptionOrName(String query, String userId) throws SQLException {
+    public ArrayList<Project> searchByDescriptionOrName(String query, String userId, int pageNumber, int pageSize)
+            throws SQLException {
         try (Connection con = ConnectionPool.getConnection();
-             PreparedStatement stmt = con.prepareStatement(getSearchByDescriptionOrNameStmt())
+             PreparedStatement stmt = con.prepareStatement(
+                     getSearchByDescriptionOrNameStmt() + getPaginationStatement(pageNumber, pageSize))
         ) {
             stmt.setString(1, userId);
             stmt.setString(2, "%" + query + "%");
@@ -220,12 +222,17 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                 "                                    L.name = R1.name " +
                 "                " +
                 ")) " +
-                "ORDER BY creationDate DESC; ";
+                "ORDER BY creationDate DESC ";
+    }
+    private String getPaginationStatement(int pageNumber, int pageSize)
+    {
+        return "LIMIT " + pageSize +" OFFSET " + ( ( pageNumber - 1 ) * pageSize );
     }
 
     @Override
-    public ArrayList<Project> findUserProjects(String userId) throws SQLException{
-       return findListForUser(userId, getFindByUserIdStatement());
+    public ArrayList<Project> findUserProjects(String userId, int pageNumber, int pageSize) throws SQLException{
+       return findListForUser(userId,
+               getFindByUserIdStatement() + getPaginationStatement(pageNumber, pageSize));
     }
 
 }

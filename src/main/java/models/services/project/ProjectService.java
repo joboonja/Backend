@@ -22,9 +22,10 @@ public class ProjectService {
         return BidMapper.getInstance().hasBidOnProject(projectId, userId);
     }
 
-    public static ArrayList<Project> searchProjects(String query) throws UserNotFound {
+    public static ArrayList<Project> searchProjects(String query, int pageNumber, int pageSize) throws UserNotFound {
         try {
-            return ProjectMapper.getInstance().searchByDescriptionOrName(query, ProjectServiceConfig.USER_ID);
+            return ProjectMapper.getInstance().searchByDescriptionOrName(
+                    query, ProjectServiceConfig.USER_ID, pageNumber, pageSize);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new UserNotFound();
