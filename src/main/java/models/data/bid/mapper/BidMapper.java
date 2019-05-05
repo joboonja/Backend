@@ -76,7 +76,7 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
     }
 
     @Override
-    public boolean isValidToAdd(Bid newBid) throws UserNotFound, ProjectNotFound {
+    public boolean isValidToAdd(Bid newBid) throws UserNotFound, ProjectNotFound, SQLException {
         ProjectMapper projectMapper = ProjectMapper.getInstance();
         UserMapper userMapper = UserMapper.getInstance();
         ProjectMapper projectMapper = ProjectMapper.getInstance();

@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class Users {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public List<AllUsersResponse> getAllUsers()
-    {
+    public List<AllUsersResponse> getAllUsers() throws SQLException {
         List<AllUsersResponse> response = new ArrayList<>();
         for(User user : UserMapper.getInstance().getAllUsers())
         {
@@ -27,7 +27,7 @@ public class Users {
     }
 
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
-    public User getUser(@PathVariable(value = "userId") String userId) throws UserNotFound{
+    public User getUser(@PathVariable(value = "userId") String userId) throws UserNotFound, SQLException {
         return UserService.getUserByID(userId);
     }
 }

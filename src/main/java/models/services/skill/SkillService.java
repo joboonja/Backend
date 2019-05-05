@@ -31,12 +31,12 @@ public class SkillService {
         User user = UserMapper.getInstance().getUserById(userID);
         return SkillMapper.getInstance().getNotSubmittedSkills(user.getId());
     }
-    public static ArrayList<UserSkill> getSkillsOfUser() throws UserNotFound {
+    public static ArrayList<UserSkill> getSkillsOfUser() throws UserNotFound, SQLException {
         User user = UserMapper.getInstance().getUserById(ProjectServiceConfig.USER_ID);
         return user.getSkillsList();
 
     }
-    public static ArrayList<UserSkill> getSkillsOfUser(String userID) throws UserNotFound {
+    public static ArrayList<UserSkill> getSkillsOfUser(String userID) throws UserNotFound, SQLException {
         User user = UserMapper.getInstance().getUserById(userID);
         return user.getSkillsList();
 

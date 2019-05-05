@@ -33,8 +33,7 @@ public class Skills {
     }
 
     @RequestMapping(value = "/skills/{skillName}", method = RequestMethod.DELETE)
-    public void removeSkill(@PathVariable(value = "skillName") String skillName) throws UserNotFound
-    {
+    public void removeSkill(@PathVariable(value = "skillName") String skillName) throws UserNotFound, SQLException {
         User user = UserMapper.getInstance().getUserById(ProjectServiceConfig.USER_ID);
         user.deleteSkill(skillName);
     }
@@ -42,8 +41,7 @@ public class Skills {
     @RequestMapping(value = "/skills/{userId}", method = RequestMethod.POST)
     public ArrayList<UserSkill> endorseSkill(@PathVariable(value = "userId") String userID,
                              @RequestBody final EndorseRequest request)
-                                throws DuplicateEndorse, UserNotFound
-    {
+            throws DuplicateEndorse, UserNotFound, SQLException {
 
         EndorseService.endorseUserSkill(userID, request.getSkillName());
         return SkillService.getSkillsOfUser(userID);

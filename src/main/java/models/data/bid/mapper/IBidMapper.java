@@ -10,5 +10,5 @@ import java.sql.SQLException;
 public interface IBidMapper extends IMapper<Bid, String> {
     boolean hasAlreadyBid(Bid newBid) throws SQLException;
     boolean hasBidOnProject(String projectId, String userId) throws SQLException;
-    boolean isValidToAdd(Bid newBid) throws UserNotFound, ProjectNotFound;
+    boolean isValidToAdd(Bid newBid) throws UserNotFound, ProjectNotFound, SQLException;
 }
