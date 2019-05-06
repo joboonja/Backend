@@ -133,8 +133,8 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
                 convertToNameAndSkill(skills),
                 rs.getString(2),
                 rs.getString(3),
-                rs.getString(5),
-                rs.getString(6)
+                rs.getString(6),
+                rs.getString(5)
         );
         newUser.setProfilePictureURL(rs.getString(4));
         return newUser;
