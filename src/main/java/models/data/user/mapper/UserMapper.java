@@ -75,17 +75,17 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     }
 
     private String getSearchByNameStatement() {
-        return "SELECT DISTINCT " + DatabaseColumns.USER_COLUMNS + " " +
-                "FROM JoboonjaUser U" +
-                "WHERE U.firstName LIKE ? OR " +
-                "U.lastName LIKE ? ";
+        return "SELECT DISTINCT " + DatabaseColumns.USER_COLUMNS +
+                " FROM JoboonjaUser U" +
+                " WHERE U.firstName LIKE ? OR " +
+                " U.lastName LIKE ? ";
     }
 
     @Override
-    public ArrayList<User> searchByName(String query, int pageNumber, int pageSize) throws SQLException {
+    public ArrayList<User> searchByName(String query) throws SQLException {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement stmt = con.prepareStatement(
-                     getSearchByNameStatement() + getPaginationStatement(pageNumber, pageSize))
+                     getSearchByNameStatement())
         ) {
             stmt.setString(1, "%" + query + "%");
             stmt.setString(2, "%" + query + "%");
@@ -259,6 +259,19 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "7"));
         jobTitle = "برنامه‌نویس وب";
         bio = "دنبال کار می‌گردم";
+        storeUserData(id, skills, firstName, lastName, jobTitle, bio);
+
+        id = "8";
+        firstName = "صدف";
+        lastName = "صادقیان";
+        skills = new HashMap<>();
+        skills.put("C", new UserSkill("C", 5, "8"));
+        skills.put("Javascript", new UserSkill("Javascript", 2, "8"));
+        skills.put("C++", new UserSkill("C++", 4, "8"));
+        skills.put("Java", new UserSkill("Python", 6, "8"));
+        skills.put("HTML", new UserSkill("HTML", 1, "8"));
+        jobTitle = "دانشجو";
+        bio = "در جستجوی دیتا";
         storeUserData(id, skills, firstName, lastName, jobTitle, bio);
 
     }

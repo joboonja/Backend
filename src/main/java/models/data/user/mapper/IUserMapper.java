@@ -9,5 +9,5 @@ import java.util.ArrayList;
 public interface IUserMapper extends IMapper<User, String> {
         ArrayList <User> getAllUsers() throws SQLException;
         void insert(User user) throws SQLException;
-        ArrayList<User> searchByName(String query, int pageNumber, int pageSize) throws SQLException;
+        ArrayList<User> searchByName(String query) throws SQLException;
 }
