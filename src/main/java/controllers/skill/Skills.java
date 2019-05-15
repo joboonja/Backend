@@ -2,8 +2,8 @@ package controllers.skill;
 
 
 import config.ProjectServiceConfig;
-import controllers.skill.Requests.AddSkillRequest;
-import controllers.skill.Requests.EndorseRequest;
+import controllers.skill.requests.AddSkillRequest;
+import controllers.skill.requests.EndorseRequest;
 import exceptions.*;
 import models.data.skill.Skill;
 import models.data.skill.UserSkill;

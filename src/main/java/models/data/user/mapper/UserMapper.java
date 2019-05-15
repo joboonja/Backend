@@ -3,6 +3,7 @@ package models.data.user.mapper;
 import config.DatabaseColumns;
 import config.ProjectConfig;
 import config.UserConfig;
+import exceptions.UserAlreadyExists;
 import exceptions.UserNotFound;
 import models.data.connectionPool.ConnectionPool;
 import models.data.mapper.Mapper;
@@ -42,10 +43,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
             throw new UserNotFound();
     }
 
-    public void registerNewUser(User newUser) throws SQLException {
+    public void registerNewUser(User newUser) throws SQLException, UserAlreadyExists {
         if(find(newUser.getId()) != null) {
-            System.out.println(UserConfig.USERNAME_ALREADY_EXISTS_ERROR);
-            return;
+            throw new UserAlreadyExists();
         }
         insert(newUser);
     }

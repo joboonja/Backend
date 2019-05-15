@@ -34,7 +34,21 @@ public class User {
         this.lastName = lastName;
         this.jobTitle = jobTitle;
         this.bio = bio;
-        this.profilePictureURL = id == ProjectServiceConfig.USER_ID ? UserConfig.MAIN_USER_PROFILE_PIC_URL : UserConfig.DEFAULT_PROFILE_PIC_URL;
+        this.profilePictureURL = id.equals(ProjectServiceConfig.USER_ID) ? UserConfig.MAIN_USER_PROFILE_PIC_URL : UserConfig.DEFAULT_PROFILE_PIC_URL;
+    }
+    public User(String id,
+                String firstName,
+                String lastName,
+                String jobTitle,
+                String bio,
+                String profilePictureURL){
+        this.id = id;
+        this.skills = new HashMap<>();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.jobTitle = jobTitle;
+        this.bio = bio;
+        this.profilePictureURL = profilePictureURL;
     }
     public void addSkill(UserSkill skill) throws DuplicateSkill, SQLException {
         if(skills.containsKey(skill.getName()))

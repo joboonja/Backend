@@ -1,4 +1,4 @@
-package controllers.skill.Requests;
+package controllers.skill.requests;
 
 import java.io.Serializable;
 

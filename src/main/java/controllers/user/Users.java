@@ -1,6 +1,9 @@
 package controllers.user;
 
+import controllers.user.requests.SignupRequest;
 import controllers.user.responses.AllUsersResponse;
+import exceptions.InvalidUser;
+import exceptions.UserAlreadyExists;
 import exceptions.UserNotFound;
 import models.data.user.User;
 import models.data.user.mapper.UserMapper;
@@ -13,6 +16,16 @@ import java.util.List;
 
 @RestController
 public class Users {
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    public void signup(@RequestBody final SignupRequest request) throws InvalidUser, UserAlreadyExists {
+        UserService.registerUser(new User( request.getUsername(),
+                request.getFirstName(),
+                request.getLastName(),
+                request.getJobTitle(),
+                request.getBio(),
+                request.getProfilePictureUrl()));
+    }
+
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<AllUsersResponse> getAllUsers(
         @RequestParam(value = "search", required = false) String query) throws SQLException, UserNotFound {

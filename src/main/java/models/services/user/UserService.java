@@ -1,5 +1,7 @@
 package models.services.user;
 
+import exceptions.InvalidUser;
+import exceptions.UserAlreadyExists;
 import exceptions.UserNotFound;
 import models.data.user.User;
 import models.data.user.mapper.UserMapper;
@@ -19,6 +21,15 @@ public class UserService {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new UserNotFound();
+        }
+    }
+
+    public static void registerUser(User user) throws InvalidUser, UserAlreadyExists {
+        try {
+            UserMapper.getInstance().registerNewUser(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InvalidUser();
         }
     }
 
