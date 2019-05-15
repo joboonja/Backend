@@ -166,7 +166,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         UserSkillMapper userSkillMapper = UserSkillMapper.getInstance();
         ArrayList <UserSkill> skills = userSkillMapper.getUserSkills(rs.getString(1));
         HashMap <String, UserSkill> hasSkills = convertToNameAndSkill(skills);
-        User newUser = new User (
+        return new User (
                 rs.getString(1),
                 hasSkills,
                 rs.getString(2),
@@ -176,7 +176,6 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
                 rs.getString(4),
                 rs.getString(7)
         );
-        return newUser;
     }
 
     @Override

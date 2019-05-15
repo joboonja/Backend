@@ -3,6 +3,7 @@ package controllers.user;
 import controllers.user.requests.SignupRequest;
 import controllers.user.responses.AllUsersResponse;
 import controllers.user.responses.SingleUserResponse;
+import exceptions.DataBaseError;
 import exceptions.InvalidUser;
 import exceptions.UserAlreadyExists;
 import exceptions.UserNotFound;
@@ -18,7 +19,7 @@ import java.util.List;
 @RestController
 public class Users {
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public void signup(@RequestBody final SignupRequest request) throws InvalidUser, UserAlreadyExists {
+    public void signup(@RequestBody final SignupRequest request) throws InvalidUser, UserAlreadyExists, DataBaseError {
         UserService.registerUser(new User( request.getUsername(),
                 request.getFirstName(),
                 request.getLastName(),

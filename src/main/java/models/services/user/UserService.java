@@ -42,11 +42,12 @@ public class UserService {
         }
     }
 
-    public static void login(String id, String password) throws DataBaseError, LoginFailure {
+    public static String login(String id, String password) throws DataBaseError, LoginFailure {
         password = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
         try {
             if(!UserMapper.getInstance().validateUser(id, password))
                 throw new LoginFailure();
+            return Authentication.createToken(id);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataBaseError();

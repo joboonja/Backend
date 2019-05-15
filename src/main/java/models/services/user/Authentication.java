@@ -7,27 +7,20 @@ import config.UserConfig;
 import java.util.*;
 
 public class Authentication {
-    private static Algorithm algorithm;
+    private static Algorithm algorithm = Algorithm.HMAC256(UserConfig.SECRET_KEY);
 
-    public String  createToken() {
-        Date exp = new Date();
+    public static String  createToken(String id) {
+        Date expire = new Date();
         Calendar calender = Calendar.getInstance();
-        calender.setTime(exp);
+        calender.setTime(expire);
         calender.add(Calendar.HOUR_OF_DAY, 2);
-        exp = calender.getTime();
-        Map< String, Object> header = new HashMap<>();
-        header.put("alg", "HS256");
-        header.put("typ", "JWT");
+        expire = calender.getTime();
 
-
-        algorithm = Algorithm.HMAC256(UserConfig.SECRET_KEY);
-        String token = JWT.create()
+        return JWT.create()
             .withIssuer("joboonja.com")
             .withIssuedAt(new Date())
-            .withHeader(header)
-            .withExpiresAt(exp)
+            .withExpiresAt(expire)
+            .withClaim("id", id)
             .sign(algorithm);
-
-        return token;
     }
 }
