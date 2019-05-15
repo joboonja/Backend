@@ -1,5 +1,6 @@
 package models.data.user.mapper;
 
+import com.google.common.hash.Hashing;
 import config.DatabaseColumns;
 import config.ProjectConfig;
 import config.UserConfig;
@@ -12,6 +13,7 @@ import models.data.skill.UserSkill;
 import models.data.skill.mapper.UserSkillMapper.UserSkillMapper;
 import models.data.user.User;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,7 +106,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     @Override
     public String getInsertStatement() {
         return "INSERT OR IGNORE INTO JoboonjaUser (" + DatabaseColumns.USER_COLUMNS + ")" +
-                "VALUES(?, ?, ?, ?, ?, ?) ";
+                "VALUES(?, ?, ?, ?, ?, ?, ?) ";
     }
 
     @Override
@@ -115,6 +117,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         stmt.setString(4, object.getProfilePictureURL());
         stmt.setString(5, object.getBio());
         stmt.setString(6, object.getJobTitle());
+        stmt.setString(7, object.getPassword());
     }
 
     @Override
@@ -128,15 +131,17 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     protected User convertResultSetToDomainModel(ResultSet rs) throws SQLException {
         UserSkillMapper userSkillMapper = UserSkillMapper.getInstance();
         ArrayList <UserSkill> skills = userSkillMapper.getUserSkills(rs.getString(1));
+        HashMap <String, UserSkill> hasSkills = convertToNameAndSkill(skills);
         User newUser = new User (
                 rs.getString(1),
-                convertToNameAndSkill(skills),
+                hasSkills,
                 rs.getString(2),
                 rs.getString(3),
                 rs.getString(6),
-                rs.getString(5)
+                rs.getString(5),
+                rs.getString(4),
+                rs.getString(7)
         );
-        newUser.setProfilePictureURL(rs.getString(4));
         return newUser;
     }
 
@@ -150,6 +155,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
                 "profilePictureUrl TEXT," +
                 "bio TEXT," +
                 "jobTitle CHAR(50)," +
+                "password CHAR(50)," +
                 "PRIMARY KEY(userId)" +
                 ");";
 
@@ -157,12 +163,19 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         return statements;
     }
 
-    private void storeUserData(String id, HashMap<String, UserSkill> skills, String firstName, String lastName, String jobTitle, String bio) throws SQLException {
+    private void storeUserData(String id,
+                               HashMap<String, UserSkill> skills,
+                               String firstName,
+                               String lastName,
+                               String jobTitle,
+                               String bio,
+                               String profilePictureUrl,
+                               String password) throws SQLException {
         User newUser;
         UserMapper userMapper = UserMapper.getInstance();
         UserSkillMapper userSkillMapper = UserSkillMapper.getInstance();
 
-        newUser = new User(id, skills, firstName, lastName, jobTitle, bio);
+        newUser = new User(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
         userMapper.insert(newUser);
 
         for(UserSkill skill: skills.values()){
@@ -186,7 +199,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Node.js", new UserSkill("Node.js", 11));
         String jobTitle = "برنامه‌نویس وب";
         String bio = "روی سنگ قبرم بنویسید: خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت";
-        storeUserData(id, skills, firstName, lastName, jobTitle, bio);
+        String password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
+                .toString();
+        String profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
         id = "2";
         firstName = "فرزاد";
@@ -198,7 +214,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "2"));
         jobTitle = "دانشجو";
         bio = "بیو ندارم";
-        storeUserData(id, skills, firstName, lastName, jobTitle, bio);
+        password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
+                .toString();
+        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
         id = "3";
         firstName = "یاسمن";
@@ -210,7 +229,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "3"));
         jobTitle = "دانشجو";
         bio = "بیو؟";
-        storeUserData(id, skills, firstName, lastName, jobTitle, bio);
+        password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
+                .toString();
+        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
         id = "4";
         firstName = "ممد";
@@ -222,8 +244,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "4"));
         jobTitle = "برنامه‌نویس";
         bio = "دنبال کار می‌گردم";
-        storeUserData(id, skills, firstName, lastName, jobTitle, bio);
-
+        password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
+                .toString();
+        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
         id = "5";
         firstName = "بهار";
@@ -235,7 +259,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "5"));
         jobTitle = "دانشجو";
         bio = "دنبال کار می‌گردم";
-        storeUserData(id, skills, firstName, lastName, jobTitle, bio);
+        password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
+                .toString();
+        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
         id = "6";
         firstName = "امیرحسین";
@@ -247,7 +274,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "6"));
         jobTitle = "دانشجو";
         bio = "دنبال کار می‌گردم";
-        storeUserData(id, skills, firstName, lastName, jobTitle, bio);
+        password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
+                .toString();
+        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
         id = "7";
         firstName = "غلام";
@@ -259,7 +289,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Java", new UserSkill("Java", 3, "7"));
         jobTitle = "برنامه‌نویس وب";
         bio = "دنبال کار می‌گردم";
-        storeUserData(id, skills, firstName, lastName, jobTitle, bio);
+        password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
+                .toString();
+        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
         id = "8";
         firstName = "صدف";
@@ -272,7 +305,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("HTML", new UserSkill("HTML", 1, "8"));
         jobTitle = "دانشجو";
         bio = "در جستجوی دیتا";
-        storeUserData(id, skills, firstName, lastName, jobTitle, bio);
+        password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
+                .toString();
+        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
     }
 

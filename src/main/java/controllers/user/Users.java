@@ -2,6 +2,7 @@ package controllers.user;
 
 import controllers.user.requests.SignupRequest;
 import controllers.user.responses.AllUsersResponse;
+import controllers.user.responses.SingleUserResponse;
 import exceptions.InvalidUser;
 import exceptions.UserAlreadyExists;
 import exceptions.UserNotFound;
@@ -23,7 +24,8 @@ public class Users {
                 request.getLastName(),
                 request.getJobTitle(),
                 request.getBio(),
-                request.getProfilePictureUrl()));
+                request.getProfilePictureUrl(),
+                request.getPassword()));
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -40,7 +42,7 @@ public class Users {
     }
 
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
-    public User getUser(@PathVariable(value = "userId") String userId) throws UserNotFound, SQLException {
-        return UserService.getUserByID(userId);
+    public SingleUserResponse getUser(@PathVariable(value = "userId") String userId) throws UserNotFound, SQLException {
+        return new SingleUserResponse(UserService.getUserByID(userId));
     }
 }

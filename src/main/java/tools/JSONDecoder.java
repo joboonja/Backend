@@ -19,26 +19,6 @@ import java.util.HashMap;
 
 public class JSONDecoder {
 
-    public static User decodeJSONtoUser(JSONObject userInfo){
-        JSONArray skillsInfo;
-        String id = userInfo.getString(UserConfig.ID);
-        HashMap<String, UserSkill> skills = new HashMap<String, UserSkill>();
-        skillsInfo = (JSONArray) userInfo.get(UserConfig.SKILLS);
-        for(Object skillInfo : skillsInfo){
-            UserSkill skill = decodeJSONtoUserSkill((JSONObject)skillInfo);
-            skills.put(skill.getName(), skill);
-        }
-        String firstName = userInfo.getString(UserConfig.FIRST_NAME);
-        String lastName = userInfo.getString(UserConfig.LAST_NAME);
-        String jobTitle = userInfo.getString(UserConfig.JOB_TITLE);
-        String bio = userInfo.getString(UserConfig.BIO);
-        User user = new User(id, skills, firstName, lastName, jobTitle, bio);
-        if(userInfo.getString(UserConfig.PROFILE_URL) != null)
-            user.setProfilePictureURL(userInfo.getString(UserConfig.PROFILE_URL));
-
-        return user;
-    }
-
     public static Project decodeJSONtoProject(JSONObject projectInfo){
         String id = projectInfo.getString(ProjectConfig.ID);
         String title = projectInfo.getString(ProjectConfig.TITLE);
@@ -57,14 +37,6 @@ public class JSONDecoder {
         }
 
         return new Project(id, title, description, imageURL, budget, skills, deadline, creationDate);
-    }
-
-    public static Bid decodeJSONtoBid(JSONObject bidInfo) throws Exception{
-        String biddingUserName = bidInfo.getString(BidConfig.BIDDING_USER);
-        String projectID = bidInfo.getString(BidConfig.PROJECT_ID);
-        long offer = bidInfo.getInt(BidConfig.BID_AMOUNT);
-
-        return new Bid(biddingUserName, projectID, offer);
     }
 
     public static UserSkill decodeJSONtoUserSkill(JSONObject skillInfo){

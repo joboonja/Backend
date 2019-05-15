@@ -21,40 +21,54 @@ public class User {
     private String profilePictureURL;
     private String bio;
     private HashMap<String, UserSkill> skills;
+    private String password;
 
     public User(String id,
                 HashMap <String, UserSkill> skills,
                 String firstName,
                 String lastName,
                 String jobTitle,
-                String bio){
-        this.id = id;
+                String bio,
+                String profilePictureURL,
+                String password){
         this.skills = skills;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.jobTitle = jobTitle;
-        this.bio = bio;
-        this.profilePictureURL = id.equals(ProjectServiceConfig.USER_ID) ? UserConfig.MAIN_USER_PROFILE_PIC_URL : UserConfig.DEFAULT_PROFILE_PIC_URL;
+        initFields(id, firstName, lastName, jobTitle, bio, profilePictureURL, password);
     }
     public User(String id,
                 String firstName,
                 String lastName,
                 String jobTitle,
                 String bio,
-                String profilePictureURL){
-        this.id = id;
+                String profilePictureURL,
+                String password){
         this.skills = new HashMap<>();
+        initFields(id, firstName, lastName, jobTitle, bio, profilePictureURL, password);
+    }
+    private void initFields(String id,
+                            String firstName,
+                            String lastName,
+                            String jobTitle,
+                            String bio,
+                            String profilePictureURL,
+                            String password)
+    {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.jobTitle = jobTitle;
         this.bio = bio;
         this.profilePictureURL = profilePictureURL;
+        this.password = password;
     }
     public void addSkill(UserSkill skill) throws DuplicateSkill, SQLException {
         if(skills.containsKey(skill.getName()))
             throw new DuplicateSkill();
         skills.put(skill.getName(), skill);
         UserSkillMapper.getInstance().insert(skill);
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getId() {
@@ -77,6 +91,10 @@ public class User {
         return bio;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getProfilePictureURL() {
         return profilePictureURL;
     }
@@ -93,7 +111,6 @@ public class User {
     public void deleteSkill(String name) {
         skills.remove(name);
     }
-
 
     public boolean haveSkill(String skillName)
     {
