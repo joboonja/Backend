@@ -1,15 +1,15 @@
 package models.services.user;
 
 import com.google.common.hash.Hashing;
-import exceptions.InvalidUser;
-import exceptions.UserAlreadyExists;
-import exceptions.UserNotFound;
+import exceptions.*;
 import models.data.user.User;
 import models.data.user.mapper.UserMapper;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class UserService {
    
@@ -26,7 +26,7 @@ public class UserService {
         }
     }
 
-    public static void registerUser(User user) throws InvalidUser, UserAlreadyExists {
+    public static void registerUser(User user) throws InvalidUser, UserAlreadyExists, DataBaseError {
         if(user.getId().equals("") || user.getFirstName().equals("") || user.getLastName().equals("")
             || user.getJobTitle().equals("") || user.getPassword().equals(""))
             throw new InvalidUser();
@@ -38,7 +38,18 @@ public class UserService {
             UserMapper.getInstance().registerNewUser(user);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new InvalidUser();
+            throw new DataBaseError();
+        }
+    }
+
+    public static void login(String id, String password) throws DataBaseError, LoginFailure {
+        password = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+        try {
+            if(!UserMapper.getInstance().validateUser(id, password))
+                throw new LoginFailure();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataBaseError();
         }
     }
 

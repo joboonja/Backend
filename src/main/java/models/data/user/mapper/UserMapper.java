@@ -12,6 +12,7 @@ import models.data.project.Project;
 import models.data.skill.UserSkill;
 import models.data.skill.mapper.UserSkillMapper.UserSkillMapper;
 import models.data.user.User;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
@@ -43,6 +44,25 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
             return user;
         else
             throw new UserNotFound();
+    }
+
+    @Override
+    public boolean validateUser(String id, String password) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(
+                     getValidateUserStatement())
+        ) {
+            fillValidateUserStatement(stmt, id, password);
+            ResultSet resultSet;
+            resultSet = stmt.executeQuery();
+            boolean valid = false;
+            if(resultSet.next())
+                valid = true;
+            resultSet.close();
+            stmt.close();
+            con.close();
+            return valid;
+        }
     }
 
     public void registerNewUser(User newUser) throws SQLException, UserAlreadyExists {
@@ -81,6 +101,20 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
                 " FROM JoboonjaUser U" +
                 " WHERE U.firstName LIKE ? OR " +
                 " U.lastName LIKE ? ";
+    }
+
+    @Override
+    public String getValidateUserStatement() {
+        return "SELECT * " +
+                "FROM JoboonjaUser U " +
+                "WHERE U.userId = ? " +
+                "AND U.password = ? ";
+    }
+
+    @Override
+    public void fillValidateUserStatement(PreparedStatement st, String id, String pass) throws SQLException {
+        st.setString(1, id);
+        st.setString(2, pass);
     }
 
     @Override

@@ -7,8 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Joboonja" />
-        <module name="Backend" />
+        <module name="IE_UTCourse-Backend" />
         <module name="IE_UTCourse" />
+        <module name="Backend" />
       </profile>
     </annotationProcessing>
   </component>
