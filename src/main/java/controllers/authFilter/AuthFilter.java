@@ -38,9 +38,9 @@ public class AuthFilter implements Filter {
                     .withIssuer("joboonja.com")
                     .build();
             String header = ((HttpServletRequest)servletRequest).getHeader("Authorization");
-            header = header.substring(7); // - Bearer
-            DecodedJWT jwt;
             if(header != null) {
+                header = header.substring(7); // - Bearer
+                DecodedJWT jwt;
                 jwt = verifier.verify(header);
                 String id =  jwt.getClaim("id").asString();
                 servletRequest.setAttribute("id", id);

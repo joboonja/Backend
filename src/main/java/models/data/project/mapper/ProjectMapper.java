@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import exceptions.ProjectNotFound;
@@ -71,6 +72,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                 "    projectDescription TEXT," +
                 "    budget BIGINT," +
                 "    deadline BIGINT," +
+                "    winner CHAR(20)," +
                 "    PRIMARY KEY(pid)" +
                 ");");
         statements.add("CREATE TABLE IF NOT EXISTS ProjectRequires(" +
@@ -136,16 +138,57 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             stmt.setString(1, userId);
             stmt.setString(2, "%" + query + "%");
             stmt.setString(3, "%" + query + "%");
-            ArrayList<Project> result = new ArrayList<>();
-            ResultSet resultSet;
-            resultSet = stmt.executeQuery();
-            while(resultSet.next())
-                result.add(convertResultSetToDomainModel(resultSet));
-            resultSet.close();
-            stmt.close();
-            con.close();
-            return result;
+            return getResultSet(con, stmt);
         }
+    }
+
+    private ArrayList<Project> getResultSet(Connection con, PreparedStatement stmt) throws SQLException {
+        ArrayList<Project> result = new ArrayList<>();
+        ResultSet resultSet;
+        resultSet = stmt.executeQuery();
+        while(resultSet.next())
+            result.add(convertResultSetToDomainModel(resultSet));
+        resultSet.close();
+        stmt.close();
+        con.close();
+        return result;
+    }
+
+    @Override
+    public ArrayList<Project> getPassedDeadlineProjects() throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(getPassedDeadlineProjectsStatement());
+        ) {
+            long now = new Date().getTime();
+            stmt.setLong(1, now);
+            return getResultSet(con, stmt);
+        }
+    }
+
+    @Override
+    public String getPassedDeadlineProjectsStatement() {
+        return "SELECT * " +
+                "FROM Project P " +
+                "WHERE P.deadline = ? " +
+                "AND P.winner = NULL ";
+    }
+
+    @Override
+    public void setWinner(String userId, String projectId) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(getSetWinnerStatement());
+        ) {
+            stmt.setString(1, projectId);
+            stmt.setString(2, userId);
+            stmt.executeQuery();
+        }
+    }
+
+    @Override
+    public String getSetWinnerStatement() {
+        return  "UPDATE Project " +
+            "SET winner = ? " +
+            "WHERE pid = ? ";
     }
 
     @Override
@@ -164,8 +207,8 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     @Override
     public String getInsertStatement() {
         return "INSERT INTO Project ( creationDate, pid, title, imageUrl, projectDescription," +
-                "budget, deadline) " +
-                "VALUES(? , ?, ?, ?, ?, ?, ?) ";
+                "budget, deadline, winner) " +
+                "VALUES(? , ?, ?, ?, ?, ?, ?, NULL) ";
     }
 
     @Override
