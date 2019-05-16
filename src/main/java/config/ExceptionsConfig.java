@@ -24,6 +24,6 @@ public class ExceptionsConfig {
     public static final String UserAlreadyExistsMsg = "This username already exists.";
     public static final HttpStatus UserAlreadyExistsStatus = HttpStatus.FORBIDDEN;
     public static final String LoginFailureMsg = "User or password is incorrect";
-    public static final HttpStatus LoginFailureStatus = HttpStatus.I_AM_A_TEAPOT;
+    public static final HttpStatus LoginFailureStatus = HttpStatus.FORBIDDEN;
 
 }
