@@ -13,21 +13,30 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 @WebFilter("/*")
 public class AuthFilter implements Filter {
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain){
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException{
         try {
             Algorithm algorithm = Algorithm.HMAC256(UserConfig.SECRET_KEY);
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer("joboonja.com")
                     .build();
-            DecodedJWT jwt = verifier.verify(((HttpServletRequest)servletRequest).getHeader("Authorization"));
-            servletRequest.setAttribute("id", jwt.getClaim("id"));
+            String header = ((HttpServletRequest)servletRequest).getHeader("Authorization");
+            DecodedJWT jwt;
+            if(header != null) {
+                jwt = verifier.verify(header);
+                servletRequest.setAttribute("id", jwt.getClaim("id"));
+            }
+            else
+                ((HttpServletResponse)servletResponse).setStatus(HttpStatus.UNAUTHORIZED.value());
+//            filterChain.doFilter(servletRequest, servletResponse);
         } catch (JWTVerificationException exception){
-            ((HttpServletResponse)servletResponse).setStatus(HttpStatus.UNAUTHORIZED.value());
+            ((HttpServletResponse)servletResponse).setStatus(HttpStatus.FORBIDDEN.value());
+            //filterChain.doFilter(servletRequest, servletResponse);
         }
     }
 }
