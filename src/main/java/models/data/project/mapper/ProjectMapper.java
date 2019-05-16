@@ -169,8 +169,8 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     public String getPassedDeadlineProjectsStatement() {
         return "SELECT * " +
                 "FROM Project P " +
-                "WHERE P.deadline = ? " +
-                "AND P.winner = NULL ";
+                "WHERE P.deadline < ? " +
+                "AND P.winner IS NULL ";
     }
 
     @Override
