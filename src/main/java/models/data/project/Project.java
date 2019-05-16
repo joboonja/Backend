@@ -15,6 +15,7 @@ public class Project {
     private HashMap<String, UserSkill> skills;
     private long deadline;
     private long creationDate;
+    private boolean hasBidOrNot;
 //    private List <Bid> bids;
 //    private UserInfo winner;
 
@@ -74,8 +75,12 @@ public class Project {
 
     public long getCreationDate() {return creationDate; }
 
-    public Boolean getHasBidOrNot() throws Exception {
-        return ProjectService.hasBidOnProject(this.id, ProjectServiceConfig.USER_ID);
+    public boolean getHasBidOrNot() {
+        return hasBidOrNot;
+    }
+
+    public void setHasBidOrNot(boolean hasBidOrNot) {
+        this.hasBidOrNot = hasBidOrNot;
     }
 
     public void setSkills(HashMap<String, UserSkill> skills) {

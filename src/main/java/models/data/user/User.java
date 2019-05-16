@@ -8,6 +8,7 @@ import models.data.skill.UserSkill;
 import models.data.skill.mapper.UserSkillMapper.UserSkillMapper;
 import models.data.user.mapper.UserMapper;
 import models.services.project.ProjectService;
+import models.services.user.UserService;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -124,5 +125,21 @@ public class User {
     public ArrayList<UserSkill> getSkillsList()
     {
         return new ArrayList<>(skills.values());
+    }
+    public ArrayList<UserSkill> getSkillsListWithEndorse(String endorserId)
+    {
+        if(endorserId.equals(id))
+            return (ArrayList<UserSkill>)this.skills.values();
+        ArrayList<UserSkill> skills = new ArrayList<>();
+        for (UserSkill skill:
+             this.skills.values()) {
+            skill.setEndorsedOrNot(UserSkillMapper.getInstance().getEndorsedOrNot(
+                    endorserId,
+                    skill.getUserId(),
+                    skill.getName()
+            ));
+            skills.add(skill);
+        }
+        return skills;
     }
 }

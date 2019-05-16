@@ -21,40 +21,41 @@ import java.util.ArrayList;
 public class Skills {
 
     @RequestMapping(value = "/skills", method = RequestMethod.GET)
-    public ArrayList<UserSkill> getAllSkills() throws Exception
+    public ArrayList<UserSkill> getAllSkills(@RequestAttribute("id") String userId) throws Exception
     {
-        return SkillService.getSkillsOfUser();
+        return SkillService.getSelfSkills(userId);
     }
 
     @RequestMapping(value = "/skills", method = RequestMethod.POST)
-    public ArrayList<UserSkill> addSkill(@RequestBody final AddSkillRequest request)
+    public ArrayList<UserSkill> addSkill(@RequestBody final AddSkillRequest request,
+                                         @RequestAttribute("id") String userId)
             throws UserNotFound, DuplicateSkill, InvalidSkill, SQLException {
-        SkillService.addSkill(request.getSkillName());
-        return SkillService.getSkillsOfUser();
+        SkillService.addSkill(request.getSkillName(), userId);
+        return SkillService.getSelfSkills(userId);
     }
 
     @RequestMapping(value = "/skills/{skillName}", method = RequestMethod.DELETE)
-    public void removeSkill(@PathVariable(value = "skillName") String skillName) throws UserNotFound, SQLException {
-        User user = UserMapper.getInstance().getUserById(ProjectServiceConfig.USER_ID);
+    public void removeSkill(@PathVariable(value = "skillName") String skillName,
+                            @RequestAttribute("id") String userId) throws UserNotFound, SQLException {
+        UserMapper.getInstance().getUserById(userId);
         if(skillName.equals("Node"))
             skillName = "Node.js";
         UserSkillMapper.getInstance().deleteUserSkill(skillName);
     }
 
     @RequestMapping(value = "/skills/{userId}", method = RequestMethod.POST)
-    public ArrayList<UserSkill> endorseSkill(@PathVariable(value = "userId") String userID,
-                             @RequestBody final EndorseRequest request)
+    public ArrayList<UserSkill> endorseSkill(@PathVariable(value = "userId") String endorsedUserId,
+                                             @RequestBody final EndorseRequest request,
+                                             @RequestAttribute("id") String userId)
             throws DuplicateEndorse, UserNotFound, SQLException, DataBaseError {
-
-        EndorseService.endorseUserSkill(userID, request.getSkillName());
-        return SkillService.getSkillsOfUser(userID);
-
+        EndorseService.endorseUserSkill(userId, endorsedUserId, request.getSkillName());
+        return SkillService.getSkillsOfUser(endorsedUserId, userId);
     }
 
     @RequestMapping(value = "/endorsableSkills", method = RequestMethod.GET)
-    public ArrayList<Skill> getAllEndorsableSkills() throws Exception
+    public ArrayList<Skill> getAllEndorsableSkills(@RequestAttribute("id") String userId) throws Exception
     {
-        return SkillService.getNotSubmittedSkills(ProjectServiceConfig.USER_ID);
+        return SkillService.getNotSubmittedSkills(userId);
     }
 
 

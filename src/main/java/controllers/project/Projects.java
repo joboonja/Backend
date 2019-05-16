@@ -16,24 +16,34 @@ public class Projects {
     public ArrayList <Project> getAllProjects(
             @RequestParam(value = "search", required = false) String query,
             @RequestParam(value = "pageNumber", required = false, defaultValue = "1") String pageNumber,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "10") String pageSize) throws UserNotFound
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") String pageSize,
+            @RequestAttribute("id") String userId) throws UserNotFound
     {
+        ArrayList<Project> projects;
         if(query != null)
-            return ProjectService.searchProjects(
+            projects =  ProjectService.searchProjects(
                     query,
                     Integer.valueOf(pageNumber),
-                    Integer.valueOf(pageSize));
-
-        return ProjectMapper.getInstance().getProjectsForUser(
-                ProjectServiceConfig.USER_ID,
+                    Integer.valueOf(pageSize),
+                    userId);
+        else
+            projects = ProjectMapper.getInstance().getProjectsForUser(
+                userId,
                 Integer.valueOf(pageNumber),
                 Integer.valueOf(pageSize));
 
+        for (Project project : projects)
+            project.setHasBidOrNot(ProjectService.hasBidOnProject(project.getID(), userId));
+
+        return projects;
     }
 
     @RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)
-    public Project getSingleProject(@PathVariable(value = "id") String id) throws ProjectNotFound {
-        return ProjectService.getProjectByID(id);
+    public Project getSingleProject(@PathVariable(value = "id") String id,
+                                    @RequestAttribute("id") String userId) throws ProjectNotFound {
+        Project project = ProjectService.getProjectByID(id);
+        project.setHasBidOrNot(ProjectService.hasBidOnProject(project.getID(), userId));
+        return project;
     }
 }
 

@@ -15,18 +15,18 @@ import java.util.HashMap;
 public class UserSkill extends Skill {
     private int points;
     private String userId;
-    private ArrayList<String> peopleWhoEndrosed;
+    private boolean endorsedOrNot;
     public UserSkill(String name, int points) {
         super(name);
         this.points = points;
-        peopleWhoEndrosed = new ArrayList<>();
         userId = "";
+        endorsedOrNot = false;
     }
     public UserSkill(String name, int points, String userId) {
         super(name);
         this.points = points;
         this.userId = userId;
-        peopleWhoEndrosed = new ArrayList<>();
+        endorsedOrNot = false;
     }
     public int getPoints()
     {
@@ -35,15 +35,12 @@ public class UserSkill extends Skill {
     public void setUserId(String userId) { this.userId = userId; }
     public String getUserId() { return userId; }
 
+    public void setEndorsedOrNot(boolean endorsedOrNot) {
+        this.endorsedOrNot = endorsedOrNot;
+    }
 
     public boolean getEndorsedOrNot() {
-        if(userId.equals(""))
-            return false;
-        return UserSkillMapper.getInstance().getEndorsedOrNot(
-                ProjectServiceConfig.USER_ID,
-                userId,
-                name
-        );
+        return endorsedOrNot;
     }
 
     public static HashMap<String, UserSkill> convertToNameAndSkill(ArrayList <UserSkill> allUserSkills) {

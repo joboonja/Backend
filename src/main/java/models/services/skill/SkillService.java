@@ -14,14 +14,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SkillService {
-    public static void addSkill(String skillName) throws UserNotFound, DuplicateSkill, InvalidSkill, SQLException {
-        User user = UserMapper.getInstance().getUserById(ProjectServiceConfig.USER_ID);
+    public static void addSkill(String skillName, String userId) throws UserNotFound, DuplicateSkill, InvalidSkill, SQLException {
+        User user = UserMapper.getInstance().getUserById(userId);
         if(user.haveSkill(skillName))
             throw new DuplicateSkill();
-        ArrayList <Skill> notSubmitted = getNotSubmittedSkills(ProjectServiceConfig.USER_ID);
+        ArrayList <Skill> notSubmitted = getNotSubmittedSkills(userId);
         for(Skill skill: notSubmitted) {
             if (skillName.equals(skill.getName())) {
-                user.addSkill(new UserSkill(skillName, 0, ProjectServiceConfig.USER_ID));
+                user.addSkill(new UserSkill(skillName, 0, userId));
                 return ;
             }
         }
@@ -31,14 +31,12 @@ public class SkillService {
         User user = UserMapper.getInstance().getUserById(userID);
         return SkillMapper.getInstance().getNotSubmittedSkills(user.getId());
     }
-    public static ArrayList<UserSkill> getSkillsOfUser() throws UserNotFound, SQLException {
-        User user = UserMapper.getInstance().getUserById(ProjectServiceConfig.USER_ID);
-        return user.getSkillsList();
-
+    public static ArrayList<UserSkill> getSkillsOfUser(String userId, String loginUserId) throws UserNotFound, SQLException {
+        User user = UserMapper.getInstance().getUserById(userId);
+        return user.getSkillsListWithEndorse(loginUserId);
     }
-    public static ArrayList<UserSkill> getSkillsOfUser(String userID) throws UserNotFound, SQLException {
-        User user = UserMapper.getInstance().getUserById(userID);
+    public static ArrayList<UserSkill> getSelfSkills(String userId)throws UserNotFound, SQLException {
+        User user = UserMapper.getInstance().getUserById(userId);
         return user.getSkillsList();
-
     }
 }

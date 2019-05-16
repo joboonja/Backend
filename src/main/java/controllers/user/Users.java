@@ -43,7 +43,8 @@ public class Users {
     }
 
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
-    public SingleUserResponse getUser(@PathVariable(value = "userId") String userId) throws UserNotFound, SQLException {
-        return new SingleUserResponse(UserService.getUserByID(userId));
+    public SingleUserResponse getUser(@PathVariable(value = "userId") String userId,
+                                      @RequestAttribute("id") String loginUser) throws UserNotFound, SQLException {
+        return new SingleUserResponse(UserService.getUserByID(userId), loginUser);
     }
 }

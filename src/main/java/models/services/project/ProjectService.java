@@ -18,14 +18,19 @@ public class ProjectService {
         return ProjectMapper.getInstance().getProjectByProjectID(id);
     }
 
-    public static boolean hasBidOnProject(String projectId, String userId) throws Exception {
-        return BidMapper.getInstance().hasBidOnProject(projectId, userId);
+    public static boolean hasBidOnProject(String projectId, String userId)  {
+        try {
+            return BidMapper.getInstance().hasBidOnProject(projectId, userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public static ArrayList<Project> searchProjects(String query, int pageNumber, int pageSize) throws UserNotFound {
+    public static ArrayList<Project> searchProjects(String query, int pageNumber, int pageSize, String userId) throws UserNotFound {
         try {
             return ProjectMapper.getInstance().searchByDescriptionOrName(
-                    query, ProjectServiceConfig.USER_ID, pageNumber, pageSize);
+                    query, userId, pageNumber, pageSize);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new UserNotFound();

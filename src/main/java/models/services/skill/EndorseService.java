@@ -9,10 +9,10 @@ import java.sql.SQLException;
 
 
 public class EndorseService {
-    public static void endorseUserSkill(String userID, String skillName) throws  DuplicateEndorse, DataBaseError {
+    public static void endorseUserSkill(String userID, String endorsedUserId,  String skillName) throws  DuplicateEndorse, DataBaseError {
         try {
-            UserSkillMapper.getInstance().endorse(ProjectServiceConfig.USER_ID,
-                                                    userID,
+            UserSkillMapper.getInstance().endorse(userID,
+                                                    endorsedUserId,
                                                     skillName);
         } catch (SQLException e) {
             e.printStackTrace();

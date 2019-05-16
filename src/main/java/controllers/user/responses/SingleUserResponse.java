@@ -13,13 +13,13 @@ public class SingleUserResponse {
     private String profilePictureUrl;
     private ArrayList<UserSkill> skillsList;
 
-    public SingleUserResponse(User user) {
+    public SingleUserResponse(User user, String loginUser) {
         this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.jobTitle = user.getJobTitle();
         this.profilePictureUrl = user.getProfilePictureURL();
-        this.skillsList =  user.getSkillsList();
+        this.skillsList =  user.getSkillsListWithEndorse(loginUser);
     }
 
     public String getId() {
