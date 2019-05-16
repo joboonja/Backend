@@ -72,6 +72,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                 "    projectDescription TEXT," +
                 "    budget BIGINT," +
                 "    deadline BIGINT," +
+                "    winner CHAR(20)," +
                 "    PRIMARY KEY(pid)" +
                 ");");
         statements.add("CREATE TABLE IF NOT EXISTS ProjectRequires(" +
