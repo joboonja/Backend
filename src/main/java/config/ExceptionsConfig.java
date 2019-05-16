@@ -25,5 +25,6 @@ public class ExceptionsConfig {
     public static final HttpStatus UserAlreadyExistsStatus = HttpStatus.FORBIDDEN;
     public static final String LoginFailureMsg = "User or password is incorrect";
     public static final HttpStatus LoginFailureStatus = HttpStatus.FORBIDDEN;
-
+    public static final String NotAuthMsg = "You need to login to view this page.";
+    public static final HttpStatus NotAuthStatus = HttpStatus.FORBIDDEN;
 }
