@@ -40,14 +40,16 @@ public class Skills {
         UserMapper.getInstance().getUserById(userId);
         if(skillName.equals("Node"))
             skillName = "Node.js";
-        UserSkillMapper.getInstance().deleteUserSkill(skillName);
+        UserSkillMapper.getInstance().deleteUserSkill(skillName, userId);
     }
 
     @RequestMapping(value = "/skills/{userId}", method = RequestMethod.POST)
     public ArrayList<UserSkill> endorseSkill(@PathVariable(value = "userId") String endorsedUserId,
                                              @RequestBody final EndorseRequest request,
                                              @RequestAttribute("id") String userId)
-            throws DuplicateEndorse, UserNotFound, SQLException, DataBaseError {
+            throws DuplicateEndorse, UserNotFound, SQLException, DataBaseError, EndorseSelf {
+        if(userId.equals(endorsedUserId))
+            throw new EndorseSelf();
         EndorseService.endorseUserSkill(userId, endorsedUserId, request.getSkillName());
         return SkillService.getSkillsOfUser(endorsedUserId, userId);
     }

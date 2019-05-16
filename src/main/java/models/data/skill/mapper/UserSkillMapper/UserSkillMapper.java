@@ -30,12 +30,12 @@ public class UserSkillMapper extends Mapper<UserSkill, String> implements IUserS
     }
 
     @Override
-    public void deleteUserSkill(String name) {
+    public void deleteUserSkill(String name, String userId) {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement stmt = con.prepareStatement(getDeleteUserSkillStatement())
         ) {
             stmt.setString(1, name);
-            stmt.setString(2, ProjectServiceConfig.USER_ID);
+            stmt.setString(2, userId);
             try {
                 stmt.execute();
                 stmt.close();

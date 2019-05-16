@@ -232,7 +232,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         skills.put("Node.js", new UserSkill("Node.js", 11));
         String jobTitle = "برنامه‌نویس وب";
         String bio = "روی سنگ قبرم بنویسید: خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت";
-        String password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
+        String password =  Hashing.sha256().hashString("12345678", StandardCharsets.UTF_8)
                 .toString();
         String profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
         storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
