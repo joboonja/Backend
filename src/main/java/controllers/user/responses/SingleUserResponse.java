@@ -10,7 +10,7 @@ public class SingleUserResponse {
     private String firstName;
     private String lastName;
     private String jobTitle;
-    private String profilePictureUrl;
+    private String profilePictureURL;
     private ArrayList<UserSkill> skillsList;
 
     public SingleUserResponse(User user, String loginUser) {
@@ -18,7 +18,7 @@ public class SingleUserResponse {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.jobTitle = user.getJobTitle();
-        this.profilePictureUrl = user.getProfilePictureURL();
+        this.profilePictureURL = user.getProfilePictureURL();
         this.skillsList =  user.getSkillsListWithEndorse(loginUser);
     }
 
@@ -54,12 +54,12 @@ public class SingleUserResponse {
         this.jobTitle = jobTitle;
     }
 
-    public String getProfilePictureUrl() {
-        return profilePictureUrl;
+    public String getProfilePictureURL() {
+        return profilePictureURL;
     }
 
-    public void setProfilePictureUrl(String profilePictureUrl) {
-        this.profilePictureUrl = profilePictureUrl;
+    public void setProfilePictureURL(String profilePictureUrl) {
+        this.profilePictureURL = profilePictureUrl;
     }
 
     public ArrayList<UserSkill> getSkillsList() {
