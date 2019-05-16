@@ -94,6 +94,31 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
         return project.checkSkillSatisfaction(user.getSkills()) && project.checkBudgetSatisfaction(newBid.getOffer());
     }
 
+    @Override
+    public ArrayList<Bid> getAllBidsOfProject(String projectId) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(getAllBidsOfProjectStatement())
+        ) {
+            stmt.setString(1, projectId);
+            ResultSet resultSet;
+            ArrayList<Bid> result = new ArrayList<>();
+            resultSet = stmt.executeQuery();
+            while(resultSet.next())
+                result.add(convertResultSetToDomainModel(resultSet));
+            resultSet.close();
+            stmt.close();
+            con.close();
+            return result;
+        }
+    }
+
+    @Override
+    public String getAllBidsOfProjectStatement() {
+        return "SELECT * " +
+                "FROM Bid B " +
+                "WHERE B.pid = ?";
+    }
+
     public void addNewBid(Bid newBid) throws AlreadyBid, InvalidBidRequirements, UserNotFound, ProjectNotFound {
         try {
             if (hasAlreadyBid(newBid))

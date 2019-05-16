@@ -46,12 +46,6 @@ public class JSONDecoder {
         return new UserSkill(name, points);
     }
 
-    public static Auction decodeJSONToAuction(JSONObject auctionInfo){
-        String projectTitle = auctionInfo.getString(BidConfig.PROJECT_ID);
-
-        return new Auction(projectTitle);
-    }
-
     public static ArrayList<Project> decodeJSONListToProjectList(String info)
     {
         ArrayList<Project> projects = new ArrayList<Project>();
