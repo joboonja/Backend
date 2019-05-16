@@ -27,4 +27,6 @@ public class ExceptionsConfig {
     public static final HttpStatus LoginFailureStatus = HttpStatus.FORBIDDEN;
     public static final String NotAuthMsg = "You need to login to view this page.";
     public static final HttpStatus NotAuthStatus = HttpStatus.FORBIDDEN;
+    public static final String EndorseSelfMsg = "You can not endorse your self.";
+    public static final HttpStatus EndorseSelfStatus = HttpStatus.NOT_ACCEPTABLE;
 }

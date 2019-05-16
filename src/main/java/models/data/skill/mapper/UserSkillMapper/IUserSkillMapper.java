@@ -11,5 +11,5 @@ public interface IUserSkillMapper extends IMapper<UserSkill, String> {
     boolean canEndorse(String endorserId, String endorsedId, String userSkillName);
     void endorse(String endorserId, String endorsedId, String userSkillName) throws DuplicateEndorse, DataBaseError, SQLException;
     boolean getEndorsedOrNot(String endorserId, String endorsedId, String userSkillName);
-    void deleteUserSkill(String name);
+    void deleteUserSkill(String name, String userId);
 }

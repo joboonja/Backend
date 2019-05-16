@@ -1,5 +1,6 @@
 package controllers.authFilter;
 
+import models.services.user.Authentication;
 import org.springframework.http.HttpStatus;
 
 import com.auth0.jwt.JWT;
@@ -16,27 +17,43 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-//@WebFilter("/*")
+@WebFilter("/*")
 public class AuthFilter implements Filter {
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException{
+    public AuthFilter(){
+
+    }
+
+    public void destroy() {
+    }
+
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException{
         try {
-            Algorithm algorithm = Algorithm.HMAC256(UserConfig.SECRET_KEY);
-            JWTVerifier verifier = JWT.require(algorithm)
+            String uri = ((HttpServletRequest)servletRequest).getRequestURI();
+            if(uri.equals("/login") || uri.equals("/signup"))
+            {
+                chain.doFilter(servletRequest, servletResponse);
+                return;
+            }
+            JWTVerifier verifier = JWT.require(Authentication.algorithm)
                     .withIssuer("joboonja.com")
                     .build();
             String header = ((HttpServletRequest)servletRequest).getHeader("Authorization");
+            header = header.substring(7); // - Bearer
             DecodedJWT jwt;
             if(header != null) {
                 jwt = verifier.verify(header);
-                servletRequest.setAttribute("id", jwt.getClaim("id"));
+                String id =  jwt.getClaim("id").asString();
+                servletRequest.setAttribute("id", id);
+                chain.doFilter(servletRequest, servletResponse);
             }
             else
                 ((HttpServletResponse)servletResponse).setStatus(HttpStatus.UNAUTHORIZED.value());
-//            filterChain.doFilter(servletRequest, servletResponse);
         } catch (JWTVerificationException exception){
             ((HttpServletResponse)servletResponse).setStatus(HttpStatus.FORBIDDEN.value());
-            //filterChain.doFilter(servletRequest, servletResponse);
         }
+
     }
+    public void init(FilterConfig fConfig) throws ServletException {
+    }
+
 }

@@ -7,7 +7,7 @@ import config.UserConfig;
 import java.util.*;
 
 public class Authentication {
-    private static Algorithm algorithm = Algorithm.HMAC256(UserConfig.SECRET_KEY);
+    public static Algorithm algorithm = Algorithm.HMAC256(UserConfig.SECRET_KEY);
 
     public static String  createToken(String id) {
         Date expire = new Date();

@@ -129,7 +129,7 @@ public class User {
     public ArrayList<UserSkill> getSkillsListWithEndorse(String endorserId)
     {
         if(endorserId.equals(id))
-            return (ArrayList<UserSkill>)this.skills.values();
+            return new ArrayList<>(this.skills.values());
         ArrayList<UserSkill> skills = new ArrayList<>();
         for (UserSkill skill:
              this.skills.values()) {
