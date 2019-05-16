@@ -18,16 +18,6 @@ import java.util.List;
 
 @RestController
 public class Users {
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public void signup(@RequestBody final SignupRequest request) throws InvalidUser, UserAlreadyExists, DataBaseError {
-        UserService.registerUser(new User( request.getUsername(),
-                request.getFirstName(),
-                request.getLastName(),
-                request.getJobTitle(),
-                request.getBio(),
-                request.getProfilePictureUrl(),
-                request.getPassword()));
-    }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<AllUsersResponse> getAllUsers(
