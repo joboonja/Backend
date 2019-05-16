@@ -16,7 +16,7 @@ public class AuctionScheduler implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new Auction(), 0, 10, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(new Auction(), 10, 1000000000, TimeUnit.SECONDS);
     }
 
     @Override

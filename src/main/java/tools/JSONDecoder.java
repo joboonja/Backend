@@ -36,7 +36,7 @@ public class JSONDecoder {
             skills.put(skill.getName(), skill);
         }
 
-        return new Project(id, title, description, imageURL, budget, skills, deadline, creationDate);
+        return new Project(id, title, description, imageURL, budget, skills, deadline, creationDate, null);
     }
 
     public static UserSkill decodeJSONtoUserSkill(JSONObject skillInfo){
