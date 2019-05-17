@@ -16,11 +16,9 @@ public class Project {
     private long deadline;
     private long creationDate;
     private boolean hasBidOrNot;
-//    private List <Bid> bids;
-//    private UserInfo winner;
+    private String winner;
 
-
-    public Project(String id, String title, String description, String imageURL, long budget, HashMap<String, UserSkill> skills, long deadline, long creationDate)
+    public Project(String id, String title, String description, String imageURL, long budget, HashMap<String, UserSkill> skills, long deadline, long creationDate, String winner)
     {
         this.id = id;
         this.title = title;
@@ -30,6 +28,7 @@ public class Project {
         this.skills = skills;
         this.deadline = deadline;
         this.creationDate = creationDate;
+        this.winner = winner;
     }
 
     public String getTitle()
@@ -73,6 +72,10 @@ public class Project {
         return imageURL;
     }
 
+    public String getWinner() {
+        return winner;
+    }
+
     public long getCreationDate() {return creationDate; }
 
     public boolean getHasBidOrNot() {
@@ -85,5 +88,9 @@ public class Project {
 
     public void setSkills(HashMap<String, UserSkill> skills) {
         this.skills = skills;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
     }
 }

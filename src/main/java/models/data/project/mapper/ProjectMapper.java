@@ -171,8 +171,12 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     public String getPassedDeadlineProjectsStatement() {
         return "SELECT * " +
                 "FROM Project P " +
-                "WHERE P.deadline = ? " +
-                "AND P.winner = NULL ";
+                "WHERE P.deadline < ? " +
+                "AND P.winner IS NULL " +
+                "AND EXISTS ( " +
+                "SELECT * " +
+                "FROM Bid B " +
+                "WHERE B.pid = P.pid) ";
     }
 
     @Override
@@ -180,9 +184,11 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement stmt = con.prepareStatement(getSetWinnerStatement());
         ) {
-            stmt.setString(1, projectId);
-            stmt.setString(2, userId);
-            stmt.executeQuery();
+            stmt.setString(1, userId);
+            stmt.setString(2, projectId);
+            stmt.execute();
+            stmt.close();
+            con.close();
         }
     }
 
@@ -202,8 +208,9 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         String description = rs.getString(5);
         long budget = rs.getLong(6);
         long deadline = rs.getLong(7);
+        String winner = rs.getString(8);
         HashMap<String, UserSkill> skills = findProjectRequires(pid);
-        return new Project(pid, title, description, imageUrl, budget, skills, deadline, creationDate);
+        return new Project(pid, title, description, imageUrl, budget, skills, deadline, creationDate, winner);
     }
 
     @Override

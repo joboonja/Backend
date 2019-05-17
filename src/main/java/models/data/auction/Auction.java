@@ -56,6 +56,7 @@ public class Auction implements Runnable{
                     winner = user;
                 }
                 projectMapper.setWinner(winner.getId(), projectId);
+                project.setWinner(winner.getId());
             }
         }catch (Exception e) {
             e.printStackTrace();
