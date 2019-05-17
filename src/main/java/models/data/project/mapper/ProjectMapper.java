@@ -133,11 +133,13 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             throws SQLException {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement stmt = con.prepareStatement(
-                     getSearchByDescriptionOrNameStmt() + getPaginationStatement(pageNumber, pageSize))
+                     getSearchByDescriptionOrNameStmt() + getPaginationStatement())
         ) {
             stmt.setString(1, userId);
             stmt.setString(2, "%" + query + "%");
             stmt.setString(3, "%" + query + "%");
+            stmt.setInt(4, pageNumber);
+            stmt.setInt(5, ( ( pageNumber - 1 ) * pageSize ));
             return getResultSet(con, stmt);
         }
     }
@@ -278,7 +280,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     @Override
     public ArrayList<Project> findUserProjects(String userId, int pageNumber, int pageSize) throws SQLException{
        return findListForUser(userId,
-               getFindByUserIdStatement() + getPaginationStatement(pageNumber, pageSize));
+               getFindByUserIdStatement(), pageNumber, pageSize);
     }
 
 }

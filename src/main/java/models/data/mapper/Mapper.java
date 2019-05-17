@@ -39,18 +39,37 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
             PreparedStatement stmt = con.prepareStatement(query)
         ) {
             stmt.setString(1, id.toString());
-            ArrayList<T> result = new ArrayList<>();
             ResultSet resultSet;
             resultSet = stmt.executeQuery();
-            while(resultSet.next())
-            {
-                result.add(convertResultSetToDomainModel(resultSet));
-            }
-            resultSet.close();
+            ArrayList<T> result = getListFromResultSet(resultSet);
             stmt.close();
             con.close();
         return result;
         }
+    }
+    public ArrayList<T> findListForUser(I id, String query, int pageNumber, int pageSize) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement stmt = con.prepareStatement(query + getPaginationStatement() )
+        ) {
+            stmt.setString(1, id.toString());
+            stmt.setInt(2, pageNumber);
+            stmt.setInt(3, ( ( pageNumber - 1 ) * pageSize ));
+            ResultSet resultSet;
+            resultSet = stmt.executeQuery();
+            ArrayList<T> result = getListFromResultSet(resultSet);
+            stmt.close();
+            con.close();
+            return result;
+        }
+    }
+    private ArrayList<T> getListFromResultSet(ResultSet resultSet) throws SQLException {
+        ArrayList<T> result = new ArrayList<>();
+        while(resultSet.next())
+        {
+            result.add(convertResultSetToDomainModel(resultSet));
+        }
+        resultSet.close();
+        return result;
     }
 
     abstract protected ArrayList<String> getCreateTableStatement();
@@ -86,8 +105,8 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
         }
     }
 
-    protected String getPaginationStatement(int pageNumber, int pageSize)
+    protected String getPaginationStatement()
     {
-        return "LIMIT " + pageSize +" OFFSET " + ( ( pageNumber - 1 ) * pageSize );
+        return "LIMIT ?  OFFSET ? ";
     }
 }
