@@ -138,7 +138,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             stmt.setString(1, userId);
             stmt.setString(2, "%" + query + "%");
             stmt.setString(3, "%" + query + "%");
-            stmt.setInt(4, pageNumber);
+            stmt.setInt(4, pageSize);
             stmt.setInt(5, ( ( pageNumber - 1 ) * pageSize ));
             return getResultSet(con, stmt);
         }

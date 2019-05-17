@@ -52,7 +52,7 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
              PreparedStatement stmt = con.prepareStatement(query + getPaginationStatement() )
         ) {
             stmt.setString(1, id.toString());
-            stmt.setInt(2, pageNumber);
+            stmt.setInt(2, pageSize);
             stmt.setInt(3, ( ( pageNumber - 1 ) * pageSize ));
             ResultSet resultSet;
             resultSet = stmt.executeQuery();
