@@ -218,129 +218,104 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
     public void addDefaultUser() throws SQLException {
 
-        String id = "1";
-        String firstName = "علی";
-        String lastName = "شریف‌زاده";
+        String id = "farzad";
+        String firstName = "فرزاد";
+        String lastName = "حبیبی";
         HashMap<String, UserSkill> skills = new HashMap<String, UserSkill>();
-        skills.put("HTML", new UserSkill("HTML", 10));
-        skills.put("Javascript", new UserSkill("Javascript", 13));
-        skills.put("C++", new UserSkill("C++", 12));
-        skills.put("Java", new UserSkill("Java", 11));
-        skills.put("SQL", new UserSkill("SQL", 11));
-        skills.put("Linux", new UserSkill("Linux", 11));
-        skills.put("C", new UserSkill("C", 11));
-        skills.put("Node.js", new UserSkill("Node.js", 11));
-        String jobTitle = "برنامه‌نویس وب";
-        String bio = "روی سنگ قبرم بنویسید: خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت";
+        skills.put("HTML", new UserSkill("HTML", 10, "farzad"));
+        skills.put("Javascript", new UserSkill("Javascript", 13, "farzad"));
+        skills.put("C++", new UserSkill("C++", 12, "farzad"));
+        skills.put("Java", new UserSkill("Java", 11, "farzad"));
+        skills.put("SQL", new UserSkill("SQL", 11, "farzad"));
+        skills.put("Linux", new UserSkill("Linux", 11, "farzad"));
+        skills.put("C", new UserSkill("C", 11, "farzad"));
+        skills.put("Node.js", new UserSkill("Node.js", 11, "farzad"));
+        String jobTitle = "دانشجو";
+        String bio = "بیو ندارم";
         String password =  Hashing.sha256().hashString("12345678", StandardCharsets.UTF_8)
                 .toString();
-        String profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        String profilePictureUrl = "https://quera.ir/media/CACHE/images/public/avatars/7fec038a74bb45e6a6c3a229248ba7a5/15b5eb02454a49cefb753c491dd13ae4.jpg";
         storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
-        id = "2";
-        firstName = "فرزاد";
-        lastName = "حبیبی";
-        skills = new HashMap<>();
-        skills.put("HTML", new UserSkill("HTML", 5, "2"));
-        skills.put("Javascript", new UserSkill("Javascript", 4, "2"));
-        skills.put("C++", new UserSkill("C++", 2, "2"));
-        skills.put("Java", new UserSkill("Java", 3, "2"));
-        jobTitle = "دانشجو";
-        bio = "بیو ندارم";
-        password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
-                .toString();
-        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
-        storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
-        id = "3";
+        id = "yasaman";
         firstName = "یاسمن";
         lastName = "جعفری";
-        skills = new HashMap<>();
-        skills.put("HTML", new UserSkill("HTML", 5, "3"));
-        skills.put("Javascript", new UserSkill("Javascript", 4, "3"));
-        skills.put("C++", new UserSkill("C++", 2, "3"));
-        skills.put("Java", new UserSkill("Java", 3, "3"));
         jobTitle = "دانشجو";
         bio = "بیو؟";
-        password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
+        skills.put("HTML", new UserSkill("HTML", 10, "yasaman"));
+        skills.put("Javascript", new UserSkill("Javascript", 13, "yasaman"));
+        skills.put("C++", new UserSkill("C++", 12, "yasaman"));
+        skills.put("Java", new UserSkill("Java", 11, "yasaman"));
+        skills.put("SQL", new UserSkill("SQL", 11, "yasaman"));
+        skills.put("Linux", new UserSkill("Linux", 11, "yasaman"));
+        skills.put("C", new UserSkill("C", 11, "yasaman"));
+        skills.put("Node.js", new UserSkill("Node.js", 11, "yasaman"));
+        password =  Hashing.sha256().hashString("12345678", StandardCharsets.UTF_8)
                 .toString();
-        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        profilePictureUrl = "https://quera.ir/media/CACHE/images/public/avatars/22a4d7bc67bb46b7962d0e38a0b9a979/f13bf7290aecc1529de8b10f6d8c4cfa.jpg";
         storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
-        id = "4";
-        firstName = "ممد";
-        lastName = "فراهانی";
-        skills = new HashMap<>();
-        skills.put("HTML", new UserSkill("HTML", 5, "4"));
-        skills.put("Javascript", new UserSkill("Javascript", 4, "4"));
-        skills.put("C++", new UserSkill("C++", 2, "4"));
-        skills.put("Java", new UserSkill("Java", 3, "4"));
-        jobTitle = "برنامه‌نویس";
-        bio = "دنبال کار می‌گردم";
-        password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
-                .toString();
-        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
-        storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
-        id = "5";
+        id = "bahar";
         firstName = "بهار";
         lastName = "باطنی";
         skills = new HashMap<>();
-        skills.put("HTML", new UserSkill("HTML", 5, "5"));
-        skills.put("Javascript", new UserSkill("Javascript", 4, "5"));
-        skills.put("C++", new UserSkill("C++", 2, "5"));
-        skills.put("Java", new UserSkill("Java", 3, "5"));
+        skills.put("HTML", new UserSkill("HTML", 5, "bahar"));
+        skills.put("Javascript", new UserSkill("Javascript", 4, "bahar"));
+        skills.put("C++", new UserSkill("C++", 2, "bahar"));
+        skills.put("Java", new UserSkill("Java", 3, "bahar"));
         jobTitle = "دانشجو";
         bio = "دنبال کار می‌گردم";
         password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
                 .toString();
-        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        profilePictureUrl = "";
         storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
-        id = "6";
+        id = "amir";
         firstName = "امیرحسین";
         lastName = "احمدی";
         skills = new HashMap<>();
-        skills.put("HTML", new UserSkill("HTML", 5, "6"));
-        skills.put("Javascript", new UserSkill("Javascript", 4, "6"));
-        skills.put("C++", new UserSkill("C++", 2, "6"));
-        skills.put("Java", new UserSkill("Java", 3, "6"));
+        skills.put("HTML", new UserSkill("HTML", 5, "amir"));
+        skills.put("Javascript", new UserSkill("Javascript", 4, "amir"));
+        skills.put("C++", new UserSkill("C++", 2, "amir"));
+        skills.put("Java", new UserSkill("Java", 3, "amir"));
         jobTitle = "دانشجو";
         bio = "دنبال کار می‌گردم";
         password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
                 .toString();
-        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        profilePictureUrl = "";
         storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
-        id = "7";
-        firstName = "غلام";
-        lastName = "حسنی";
+        id = "ghorbani";
+        firstName = "علیرضا";
+        lastName = "قربانی";
         skills = new HashMap<>();
-        skills.put("HTML", new UserSkill("HTML", 5, "7"));
-        skills.put("Javascript", new UserSkill("Javascript", 4, "7"));
-        skills.put("C++", new UserSkill("C++", 2, "7"));
-        skills.put("Java", new UserSkill("Java", 3, "7"));
-        jobTitle = "برنامه‌نویس وب";
-        bio = "دنبال کار می‌گردم";
+        skills.put("HTML", new UserSkill("HTML", 5, "ghorbani"));
+        skills.put("Javascript", new UserSkill("Javascript", 4, "ghorbani"));
+        skills.put("C++", new UserSkill("C++", 2, "ghorbani"));
+        skills.put("Java", new UserSkill("Java", 3, "ghorbani"));
+        jobTitle = "خواننده";
+        bio = "خوانندگی فایده نداشت دنبال کار توی حوزه‌ی آی‌تی هستم.";
         password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
                 .toString();
-        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        profilePictureUrl = "http://dl.parsnava.ir/dl/2017/07/Homayoun-Shajarian-Alireza-Ghorbani.jpg";
         storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
-        id = "8";
+        id = "sadaf";
         firstName = "صدف";
         lastName = "صادقیان";
         skills = new HashMap<>();
-        skills.put("C", new UserSkill("C", 5, "8"));
-        skills.put("Javascript", new UserSkill("Javascript", 2, "8"));
-        skills.put("C++", new UserSkill("C++", 4, "8"));
-        skills.put("Java", new UserSkill("Python", 6, "8"));
-        skills.put("HTML", new UserSkill("HTML", 1, "8"));
+        skills.put("C", new UserSkill("C", 5, "sadaf"));
+        skills.put("Javascript", new UserSkill("Javascript", 2, "sadaf"));
+        skills.put("C++", new UserSkill("C++", 4, "sadaf"));
+        skills.put("Java", new UserSkill("Python", 6, "sadaf"));
+        skills.put("HTML", new UserSkill("HTML", 1, "sadaf"));
         jobTitle = "دانشجو";
         bio = "در جستجوی دیتا";
         password =  Hashing.sha256().hashString("123", StandardCharsets.UTF_8)
                 .toString();
-        profilePictureUrl = UserConfig.MAIN_USER_PROFILE_PIC_URL;
+        profilePictureUrl = "";
         storeUserData(id, skills, firstName, lastName, jobTitle, bio, profilePictureUrl, password);
 
     }
