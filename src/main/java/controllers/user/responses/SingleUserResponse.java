@@ -12,6 +12,7 @@ public class SingleUserResponse {
     private String jobTitle;
     private String profilePictureURL;
     private ArrayList<UserSkill> skillsList;
+    private String bio;
 
     public SingleUserResponse(User user, String loginUser) {
         this.id = user.getId();
@@ -20,6 +21,15 @@ public class SingleUserResponse {
         this.jobTitle = user.getJobTitle();
         this.profilePictureURL = user.getProfilePictureURL();
         this.skillsList =  user.getSkillsListWithEndorse(loginUser);
+        this.bio = user.getBio();
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public String getId() {
