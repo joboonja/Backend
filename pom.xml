@@ -17,7 +17,13 @@
                     <source>8</source>
                     <target>8</target>
                 </configuration>
-
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webXml>src/main/webapp/WEB_INF/web.xml</webXml>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -26,6 +32,12 @@
         <jackson.version>2.9.8</jackson.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <version>2.1.5.RELEASE</version>
+        </dependency>
+
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>

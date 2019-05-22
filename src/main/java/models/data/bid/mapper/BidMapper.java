@@ -12,7 +12,6 @@ import models.data.project.Project;
 import models.data.project.mapper.ProjectMapper;
 import models.data.user.User;
 import models.data.user.mapper.UserMapper;
-import sun.jvm.hotspot.ui.tree.SimpleTreeModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
