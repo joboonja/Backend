@@ -188,7 +188,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
                 "profilePictureUrl TEXT," +
                 "bio TEXT," +
                 "jobTitle CHAR(50)," +
-                "password CHAR(50)," +
+                "password TEXT," +
                 "PRIMARY KEY(userId)" +
                 ");";
 
