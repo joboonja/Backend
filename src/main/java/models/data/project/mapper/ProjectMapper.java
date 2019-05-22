@@ -69,7 +69,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         statements.add("CREATE TABLE IF NOT EXISTS Project(" +
                 "    creationDate BIGINT," +
                 "    pid CHAR(40)," +
-                "    title CHAR(40)," +
+                "    title TEXT," +
                 "    imageUrl TEXT," +
                 "    projectDescription TEXT," +
                 "    budget BIGINT," +
@@ -217,7 +217,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
     @Override
     public String getInsertStatement() {
-        return "INSERT INTO Project ( creationDate, pid, title, imageUrl, projectDescription," +
+        return "INSERT IGNORE INTO Project ( creationDate, pid, title, imageUrl, projectDescription," +
                 "budget, deadline, winner) " +
                 "VALUES(? , ?, ?, ?, ?, ?, ?, NULL) ";
     }
