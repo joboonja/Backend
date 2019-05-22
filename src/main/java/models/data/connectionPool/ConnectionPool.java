@@ -3,23 +3,32 @@ package models.data.connectionPool;
 import config.ConnectionPoolConfig;
 import org.apache.commons.dbcp.BasicDataSource;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionPool {
+    private static ConnectionPool ourInstance = new ConnectionPool();
 
-    private static BasicDataSource ds = new BasicDataSource();
-
+    public static ConnectionPool getInstance() {
+        return ourInstance;
+    }
+    private static  DataSource dataSource;
     static {
-        ds.setUrl(ConnectionPoolConfig.url);
-        ds.setDriverClassName(ConnectionPoolConfig.driver);
-        ds.setMinIdle(ConnectionPoolConfig.minPools);
-        ds.setMaxIdle(ConnectionPoolConfig.maxPools);
-        ds.setMaxOpenPreparedStatements(ConnectionPoolConfig.maxOpenPreparedStatement);
+        dataSource = setupDataSource();
     }
-
+    private static DataSource setupDataSource() {
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setDriverClassName(ConnectionPoolConfig.driver);
+        basicDataSource.setUrl(ConnectionPoolConfig.url);
+        basicDataSource.setUsername(ConnectionPoolConfig.username);
+        basicDataSource.setPassword(ConnectionPoolConfig.password);
+        basicDataSource.setMinIdle(ConnectionPoolConfig.minPools);
+        basicDataSource.setMaxIdle(ConnectionPoolConfig.maxPools);
+        basicDataSource.setMaxOpenPreparedStatements(ConnectionPoolConfig.maxOpenPreparedStatement);
+        return basicDataSource;
+    }
     public static Connection getConnection() throws SQLException {
-        return ds.getConnection();
+        return dataSource.getConnection();
     }
-
 }

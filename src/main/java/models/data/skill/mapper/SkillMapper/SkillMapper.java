@@ -62,7 +62,7 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
     protected ArrayList<String> getCreateTableStatement() {
         ArrayList<String> statements = new ArrayList<>();
         String stmt = "CREATE TABLE IF NOT EXISTS Skill(" +
-                "name CHAR(20)," +
+                "name CHAR(40)," +
                 "PRIMARY KEY(name)" +
                 ");";
         statements.add(stmt);
@@ -71,7 +71,7 @@ public class SkillMapper extends Mapper<Skill, String> implements ISkillMapper {
 
     @Override
     public String getInsertStatement() {
-        return "INSERT OR IGNORE INTO Skill (name) " +
+        return "INSERT IGNORE INTO Skill (name) " +
                 "VALUES(?) ";
     }
 

@@ -84,19 +84,19 @@ public class UserSkillMapper extends Mapper<UserSkill, String> implements IUserS
     protected ArrayList<String> getCreateTableStatement() {
         ArrayList<String> statements = new ArrayList<>();
         String stmt = "CREATE TABLE IF NOT EXISTS UserSkill(" +
-                "usid CHAR(20)," +
+                "usid CHAR(40)," +
                 "points INTEGER," +
-                "name CHAR(20)," +
+                "name CHAR(40)," +
                 "PRIMARY KEY(name, usid)," +
-                "FOREIGN KEY(name) REFERENCES Skill ON DELETE CASCADE" +
+                "FOREIGN KEY(name) REFERENCES Skill(name) ON DELETE CASCADE" +
                 ");";
         String stmt2 = "CREATE TABLE IF NOT EXISTS Endorsement(" +
-                "userId CHAR(20)," +
-                "name CHAR(20)," +
-                "usid CHAR(20)," +
+                "userId CHAR(40)," +
+                "name CHAR(40)," +
+                "usid CHAR(40)," +
                 "PRIMARY KEY(userId, name, usid)," +
-                "FOREIGN KEY(userId) REFERENCES JoboonjaUser on DELETE CASCADE," +
-                "FOREIGN KEY (name, usid) REFERENCES UserSkill on DELETE CASCADE" +
+                "FOREIGN KEY(userId) REFERENCES JoboonjaUser(userId) on DELETE CASCADE," +
+                "FOREIGN KEY (name, usid) REFERENCES UserSkill(name, usid) on DELETE CASCADE" +
                 ");";
         statements.add(stmt);
         statements.add(stmt2);
@@ -106,7 +106,7 @@ public class UserSkillMapper extends Mapper<UserSkill, String> implements IUserS
 
     @Override
     public String getInsertStatement() {
-        return "INSERT OR IGNORE INTO UserSkill (usid, points, name) " +
+        return "INSERT IGNORE INTO UserSkill (usid, points, name) " +
                 "VALUES( ? , ? , ? ) ";
     }
 

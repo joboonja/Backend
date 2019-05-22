@@ -139,7 +139,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
     @Override
     public String getInsertStatement() {
-        return "INSERT OR IGNORE INTO JoboonjaUser (" + DatabaseColumns.USER_COLUMNS + ")" +
+        return "INSERT IGNORE INTO JoboonjaUser (" + DatabaseColumns.USER_COLUMNS + ")" +
                 "VALUES(?, ?, ?, ?, ?, ?, ?) ";
     }
 
@@ -182,9 +182,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     protected ArrayList<String> getCreateTableStatement() {
         ArrayList<String> statements = new ArrayList<String>();
         String stmt1 = "CREATE TABLE IF NOT EXISTS JoboonjaUser(" +
-                "userId CHAR(20), " +
-                "firstName CHAR(20)," +
-                "lastName CHAR(20)," +
+                "userId CHAR(40), " +
+                "firstName CHAR(40)," +
+                "lastName CHAR(40)," +
                 "profilePictureUrl TEXT," +
                 "bio TEXT," +
                 "jobTitle CHAR(50)," +

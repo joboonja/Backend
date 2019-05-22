@@ -17,6 +17,7 @@ import models.data.connectionPool.ConnectionPool;
 import models.data.mapper.Mapper;
 import models.data.project.Project;
 import models.data.skill.UserSkill;
+import models.data.skill.mapper.SkillMapper.SkillMapper;
 
 public class ProjectMapper extends Mapper<Project, String> implements IProjectMapper{
     private static ProjectMapper ourInstance = new ProjectMapper();
@@ -27,6 +28,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
     private ProjectMapper() {
         try {
+            SkillMapper.getInstance();
             createTable();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,21 +68,21 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         ArrayList<String> statements = new ArrayList<>();
         statements.add("CREATE TABLE IF NOT EXISTS Project(" +
                 "    creationDate BIGINT," +
-                "    pid CHAR(20)," +
-                "    title CHAR(20)," +
+                "    pid CHAR(40)," +
+                "    title CHAR(40)," +
                 "    imageUrl TEXT," +
                 "    projectDescription TEXT," +
                 "    budget BIGINT," +
                 "    deadline BIGINT," +
-                "    winner CHAR(20)," +
+                "    winner CHAR(40)," +
                 "    PRIMARY KEY(pid)" +
                 ");");
         statements.add("CREATE TABLE IF NOT EXISTS ProjectRequires(" +
                 "    points INTEGER," +
-                "    name CHAR(20)," +
-                "    pid CHAR(20)," +
-                "    FOREIGN KEY(name) REFERENCES Skill ON DELETE CASCADE," +
-                "    FOREIGN KEY(pid) REFERENCES Project ON DELETE CASCADE," +
+                "    name CHAR(40)," +
+                "    pid CHAR(40)," +
+                "    FOREIGN KEY(name) REFERENCES Skill(name) ON DELETE CASCADE," +
+                "    FOREIGN KEY(pid) REFERENCES Project(pid) ON DELETE CASCADE," +
                 "    PRIMARY KEY(points, name, pid)" +
                 ");");
         return statements;

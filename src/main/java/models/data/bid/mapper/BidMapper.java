@@ -85,7 +85,6 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
 
     @Override
     public boolean isValidToAdd(Bid newBid) throws UserNotFound, ProjectNotFound, SQLException {
-        ProjectMapper projectMapper = ProjectMapper.getInstance();
         UserMapper userMapper = UserMapper.getInstance();
         ProjectMapper projectMapper = ProjectMapper.getInstance();
         Project project = projectMapper.getProjectByProjectID(newBid.getProjectID());
@@ -151,10 +150,10 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
         ArrayList<String> statements = new ArrayList<>();
         statements.add ("CREATE TABLE IF NOT EXISTS Bid(" +
                 "    offer BIGINT," +
-                "    userId CHAR(20) NOT NULL," +
-                "    pid CHAR(20) NOT NULL," +
-                "    FOREIGN KEY(userId) REFERENCES JoboonjaUser ON DELETE CASCADE," +
-                "    FOREIGN KEY(pid) REFERENCES Project ON DELETE CASCADE," +
+                "    userId CHAR(40) NOT NULL," +
+                "    pid CHAR(40) NOT NULL," +
+                "    FOREIGN KEY(userId) REFERENCES JoboonjaUser(userId) ON DELETE CASCADE," +
+                "    FOREIGN KEY(pid) REFERENCES Project(pid) ON DELETE CASCADE," +
                 "    PRIMARY KEY(offer, userId, pid)" +
                 ");");
         return statements;

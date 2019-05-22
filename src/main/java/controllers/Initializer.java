@@ -12,10 +12,10 @@ import java.sql.SQLException;
 public class Initializer {
     @PostConstruct
     public void init() throws SQLException {
-        BidMapper.getInstance();
         SkillInitializer.initSkills();
-        ProjectInitializer.initProjects();
         UserMapper.getInstance().addDefaultUser();
+        ProjectInitializer.initProjects();
+        BidMapper.getInstance();
     }
 }
 

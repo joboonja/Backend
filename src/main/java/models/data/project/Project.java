@@ -1,6 +1,7 @@
 package models.data.project;
 
 import config.ProjectServiceConfig;
+import models.data.skill.Skill;
 import models.data.skill.UserSkill;
 import models.services.project.ProjectService;
 
@@ -38,7 +39,7 @@ public class Project {
 
     public String getID() { return id; }
 
-    public HashMap<String, Skill> getSkills() { return skills; }
+    public HashMap<String, UserSkill> getSkills() { return skills; }
 
     public long getBudget()
     {
@@ -80,6 +81,10 @@ public class Project {
 
     public boolean getHasBidOrNot() {
         return hasBidOrNot;
+    }
+
+    public long getDeadline() {
+        return deadline;
     }
 
     public void setHasBidOrNot(boolean hasBidOrNot) {
