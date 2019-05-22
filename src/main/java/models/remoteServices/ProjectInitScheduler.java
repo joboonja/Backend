@@ -14,7 +14,7 @@ public class ProjectInitScheduler implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new ProjectInitializer(), 1, 5, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(new ProjectInitializer(), 5, 5, TimeUnit.MINUTES);
     }
 
     @Override
