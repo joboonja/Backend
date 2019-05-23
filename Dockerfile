@@ -7,13 +7,10 @@ RUN mvn clean
 RUN mvn package
 VOLUME /app
 
-# MySQL config 
-FROM mysql:8.0 AS mysql-app
-ENV MYSQL_ROOT_PASSWORD=1377731
-ENV MYSQL_DATABASE=joboonja
-
+# Tomcat config
 FROM tomcat:9.0.20-jre11 As tomcat-app
-RUN ls -a webapps
-COPY --from=maven-app /app/target/Joboonja-1.0-SNAPSHOT.war /webapps/ROOT.war
-RUN ls -a webapps
+COPY --from=maven-app /app/target/Joboonja-1.0-SNAPSHOT.war ./webapps/ROOT.war
+RUN rm -r ./webapps/ROOT
+
+CMD ["bin/catalina.sh", "run"]
 
