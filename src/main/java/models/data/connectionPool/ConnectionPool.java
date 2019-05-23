@@ -28,7 +28,14 @@ public class ConnectionPool {
         basicDataSource.setMaxOpenPreparedStatements(ConnectionPoolConfig.maxOpenPreparedStatement);
         return basicDataSource;
     }
-    public static Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
+    public static Connection getConnection() {
+        while (true) {
+            try {
+                return dataSource.getConnection();
+            } catch (SQLException e) {
+                System.out.println("Another try to connect to database...");
+                e.printStackTrace();
+            }
+        }
     }
 }
