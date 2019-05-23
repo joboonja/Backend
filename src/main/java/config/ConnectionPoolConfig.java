@@ -1,7 +1,7 @@
 package config;
 
 public class ConnectionPoolConfig {
-    public static String url = "jdbc:mysql://localhosts:3306/joboonja?useSSL=false";
+    public static String url = "jdbc:mysql://localhost:3306/joboonja?useSSL=false";
     public static String username = "root";
     public static String password = "13777731";
     public static int minPools = 5;

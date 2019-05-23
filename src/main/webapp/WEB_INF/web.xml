@@ -5,7 +5,14 @@
 <web-app>
     <display-name>Joboonja</display-name>
 
-
+    <filter-mapping>
+        <filter-name>corsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>authFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>
