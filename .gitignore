@@ -89,5 +89,6 @@ target/
 
 .DS_Store
 .idea
+lib/
 
 # End of https://www.gitignore.io/api/intellij
