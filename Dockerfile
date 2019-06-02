@@ -8,7 +8,7 @@ RUN mvn package
 VOLUME /app
 
 # Tomcat config
-FROM tomcat:9.0.20-jre11 As tomcat-app
+FROM tomcat:9.0.20-jre8 As tomcat-app
 COPY --from=maven-app /app/target/Joboonja-1.0-SNAPSHOT.war ./webapps/ROOT.war
 RUN rm -r ./webapps/ROOT
 
