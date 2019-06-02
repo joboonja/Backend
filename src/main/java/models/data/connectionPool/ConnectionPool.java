@@ -19,7 +19,7 @@ public class ConnectionPool {
     }
     private static DataSource setupDataSource() {
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setDriverClassName(ConnectionPoolConfig.driver);
+        // basicDataSource.setDriverClassName(ConnectionPoolConfig.driver);
         basicDataSource.setUrl(ConnectionPoolConfig.url);
         basicDataSource.setUsername(ConnectionPoolConfig.username);
         basicDataSource.setPassword(ConnectionPoolConfig.password);
