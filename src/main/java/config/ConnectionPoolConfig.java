@@ -7,5 +7,5 @@ public class ConnectionPoolConfig {
     public static int minPools = 5;
     public static int maxPools = 10;
     public static int maxOpenPreparedStatement = 100;
-    public static String driver = "com.mysql.jdbc.Driver";
+    public static String driver = "com.mysql.cj.jdbc.Driver";
 }
