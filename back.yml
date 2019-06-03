@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:  
+  name: backend
+spec:
+  selector:    
+    app: joboonja-backend
+  type: NodePort
+  ports:  
+  - name: joboonja-backend
+    port: 8080
+    nodePort: 30720
+    protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: joboonja-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: joboonja-backend
+  template:
+    metadata:
+      labels:
+        app: joboonja-backend
+    spec:
+      containers:
+      - name: joboonja-backend
+        image: quay.io/ysjf/joboonja_back:latest
+        resources:
+          requests:
+            memory: "300Mi"
+            cpu: "0.3"
+          limits:
+            cpu: "0.3"
+            memory: "301Mi"
+        ports:
+        - containerPort: 8080
