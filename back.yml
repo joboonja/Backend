@@ -29,6 +29,7 @@ spec:
       containers:
       - name: joboonja-backend
         image: quay.io/ysjf/joboonja_back:latest
+        imagePullPolicy: "Always"
         resources:
           requests:
             memory: "300Mi"
