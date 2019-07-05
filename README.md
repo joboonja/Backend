@@ -4,3 +4,5 @@
 [![buddy pipeline](https://app.buddy.works/joboonja/ie-utcourse-backend/pipelines/pipeline/190747/badge.svg?token=25e4bdec5c202fc8257db455e5fe466dbdda77a02f26063b4ac5bc82c370f741 "buddy pipeline")](https://app.buddy.works/joboonja/ie-utcourse-backend/pipelines/pipeline/190747)
 
 Joboonja is a website to share your projects and also find some good projects to do!!
+
+<img src="https://github.com/joboonja/Backend/blob/master/BackendCover.png" width="900" height="450" />
