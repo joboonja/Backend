@@ -29,7 +29,7 @@
     </build>
     <properties>
         <springframework.version>4.3.0.RELEASE</springframework.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.9.10.3</jackson.version>
     </properties>
     <dependencies>
 
